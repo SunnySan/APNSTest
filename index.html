@@ -797,10 +797,12 @@ alert('6');
 				{  // otherwise we were launched because the user touched a notification in the notification tray.
 					if ( e.coldstart )
 					{
+alert('COLDSTART');
 						//$("#app-status-ul").append('<li>--COLDSTART NOTIFICATION--' + '</li>');
 					}
 					else
 					{
+alert('BACKGROUND');
 						//$("#app-status-ul").append('<li>--BACKGROUND NOTIFICATION--' + '</li>');
 					}
 				}

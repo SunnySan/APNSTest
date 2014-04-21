@@ -1,0 +1,223 @@
+﻿/***********自動resize大圖至螢幕寬度***********/
+img {
+	max-width:100%;
+}
+
+.content {
+	overflow: hidden;
+}
+
+.content, .content div {
+	z-index: 1;
+}
+
+.ui-btn-active {
+	background-color: #00abbd !important;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #e4f2f1 /*{f-bdown-background-start}*/), to( #90d6ed /*{f-bdown-background-end}*/)) !important; /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important; /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important; /* FF3.6 */
+	background-image:     -ms-linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important; /* IE10 */
+	background-image:      -o-linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important; /* Opera 11.10+ */
+	background-image:         linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important;
+	border-bottom-color: #c8e9f0 !important;
+	color: #019cb6 !important;
+	text-shadow: none !important;
+}
+
+/***********頁面header的威寶logo***********/
+.ui-header {
+	padding: 0 !important;
+	border-width: 0 !important;
+	background-size: auto 40px !important;
+}
+
+.vibo-header {
+	width: 100%;
+	background-image: url(../images/header_logo.png);
+	background-color: #E70012;
+	background-repeat: no-repeat;
+	background-position: left top;
+	padding: 0;
+	height: auto;
+}
+
+/***********放在header背景圖上的空白區域***********/
+.header-padding {
+	margin:0;
+	padding:0;
+	width:100%;
+	height:40px;
+}
+
+/***********content***********/
+/*
+.ui-content {
+    margin: 15px 15px 15px 15px;
+    padding: 0;
+}
+*/
+
+/***********頁面content的功能標題***********/
+.PageTitle {
+	width: 100%;
+	background-color: #00abbd !important;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #e4f2f1 /*{f-bdown-background-start}*/), to( #90d6ed /*{f-bdown-background-end}*/)) !important; /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important; /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important; /* FF3.6 */
+	background-image:     -ms-linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important; /* IE10 */
+	background-image:      -o-linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important; /* Opera 11.10+ */
+	background-image:         linear-gradient( #e4f2f1 /*{f-bdown-background-start}*/, #90d6ed /*{f-bdown-background-end}*/) !important;
+	border-bottom-color: #c8e9f0 !important;
+	color: #019cb6 !important;
+	text-shadow: none !important;
+}
+
+/***********首頁的content區，四周不要留白***********/
+#home .ui-content, #myQueryStorePosition .ui-content, #myWifiQueryWifiHotSpot .ui-content, .FullContent {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.home-text {
+	position:absolute;
+	z-index:2;
+	/*font-size: 24px;*/
+}
+
+/***********頁面footer的版權宣告***********/
+.footer-copyright {
+	height: 21px;
+	color:#DDDDDD;
+	background-color:#E70012;
+	font-size:9pt;
+	font-style:normal;
+	font-weight:normal;
+	text-shadow:none;
+	text-align: center;
+	padding-top: 7px;
+}
+
+h1, h2, h3 {
+	text-align: center;
+}
+
+/***********畫面下方的選單***********/
+.CarouselMenu {
+	width:100%;
+	z-index: 99 !important;
+}
+.CarouselMenu a {
+	margin: 0;
+	padding: 0;
+	display: block;
+	float: left;
+	text-decoration: none;
+}
+.CarouselMenu div {
+	background-repeat: no-repeat;
+	background-size:100% 100%;
+}
+.CarouselMenu span {
+	font-size: 1px;
+	color: #818285;
+}
+
+
+/******************畫面上方選單**************************/
+.navbar-content-area .ui-btn .ui-btn-inner {
+	padding-right:5px;
+	padding-left:5px;
+}
+
+/***********不要顯示JQuery Mobile data-mode="columntoggle"中的欄位選擇按鈕***********/
+.ui-table-columntoggle-btn {
+	display: none !important;
+}
+
+/***********iscroll的wrapper***********/
+.wrapper {
+	position:absolute;
+	z-index:1;
+	top:40px; 
+	left:0;
+	/*width:90%;*/
+	background:#aaa;
+	overflow:auto;
+}
+
+/***********iscroll的scroller***********/
+.scroller {
+	position:absolute;
+	z-index:1;
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	/*width:90%;*/
+	padding:0;
+}
+
+/***********固定在畫面下方的footer***********/
+.fixedFooter {
+	position: fixed !important;
+	left: 0px !important;
+	right: 0px !important;
+	bottom: 0px !important;
+	z-index: 99 !important;
+}
+
+/***********類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/***********/
+.ui-simpledialog-container {
+	z-index: 10001 !important;
+}
+
+.ui-simpledialog-screen-modal {
+	z-index: 10000 !important;
+}
+
+.ui-simpledialog-container .msgbox-text, .ui-simpledialog-container .ui-simpledialog-subtitle {
+	padding-left:5px;
+	padding-right:5px;
+	text-align: center;
+}
+
+.ui-simpledialog-container .msgbox-button, .ui-simpledialog-container .ui-simpledialog-controls {
+	margin-left:5px;
+	margin-right:5px;
+}
+
+.ui-simpledialog-container .ui-header {
+	border-top-left-radius:0px !important;
+	border-top-right-radius:0px !important;
+	height:44px !important;
+}
+
+.ui-simpledialog-container .ui-title {
+	margin:0 !important;
+	padding-top:10px !important;
+}
+
+/***********讓 collapsible 中的 <h2> 或 <h3> 文字會換行，避免過長的字被截掉***********/
+.ui-collapsible h3 .ui-btn-text, .ui-collapsible h2 .ui-btn-text {
+	white-space:normal;
+}
+/***********讓 collapsible 中 table 裡過長的字自動換行***********/
+.ui-collapsible table td {
+	white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	white-space: pre-wrap; /* css-3 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+/***********讓 select 中已選項目裡過長的字自動換行***********/
+.ui-select .ui-btn-text{
+	white-space:normal;
+}
+
+/***********撥打客服電話的撥號 icon***********/
+.ui-icon-phonecall {
+	background-image: url("../images/phonecall.png");
+	background-size: contain;
+	width: 24px;
+	height: 24px;
+	margin-top: -12px !important;
+}

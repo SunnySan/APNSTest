@@ -1,0 +1,720 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	<!--<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&region=TW&language=zh-TW"></script>-->
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- ****************************** 帳單地址 ***********************************-->
+<div data-role="page" id="myDataAddress">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myDataAddress">帳單地址</a></li>
+				<li><a href="#myDataPhone">電話</a></li>
+				<li><a href="#myDataEmail">Email</a></li>
+				<li><a href="#myDataPassword">密碼</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 id="myDataAddressStatus"></h3>
+		<div id="myDataAddressData">
+			<h3>變更帳單地址</h3>
+			<label>您的門號：<span class='myMSISDN'></span></label>
+			<br><label>縣市區域<span id='myDataAddressDataCity'></span></label>
+			<input type='hidden' id='txtDataAddressZipCode' value=''>
+			<input type='hidden' id='txtDataAddressCity' value=''>
+			<input type='hidden' id='txtDataAddressTown' value=''>
+			<!--城市及地區選擇-->
+			<div id="collapsible-set-city" data-role="collapsible-set" data-theme="c" data-content-theme="d">
+				資料更新中，請稍候...
+				<!--
+				<div data-role="collapsible">
+					<h2>Filtered list</h2>
+					<ul data-role="listview">
+						<li><a href="index.html">Adam Kinkaid</a></li>
+						<li><a href="index.html">Alex Wickerham</a></li>
+					</ul>
+				</div>
+				-->
+			</div>
+			<label for="txtDataAddressStreet">街道地址</label>
+			<input type="text" name="txtDataAddressStreet" id="txtDataAddressStreet" value="">
+			<a href="#" data-role="button" onclick="doChangeAddress();return false;">我要修改</a>
+			<ol type="decimal">
+				<li>提醒您！個人資料修改時，請您務必提供正確之個人聯絡資料，威寶電信將依此資料郵寄帳單、各項資料及與您聯絡。</li>
+	            <li>若您已申請合併帳單，變更帳單地址服務需求，請您以主門號登入服務申請。</li>
+            </ol>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 帳單地址 -->
+
+<!-- ****************************** 電話 ***********************************-->
+<div data-role="page" id="myDataPhone">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myDataAddress">帳單地址</a></li>
+				<li><a href="#myDataPhone">電話</a></li>
+				<li><a href="#myDataEmail">Email</a></li>
+				<li><a href="#myDataPassword">密碼</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 id="myDataPhoneStatus"></h3>
+		<div id="myDataPhoneData">
+			<h3>變更聯絡電話</h3>
+			<label>您的門號：<span class='myMSISDN'></span></label>
+			<table>
+				<tr>
+					<td width="15%">住家</td>
+					<td width="15%"><input type="tel" id="myDataPhoneHomePrefix" name="myDataPhoneHomePrefix" minlength="2" maxlength="4" class="beNumber" data-mini="true"></td>
+					<td colspan="3"><input type="tel" id="myDataPhoneHomeNumber" name="myDataPhoneHomeNumber" maxlength="10" class="beNumber" data-mini="true"></td>
+				</tr>
+				<tr>
+					<td width="15%">公司</td>
+					<td width="15%"><input type="tel" id="myDataPhoneWorkPrefix" name="myDataPhoneWorkPrefix" minlength="2" maxlength="4" class="beNumber" data-mini="true"></td>
+					<td width="40%"><input type="tel" id="myDataPhoneWorkNumber" name="myDataPhoneWorkNumber" maxlength="10" class="beNumber" data-mini="true"></td>
+					<td width="15%">分機</td>
+					<td width="15%"><input type="tel" id="myDataPhoneWorkExt" name="myDataPhoneWorkExt" maxlength="10" class="beNumber" data-mini="true"></td>
+				</tr>
+				<tr>
+					<td width="15%">手機</td>
+					<td colspan="4"><input type="tel" id="myDataPhoneOther" name="myDataPhoneOther" maxlength="10" class="beNumber" data-mini="true"></td>
+				</tr>
+			</table>
+			
+			<a href="#" data-role="button" onclick="doChangePhone();return false;">我要修改</a>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 電話 -->
+
+<!-- ****************************** Email ***********************************-->
+<div data-role="page" id="myDataEmail">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myDataAddress">帳單地址</a></li>
+				<li><a href="#myDataPhone">電話</a></li>
+				<li><a href="#myDataEmail">Email</a></li>
+				<li><a href="#myDataPassword">密碼</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 id="myDataEmailStatus"></h3>
+		<div id="myDataEmailData">
+			<h3>門號個人資料Email</h3>
+			<label>您的門號：<span class='myMSISDN'></span></label>
+			<table>
+				<tr>
+					<td width="20%">變更為</td>
+					<td width="80%"><input type="text" id="myDataEmailValue" name="myDataEmailValue" minlength="10" maxlength="100" data-mini="true"></td>
+				</tr>
+			</table>
+			
+			<a href="#" data-role="button" onclick="doChangeEmail();return false;">我要修改</a>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- Email -->
+
+<!-- ****************************** 密碼 ***********************************-->
+<div data-role="page" id="myDataPassword">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myDataAddress">帳單地址</a></li>
+				<li><a href="#myDataPhone">電話</a></li>
+				<li><a href="#myDataEmail">Email</a></li>
+				<li><a href="#myDataPassword">密碼</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<form id="frmChangePassword">
+			<label for="txtChangePasswordMSISDN">威寶電信門號</label>
+			<input type="tel" name="txtChangePasswordMSISDN" id="txtChangePasswordMSISDN" minlength="10" maxlength="10" data-mini="true" value="">
+			<label for="txtChangePasswordOldPassword">舊密碼</label>
+			<input type="password" name="txtChangePasswordOldPassword" id="txtChangePasswordOldPassword" data-mini="true" value="">
+			<label for="txtChangePasswordNewPassword1">新密碼(4~6位數字)</label>
+			<input type="password" name="txtChangePasswordNewPassword1" id="txtChangePasswordNewPassword1" data-mini="true" minlength="4" maxlength="6" value="">
+			<label for="txtChangePasswordNewPassword2">請再輸入一次新密碼</label>
+			<input type="password" name="txtChangePasswordNewPassword2" id="txtChangePasswordNewPassword2" data-mini="true" minlength="4" maxlength="6" value="">
+		    <a href="#" data-role="button" onclick="doChangePassword();return false;">變更密碼</a>
+		</form>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- Email -->
+
+</body>
+</html>
+<script type="text/javascript" src="js/initPage.js"></script><!--初始化頁面，設定header及footer -->
+
+<script type="text/javascript">
+
+	var msisdn = getLocalValue('loginmsisdn');
+	var contractid = getLocalValue('logincontractid');
+	var customerid = getLocalValue('logincustomerid');
+	var isMainMsisdn = false;
+	if (beEmpty(msisdn) || beEmpty(contractid) || beEmpty(customerid)){
+		alertNoLogin();
+	}
+	$('.myMSISDN').html(msisdn);
+
+	$('#myDataAddress').one('pageshow', function () {	//檢查登入資訊
+		userAuthentication();
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			var sData = "";
+			sData = "Function=GetCustomerProfile&Request=";
+			sData += "<MSISDN>" + msisdn + "</MSISDN>";
+			sData += "<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+				var ResultCode = $(xml).find("ResultCode").text();
+				var ResultText = $(xml).find("ResultText").text();
+				if (ResultCode!='00000'){	//作業失敗
+					GATrackEvent('變更帳單地址', '取得基本資料失敗，無法取得客戶基本資料', msisdn + ':' + contractid);
+					MsgBox('無法取得您的門號資料');
+					$('#myDataAddress #myDataAddressStatus').html('無法取得您的門號資料');
+					$('#myDataAddress #myDataAddressStatus').show();
+					$('#myDataAddress #myDataAddressData').hide();
+					return;
+				}	//if (ResultCode!='00000'){	//作業失敗
+				
+				var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
+
+				if (MainMsisdnFlg=='N'){
+					MsgBox('此為副門號無法變更帳單地址！');
+					$('#myDataAddress #myDataAddressStatus').html('此為副門號無法變更帳單地址！');
+					$('#myDataAddress #myDataAddressStatus').show();
+					$('#myDataAddress #myDataAddressData').hide();
+					return;
+				}else{
+					isMainMsisdn = true;
+					updateProcessStatus(5);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+				}
+			});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+		}	//if (notEmpty(msisdn) && notEmpty(contractid)){
+	});	//$('#myDataAddress').one('pageshow', function () {	//檢查登入資訊
+
+	$('#myDataAddress').on('pageshow', function () {
+		if (beEmpty(msisdn)){
+			alertNoLogin();
+			return;
+		}
+		if (isMainMsisdn==true){
+			updateProcessStatus(5);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+		}
+	});	//$('#myDataAddress').on('pageshow', function () {
+
+	$('#myDataPhone').on('pageshow', function () {
+		if (beEmpty(msisdn)){
+			alertNoLogin();
+			return;
+		}
+		updateProcessStatus(6);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+	});	//$('#myDataPhone').on('pageshow', function () {
+
+	$('#myDataEmail').on('pageshow', function () {
+		if (beEmpty(msisdn)){
+			alertNoLogin();
+			return;
+		}
+		updateProcessStatus(7);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+	});	//$('#myDataEmail').on('pageshow', function () {
+
+	$('#myDataAddress').one('pageshow', function () {
+		//找出全省的縣市及區域
+		$.getJSON( getServerBaseURL()+'ajaxBSCAPIBridge.jsp?Function=GetZipCode&Request=<FunctionType>1</FunctionType>&ResponseType=json', function(data) { 
+			if (!data.GetZipCodeRes || data.GetZipCodeRes.ResultCode!='00000' || !data.GetZipCodeRes.Status || data.GetZipCodeRes.Status!='0'){
+				$('#myDataAddress #collapsible-set-city').html('無法取得縣市清單資料');
+				return;
+			}
+			var temp	= "";	//city
+			//var temp1	= "";	//town
+			var towns = null;	//存放所有縣市及區域列表
+			var s		= "";
+			
+			towns = data.GetZipCodeRes;
+			$.each( data.GetZipCodeRes.cities, function(i, item) {
+				if (item.city!=temp){	//新city，從 towns 找此縣市的區域
+					if (beEmpty(s)){
+						s += "<div data-role='collapsible'>";
+						s += "	<h2>" + item.city +  "</h2>";
+						s += "	<ul data-role='listview' class='citylistview'>";
+						s += getTownList(towns, item.city);
+						//s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+					}else{
+						s += "	</ul>";
+						s += "</div>";
+						s += "<div data-role='collapsible'>";
+						s += "	<h2>" + item.city +  "</h2>";
+						s += "	<ul data-role='listview' class='citylistview'>";
+						s += getTownList(towns, item.city);
+						//s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+					}
+					temp = item.city;
+				//}else{	//相同city，不同town
+				//		s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+				}
+			});
+			if (notEmpty(s)){
+				s += "	</ul>";
+				s += "</div>";
+			}
+			//console.log(s);
+			s = "<div id='myDataAddressDataCityList' data-role='collapsible'><h2>請選擇</h2>" + s + "</div>";
+			$('#myDataAddress #collapsible-set-city').html(s);
+			$('#myDataAddress #collapsible-set-city').trigger('create');
+		});
+	});	//$('#myDataAddress').one('pageshow', function () {
+
+
+
+	var sNewAddressSerNo	= "";	//修改帳單地址的 COD Service Change處理單號
+	var sNewPhoneSerNo		= "";	//修改電話的 COD Service Change處理單號
+	var sNewEmailSerNo		= "";	//修改Email的 COD Service Change處理單號
+	
+	function updateProcessStatus(CODType){	//查詢COD的作業進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+		var currSerNo	= "";
+		var currPage	= "";
+		var currStatus	= "";
+		var currData	= "";
+		var currProcess	= "";
+
+		if (CODType==5){currProcess='帳單地址'; currSerNo=sNewAddressSerNo; currPage='myDataAddress'; currStatus='myDataAddressStatus'; currData='myDataAddressData';}
+		if (CODType==6){currProcess='電話'; currSerNo=sNewPhoneSerNo; currPage='myDataPhone'; currStatus='myDataPhoneStatus'; currData='myDataPhoneData';}
+		if (CODType==7){currProcess='Email'; currSerNo=sNewEmailSerNo; currPage='myDataEmail'; currStatus='myDataEmailStatus'; currData='myDataEmailData';}
+
+		var sData = "";
+		sData = "Function=GetCODServiceChangeQuery&Request=";
+		if (beEmpty(currSerNo)){
+			sData += "<MSISDN>" + msisdn + "</MSISDN>";	////可能在企網WEB有修改過，故以門號查詢
+			sData += "<CODType>" + CODType + "</CODType>";	//1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+		}else{
+			sData += "<SvChangeSerialNo>" + currSerNo + "</SvChangeSerialNo>";	//以 COD 單號查詢
+		}
+
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('無法取得您的修改狀態資料：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			var QueryStatus	= $(xml).find("QueryStatus").text();
+			var StatusMsg	= $(xml).find("StatusMsg").text();
+			//alert(QueryStatus);
+			//alert(StatusMsg);
+			//alert($(xml).find("SvChangeSerialNo").text());
+			
+
+			var msg = "";
+			var tmp	= "";
+			if (QueryStatus=='O' || QueryStatus=='P' || QueryStatus=='SENT'){
+				msg = '系統目前正在處理您的' + currProcess + '變更作業!';
+				MsgBox(msg);
+				$('#' + currPage + ' #' + currStatus).html(msg);
+				$('#' + currPage + ' #' + currStatus).show();
+				$('#' + currPage + ' #' + currData).hide();
+			}else if (QueryStatus=='C'){
+				var serNo = $(xml).find("SvChangeSerialNo").text();
+				if (CODType==5){
+					tmp = getLocalValue('lastChangedAddress');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedAddress', serNo);
+						msg = '您的帳單地址變更作業已經處理完成!';
+						MsgBox(msg);
+					}
+					sNewAddressSerNo = "";
+				}
+				if (CODType==6){
+					tmp = getLocalValue('lastChangedPhone');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedPhone', serNo);
+						msg = '您的電話變更作業已經處理完成!';
+						MsgBox(msg);
+					}
+					sNewPhoneSerNo = "";
+				}
+				if (CODType==7){
+					tmp = getLocalValue('lastChangedEmail');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedEmail', serNo);
+						msg = '您的Email變更作業已經處理完成!';
+						MsgBox(msg);
+					}
+					sNewEmailSerNo = "";
+				}
+				$('#' + currPage + ' #' + currStatus).html('');
+				$('#' + currPage + ' #' + currStatus).hide();
+				$('#' + currPage + ' #' + currData).show();
+			}else if (QueryStatus=='R' || QueryStatus=='F'){
+				msg = '您的' + currProcess + '變更作業執行失敗!';
+				MsgBox(msg);
+				$('#' + currPage + ' #' + currStatus).html('');
+				$('#' + currPage + ' #' + currStatus).hide();
+				$('#' + currPage + ' #' + currData).show();
+				/*
+				$('#' + currPage + ' #' + currStatus).html(msg);
+				$('#' + currPage + ' #' + currStatus).show();
+				$('#' + currPage + ' #' + currData).hide();
+				*/
+			}else if (QueryStatus=='1'){
+				msg = '查詢您的' + currProcess + '變更作業時發生錯誤!';
+				MsgBox(msg);
+				$('#' + currPage + ' #' + currStatus).html('');
+				$('#' + currPage + ' #' + currStatus).hide();
+				$('#' + currPage + ' #' + currData).show();
+				/*
+				$('#' + currPage + ' #' + currStatus).html(msg);
+				$('#' + currPage + ' #' + currStatus).show();
+				$('#' + currPage + ' #' + currData).hide();
+				*/
+			}else{	//之前沒有作業 request
+				if (CODType==5) sNewAddressSerNo = "";
+				if (CODType==6) sNewPhoneSerNo = "";
+				if (CODType==7) sNewEmailSerNo = "";
+				$('#' + currPage + ' #' + currStatus).hide();
+				$('#' + currPage + ' #' + currData).show();
+			}	//if (QueryStatus=='O' || QueryStatus=='P' || QueryStatus=='SENT'){
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function updateProcessStatus(CODType){	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+	
+	function getTownList(data, city){	//找某縣市的區域
+		var s = "";
+		$.each( data.towns, function(i, item) {
+			if (item.city==city){	//新city，從 towns 找此縣市的區域
+				s += "		<li><a href='#' onclick=\"doSelectArea('" + item.city + "', '" + item.town + "', '" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+			}
+		});
+		return s;
+	}
+
+	function doSelectArea(city, town, zip){	//顯示已選的區域
+		$('#myDataAddress #txtDataAddressZipCode').val(zip);	//填入hidden欄位
+		$('#myDataAddress #txtDataAddressCity').val(city);
+		$('#myDataAddress #txtDataAddressTown').val(town);
+		$('#myDataAddress #myDataAddressDataCity').html('：' + zip + '&nbsp;' + city + '，' + town);	//畫面顯示
+		$('#myDataAddress #myDataAddressDataCityList').trigger('collapse');	//將縣市區域選單縮起來
+		return;
+	}
+
+	function doChangeAddress(){	//執行修改帳單地址
+		var zip		= $('#myDataAddress #txtDataAddressZipCode').val();
+		var city	= $('#myDataAddress #txtDataAddressCity').val();
+		var town	= $('#myDataAddress #txtDataAddressTown').val();
+		var street	= $('#myDataAddress #txtDataAddressStreet').val();
+		
+		if (beEmpty(msisdn)){
+			//MsgBox('無法取得您的登入資料，請至首頁重新登入!');
+			alertNoLogin();
+			return false;
+		}
+		if (beEmpty(zip) || beEmpty(city) || beEmpty(town)){
+			MsgBox('請選擇縣市區域!');
+			return false;
+		}
+		if (beEmpty(street) || street.length<5){
+			MsgBox('請輸入您的街道地址!');
+			return false;
+		}
+		var s		= "";
+		var sData	= "";
+		sData = "<City>" + city + "</City>";
+		sData += "<State>" + town + "</State>";
+		sData += "<Street>" + street + "</Street>";
+		sData += "<ZIP>" + zip + "</ZIP>";
+		s = msisdn + "的帳單地址為【" + zip + city + town + street  + "】？";
+		$('<div>').simpledialog2({
+			mode: 'button',
+			headerText: '個人資料變更確認',
+			headerClose: false,
+			themeDialog: 'f',
+			buttonPrompt: '請問您是否確定要變更' + s,
+			buttons : {
+				'確定變更': {
+					click: function () { 
+						doChangeData(5, sData);	//送至 server 執行
+					}
+				},
+				'再想一想': {
+					click: function () { 
+					},
+        			icon: "delete"
+				}
+			}
+		})
+	}	//function doChangeAddress(){	//執行修改帳單地址
+
+	function doChangePhone(){	//執行修改電話
+		var HomePhonePrefix		= $('#myDataPhone #myDataPhoneHomePrefix').val();
+		var HomePhoneNumber		= $('#myDataPhone #myDataPhoneHomeNumber').val();
+		var WorkPhonePrefix		= $('#myDataPhone #myDataPhoneWorkPrefix').val();
+		var WorkPhoneNumber		= $('#myDataPhone #myDataPhoneWorkNumber').val();
+		var WorkPhoneExt		= $('#myDataPhone #myDataPhoneWorkExt').val();
+		var OtherPhone			= $('#myDataPhone #myDataPhoneOther').val();
+		
+		$('#myDataPhone .beNumber').each( function() {
+			if (isNaN($(this).val())){
+				MsgBox('所有欄位均為數字，請勿輸入其他文字');
+				return;
+			}
+		});
+		/*
+		if (beEmpty(HomePhonePrefix) && notEmpty(HomePhoneNumber)){
+			MsgBox('請輸入住家電話的區碼');
+			return;
+		}
+		if (beEmpty(WorkPhonePrefix) && notEmpty(WorkPhoneNumber)){
+			MsgBox('請輸入公司電話的區碼');
+			return;
+		}
+		*/
+		if (beEmpty(HomePhoneNumber) && beEmpty(WorkPhoneNumber)){
+			MsgBox('請至少輸入住家電話或公司電話其中一個');
+			return;
+		}
+		
+		HomePhoneNumber = HomePhonePrefix + HomePhoneNumber;
+		WorkPhoneNumber = WorkPhonePrefix + WorkPhoneNumber;
+
+		var s		= "";
+		var sData	= "";
+		if (notEmpty(HomePhoneNumber)){
+			sData += "<HomePhone>" + HomePhoneNumber + "</HomePhone>";
+			s += (beEmpty(s)?HomePhoneNumber:', ' + HomePhoneNumber);
+		}
+		if (notEmpty(WorkPhoneNumber)){
+			sData += "<WorkPhone>" + WorkPhoneNumber + "</WorkPhone>";
+			s += (beEmpty(s)?WorkPhoneNumber:', ' + WorkPhoneNumber);
+		}
+		if (notEmpty(WorkPhoneExt) && notEmpty(WorkPhoneNumber)){
+			sData += "<WorkPhoneExt>" + WorkPhoneExt + "</WorkPhoneExt>";
+			s += (beEmpty(s)?WorkPhoneExt:'#' + WorkPhoneExt);
+		}
+		if (notEmpty(OtherPhone)){
+			sData += "<OtherPhone>" + OtherPhone + "</OtherPhone>";
+			s += (beEmpty(s)?OtherPhone:', ' + OtherPhone);
+		}
+		s = msisdn + "的聯絡電話為【" + s  + "】？";
+		$('<div>').simpledialog2({
+			mode: 'button',
+			headerText: '個人資料變更確認',
+			headerClose: false,
+			themeDialog: 'f',
+			buttonPrompt: '請問您是否確定要變更' + s,
+			buttons : {
+				'確定變更': {
+					click: function () { 
+						doChangeData(6, sData);	//送至 server 執行
+					}
+				},
+				'再想一想': {
+					click: function () { 
+					},
+        			icon: "delete"
+				}
+			}
+		})
+	}	//function doChangePhone(){	//執行修改電話
+
+	function doChangeEmail(){	//執行修改Email
+		var Email = $('#myDataEmail #myDataEmailValue').val();
+		
+		if (beEmpty(Email)){
+			MsgBox('請輸入您的Email');
+			return;
+		}
+		if (!isEmail(Email)){
+			MsgBox('請輸入有效的電子郵件帳號');
+			return;
+		}
+
+		var s		= "";
+		var sData	= "";
+		
+		sData += "<Email>" + Email + "</Email>";
+		
+		s = msisdn + "的Email為【" + Email  + "】？";
+		$('<div>').simpledialog2({
+			mode: 'button',
+			headerText: '個人資料變更確認',
+			headerClose: false,
+			themeDialog: 'f',
+			buttonPrompt: '請問您是否確定要變更' + s,
+			buttons : {
+				'確定變更': {
+					click: function () { 
+						doChangeData(7, sData);	//送至 server 執行
+					}
+				},
+				'再想一想': {
+					click: function () { 
+					},
+        			icon: "delete"
+				}
+			}
+		})
+	}	//function doChangeEmail(){	//執行修改Email
+	
+	function doChangeData(CODType, sData){	//執行COD資料變更，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+		sData = "Function=DoCODServiceChange&Request=<MSISDN>" + msisdn + "</MSISDN><ContractId>" + contractid + "</ContractId><ChangeType>" + CODType + "</ChangeType>" + sData;
+		//console.log(sData);
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('作業失敗：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			var ChangeStatus		= $(xml).find("ChangeStatus").text();
+			var StatusMsg			= $(xml).find("StatusMsg").text();
+			var SvChangeSerialNo	= $(xml).find("SvChangeSerialNo").text();
+			//alert(ChangeStatus);
+			//alert(SvChangeSerialNo);
+			var sProcess			= "";
+			if (CODType==5) sProcess = "變更帳單地址";
+			if (CODType==6) sProcess = "變更聯絡電話";
+			if (CODType==7) sProcess = "變更電子郵件帳號";
+
+			var msg = "";
+			if (ChangeStatus=='0'){
+				if (CODType==5) sNewAddressSerNo = SvChangeSerialNo;
+				GATrackEvent(sProcess, '成功', msisdn + ':' + contractid);
+				msg = '【' + sProcess + '】資料修改申請已送出，系統將於1小時內為您處理完成。';
+			}else if (ChangeStatus=='1'){
+				if (CODType==5) sNewAddressSerNo = "";
+				GATrackEvent(sProcess, '失敗', msisdn + ':' + contractid);
+				msg = '作業失敗：' + StatusMsg;
+			}else{
+				if (CODType==5)	sNewAddressSerNo = "";
+				GATrackEvent(sProcess, '無法取得作業狀態', msisdn + ':' + contractid);
+				msg = '無法取得作業狀態';
+			}	//if (ChangeStatus=='O'){
+			MsgBox(msg);
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function doChangeData(CODType, sData){	//執行COD資料變更，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+
+	//變更密碼
+	function doChangePassword(){
+		var mymsisdn			= $('#myDataPassword #frmChangePassword #txtChangePasswordMSISDN').val();
+		var oldpassword		= $('#myDataPassword #frmChangePassword #txtChangePasswordOldPassword').val();
+		var newpassword1	= $('#myDataPassword #frmChangePassword #txtChangePasswordNewPassword1').val();
+		var newpassword2	= $('#myDataPassword #frmChangePassword #txtChangePasswordNewPassword2').val();
+		
+		if (beEmpty(mymsisdn) || beEmpty(oldpassword) || beEmpty(newpassword1) || beEmpty(newpassword2)){
+			MsgBox('請輸入所有欄位!');
+			return;
+		}
+
+		if (newpassword1!=newpassword2){
+			MsgBox('兩個新密碼的值不相同!');
+			return;
+		}
+
+		if (newpassword1.length<4 || newpassword1.length>6){
+			MsgBox('密碼長度需為4~6碼!');
+			return;
+		}
+
+		if (isNaN(newpassword1)){
+			MsgBox('新密碼需為數字!');
+			return;
+		}
+
+		var sData = "";
+		sData = "Function=DoPwdChange&Request=";
+		sData += "<MSISDN>" + mymsisdn + "</MSISDN>";
+		sData += "<OldPassword>" + oldpassword + "</OldPassword>";
+		sData += "<NewPassword>" + newpassword1 + "</NewPassword>";
+
+		$('<div>').simpledialog2({
+			mode: 'button',
+			headerText: '密碼變更確認',
+			headerClose: false,
+			themeDialog: 'f',
+			buttonPrompt: '請問您是否確定要變更' + mymsisdn + '的密碼',
+			buttons : {
+				'確定變更': {
+					click: function () { 
+						getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+							var ResultCode = $(xml).find("ResultCode").text();
+							var ResultText = $(xml).find("ResultText").text();
+							if (ResultCode!='00000'){	//作業失敗
+								MsgBox('作業失敗：' + ResultText);
+								return;
+							}	//if (ResultCode=='00000'){	//作業成功
+							if ($(xml).find("Status").text()=='0'){
+								if (notEmpty(msisdn) && msisdn==mymsisdn) setLocalValue('loginpassword', newpassword1);	//目前登入的門號等於變更密碼的門號，將Password存起來
+								GATrackEvent('變更密碼', '成功', mymsisdn);
+								MsgBox('﹝密碼﹞已變更完成，下次請使用新密碼登入。');
+							}else{
+								GATrackEvent('變更密碼', '失敗', mymsisdn);
+								MsgBox('作業失敗：' + $(xml).find("StatusMsg").text());
+							}
+						});
+					}
+				},
+				'再想一想': {
+					click: function () { 
+					},
+        			icon: "delete"
+				}
+			}
+		})
+	}	//function doChangePassword(){
+</script>

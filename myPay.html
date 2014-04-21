@@ -1,0 +1,1068 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- ****************************** 信用卡1 ***********************************-->
+<div data-role="page" id="myPayCreditCard1">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayCreditCard1">信用卡</a></li>
+				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
+				<li><a href="#myPayRecord">繳款記錄</a></li>
+			</ul>
+		</div><!-- /navbar -->
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3>信用卡繳款</h3>
+		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
+			<h3>服務說明</h3>
+			<p>
+				<ol type="decimal" style="padding-left:15px;">
+					<li>
+						本人即申請人，已知悉並同意威寶電信依『個人資料保護法第8條』所為之告知事項。依「個人資料保護法」第八條規定之告知內容：
+						<ol type="decimal" style="padding-left:15px;">
+							<li>
+								非公務機關名稱：威寶電信股份有限公司。
+							</li>
+							<li>
+								蒐集之目的：客戶管理、統計調查與分析、資訊與資料庫管理、經營電信業務與電信加值網路業務、徵信、行銷(不包括直銷至個人)、行銷(包括直銷至個人)、其他合於營業登記項目或章程所定業務之需要、其他諮詢與顧問服務及依主管機關公告之特定目的。
+							</li>
+							<li>
+								個人資料之類別：辨識個人資料、辨識財務者、政府資料中之辨識者、個人描述、財務交易及其他依主管機關公告之個人資料類別。
+							</li>
+							<li>
+								個人資料利用之期間、地區、對象及方式：
+								<br>（1）期間：依法令、各契約規定之期間。
+								<br>（2）地區：中華民國境內、境外（主管機關禁止者不在此限）。
+								<br>（3）對象：威寶電信、與威寶電信有合作或業務往來之威寶電信關係企業及合作廠商。
+								<br>（4）方式：符合法令規定範圍之利用。
+							</li>
+							<li>
+								使用者在符合電信相關法規之情形下，就其個人資料得依「個人資料保護法」規定行使下列權利，行使方式依威寶電信作業規範：
+								<br>（1）查詢或請求閱覽。
+								<br>（2）請求製給複製本。
+								<br>（3）請求補充或更正。
+								<br>（4）請求停止蒐集、處理或利用。
+								<br>（5）請求刪除。
+							</li>
+							<li>
+								使用者得自由選擇提供資料（但依法令規定者不在此限），若不提供將影響電信服務之完整性。
+							</li>
+						</ol>
+					</li>
+					<li>
+						網路繳款僅提供威寶電信月租型用戶本人之信用卡繳費，並使用其名下信用卡(VISA、MASTER、JCB、聯合信用卡)透過網路刷卡繳付帳單費用。
+					</li>
+					<li>
+						本服務將進入SSL安全鑰匙加密機制，您可以安心使用威寶電信網路刷卡繳款服務。
+					</li>
+					<li>
+						繳費並銷帳成功後您可於「<a href="#myPayRecord">繳款記錄查詢</a>」查詢到您的繳款記錄。
+					</li>
+			</ol>
+			</p>
+		</div><!-- /collapsible -->
+		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
+			<h3>注意事項</h3>
+			<p>
+				<ol type="decimal" style="padding-left:15px;">
+					<li>
+						如用戶使用非本人之信用卡繳費，並經持卡人或原發卡銀行舉發，應由用戶本人負擔全部責任；如致本公司退費予持卡人或原發卡銀行時，逕依帳務催款程序向用戶催討，並願負擔該筆款項。
+					</li>
+					<li>
+						用戶本人如以信用卡繳款但經授權失敗時，請向原發卡銀行查詢扣款失敗之原因。
+					</li>
+					<li>
+						刷卡一經銀行同意授權，視同該筆消費已成立， 無法任意取消或變更。
+					</li>
+					<li>
+						若您因帳款逾期未繳而無法正常通話，請先登入網上繳款服務後，選擇「無用戶密碼繳款」完成繳費。
+					</li>
+				</ol>
+			</p>
+		</div><!-- /collapsible -->
+		<br>
+		<label><input type="checkbox" id="chk1" name="chk1">本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。</label>
+		<button onclick="gotomyPayCreditCard2();">我要繳費</button>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 信用卡1 -->
+
+<!-- ****************************** 銀行帳戶 ***********************************-->
+<div data-role="page" id="myPayBankAccount1">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayCreditCard1">信用卡</a></li>
+				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
+				<li><a href="#myPayRecord">繳款記錄</a></li>
+			</ul>
+		</div><!-- /navbar -->
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3>銀行帳戶繳款</h3>
+		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
+			<h3>服務說明</h3>
+			<p>
+				<ol type="decimal" style="padding-left:15px;">
+					<li>
+						本人即申請人，已知悉並同意威寶電信依『個人資料保護法第8條』所為之告知事項。<br>依「個人資料保護法」第八條規定之告知內容：
+						<ol type="decimal" style="padding-left:15px;">
+							<li>
+								非公務機關名稱：威寶電信股份有限公司。
+							</li>
+							<li>
+								蒐集之目的：客戶管理、統計調查與分析、資訊與資料庫管理、經營電信業務與電信加值網路業務、徵信、行銷(不包括直銷至個人)、行銷(包括直銷至個人)、其他合於營業登記項目或章程所定業務之需要、其他諮詢與顧問服務及依主管機關公告之特定目的。
+							</li>
+							<li>
+								個人資料之類別：辨識個人資料、辨識財務者、政府資料中之辨識者、個人描述、財務交易及其他依主管機關公告之個人資料類別。
+							</li>
+							<li>
+								個人資料利用之期間、地區、對象及方式：
+								<br>（1）期間：依法令、各契約規定之期間。
+								<br>（2）地區：中華民國境內、境外（主管機關禁止者不在此限）。
+								<br>（3）對象：威寶電信、與威寶電信有合作或業務往來之威寶電信關係企業及合作廠商。
+								<br>（4）方式：符合法令規定範圍之利用。
+							</li>
+							<li>
+								使用者在符合電信相關法規之情形下，就其個人資料得依「個人資料保護法」規定行使下列權利，行使方式依威寶電信作業規範：
+								<br>（1）查詢或請求閱覽。
+								<br>（2）請求製給複製本。
+								<br>（3）請求補充或更正。
+								<br>（4）請求停止蒐集、處理或利用。
+								<br>（5）請求刪除。
+							</li>
+							<li>
+								使用者得自由選擇提供資料（但依法令規定者不在此限），若不提供將影響電信服務之完整性。
+							</li>
+						</ol>
+					</li>
+					<li>
+						您使用本服務所輸入之相關資料，將由帳務代理、轉出、轉入金融機構及財金資訊股份有限公司在完成服務之特定目的內，蒐集、處理、利用及國際傳輸您的個人資料。
+					</li>
+					<li>
+						本服務僅提供威寶電信月租型用戶本使用其名下銀行帳戶繳付帳單費用。
+					</li>
+					<li>
+						本服務將進入SSL安全鑰匙加密機制，您可以放心使用威寶電信此項線上繳款服務。
+					</li>
+					<li>
+						繳費並銷帳成功後您可於「<a href="#myPayRecord">繳款記錄查詢</a>」查詢到您的繳款記錄，倘若使用本服務有錯誤或對款項之計算暨退補費等發生疑義，請洽威寶電信或轉出金融機構處理。
+					</li>
+					<li>
+						為了讓您有更多的繳款選擇，同時提供「<a href="#myPayCreditCard1">信用卡繳款</a>」功能，歡迎多加利用!
+					</li>
+				</ol>
+			</p>
+		</div><!-- /collapsible -->
+		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
+			<h3>注意事項</h3>
+			<p>
+				<ol type="decimal" style="padding-left:15px;">
+					<li>
+						本服務不受每日轉帳新臺幣（下同）3萬元限制，但每一轉出帳戶每日不得超過10萬元，每月不得超過20萬元。如轉出金融機構之限額低於前述規定，則依轉出金融機構之規定辦理。
+					</li>
+					<li>
+						轉帳時間依營業時間區分如下：
+						<br>營業日： 15：30 前轉帳為當日帳；15：30 後轉帳則視為次一營業日之交易。
+						<br>非營業日：轉帳一律視為次一營業日之交易 。
+					</li>
+					<li>
+						在您確認繳款同時將連線到銀行端執行扣款授權作業，偶有因網路擁塞造成連線逾時，屆時請您查詢銀行帳戶確認是否扣款成功，避免重覆繳款。
+					</li>
+					<li>
+						完成線上繳款程序，一律無法再取消該筆交易。
+					</li>
+					<li>
+						外籍人士/華僑恕無法使用此服務。
+					</li>
+					<li>
+						若您因帳款逾期未繳而無法正常通話，請先登入網上繳款服務後，選擇「無用戶密碼繳款」完成繳費。
+					</li>
+				</ol>
+			</p>
+		</div><!-- /collapsible -->
+		<br>
+		<label><input type="checkbox" id="chk1" name="chk1">本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。</label>
+		<button onclick="gotomyPayBankAccount2();">我要繳款</button>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 銀行帳戶 -->
+
+<!-- ****************************** 繳款記錄 ***********************************-->
+<div data-role="page" id="myPayRecord">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayCreditCard1">信用卡</a></li>
+				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
+				<li><a href="#myPayRecord">繳款記錄</a></li>
+			</ul>
+		</div><!-- /navbar -->
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3>提供一個月內繳款記錄查詢</h3>
+		<p>線上繳款記錄：</p>
+		<div id="OnlinePayInfo">
+			<table data-role='table' id='tblOnlinePayInfo' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>
+				<tbody>
+					<tr><td>查詢中，請稍候...</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<p>歷史繳款記錄：</p>
+		<div id="HistoryPayInfo">
+			<table data-role='table' id='tblHistoryPayInfo' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>
+				<tbody>
+					<tr><td>查詢中，請稍候...</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<p>注意事項：網頁入帳資訊之更新，約需3個工作日左右。</p>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 繳款記錄 -->
+
+<!-- ****************************** ATM繳款帳號查詢 ***********************************-->
+<div data-role="page" id="myPayATMAccountQuery">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayCreditCard1">信用卡</a></li>
+				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
+				<li><a href="#myPayRecord">繳款記錄</a></li>
+			</ul>
+		</div><!-- /navbar -->
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3>銀行代號：<span id="BankId">822</span></h3>
+		<h3>用戶帳號：<span id="BankAccount"></span></h3>
+		您可利用金融卡在全省具有轉帳功能之自動櫃員機，依照指示依序輸入
+		<img src="images/atm_pic.jpg" style="margin-top:10px;" />
+		<p>注意事項：</p>
+		<ol type="decimal" style="padding-left:15px;">
+			<li>每筆跨行轉帳手續費需由客戶自行負擔。</li>
+			<li>轉帳完成，請務必保留您的轉帳收據以供備查。</li>
+		</ol>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- ATM繳款帳號查詢 -->
+
+<!-- ****************************** 信用卡2 ***********************************-->
+<div data-role="page" id="myPayCreditCard2">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayCreditCard1">信用卡</a></li>
+				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
+				<li><a href="#myPayRecord">繳款記錄</a></li>
+			</ul>
+		</div><!-- /navbar -->
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id="myPayCreditCard2Status"></div>
+		<div id="myPayCreditCard2CardData">
+			<label>門號使用人相關資訊</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>姓名</td>
+						<td id='username'></td>
+					</tr>
+					<tr>
+						<td>門號</td>
+						<td id='msisdn'></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<label>繳款資料</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>出帳日</td>
+						<td id='bills_date'></td>
+					</tr>
+					<tr>
+						<td>上期應繳金額</td>
+						<td id='prior_pay'></td>
+					</tr>
+					<tr>
+						<td>上期繳款金額</td>
+						<td id='prior_payed'></td>
+					</tr>
+					<tr>
+						<td>本期新增金額</td>
+						<td id='currt_append'></td>
+					</tr>
+					<tr>
+						<td>本期應繳金額</td>
+						<td id='currt_pay' style='color:#FF0000;'></td>
+					</tr>
+					<tr>
+						<td>繳款截止日</td>
+						<td id='pay_end_time' style='color:#FF0000;'></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<label>繳款信用卡資料</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4">付款金額</td>
+					</tr>
+					<tr>
+						<td colspan="4"><span id='tdNeedPay' style="color:#FF0000;"></span></td>
+					</tr>
+					<tr>
+						<td colspan="4">卡號</td>
+					</tr>
+					<tr>
+						<td><input type="tel" id="CardNo1" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
+						<td><input type="tel" id="CardNo2" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
+						<td><input type="tel" id="CardNo3" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
+						<td><input type="tel" id="CardNo4" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
+					</tr>
+					<tr>
+						<td colspan="4">三碼檢查碼</td>
+					</tr>
+					<tr>
+						<td><input type="tel" id="CardBack" data-mini="true" size="3" minlength="3" maxlength="3" value=""></td>
+						<td colspan="3">卡片背面末三碼</td>
+					</tr>
+				</tbody>
+			</table>
+			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4">有效期限</td>
+					</tr>
+					<tr>
+						<td><input type="tel" id="ExpireMonth" data-mini="true" size="2" minlength="2" maxlength="2" value=""></td>
+						<td>月/</td>
+						<td><input type="tel" id="ExpireYear" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
+						<td>年(四碼西元年)</td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="hidden" id="txtNeedPay" name="txtNeedPay" value="0">
+			<button onclick="doPayCreditCard();">付款</button>
+		</div><!--<div id="myPayCreditCard2CardData">-->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 信用卡2 -->
+
+<!-- ****************************** 銀行帳戶2 ***********************************-->
+<div data-role="page" id="myPayBankAccount2">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayCreditCard1">信用卡</a></li>
+				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
+				<li><a href="#myPayRecord">繳款記錄</a></li>
+			</ul>
+		</div><!-- /navbar -->
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id="myPayCreditCard2Status"></div>
+		<div id="myPayCreditCard2CardData">
+			<label>門號使用人相關資訊</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>姓名</td>
+						<td id='username'></td>
+					</tr>
+					<tr>
+						<td>門號</td>
+						<td id='msisdn'></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<label>繳款資料</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>出帳日</td>
+						<td id='bills_date'></td>
+					</tr>
+					<tr>
+						<td>上期應繳金額</td>
+						<td id='prior_pay'></td>
+					</tr>
+					<tr>
+						<td>上期繳款金額</td>
+						<td id='prior_payed'></td>
+					</tr>
+					<tr>
+						<td>本期新增金額</td>
+						<td id='currt_append'></td>
+					</tr>
+					<tr>
+						<td>本期應繳金額</td>
+						<td id='currt_pay' style='color:#FF0000;'></td>
+					</tr>
+					<tr>
+						<td>繳款截止日</td>
+						<td id='pay_end_time' style='color:#FF0000;'></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<label>銀行帳戶繳款資料</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>付款金額</td>
+						<td><span id='tdNeedPay' style="color:#FF0000;"></span></td>
+					</tr>
+				</tbody>
+			</table>
+			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2" style="display:none;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width:3em;">銀行</td>
+						<td>
+							<select name="selBank" id="selBank">
+								<option value=''>請選擇</option>
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>帳號</td>
+						<td><input type="tel" id="BankAccount" data-mini="true" value=""></td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="hidden" id="txtNeedPay" name="txtNeedPay" value="0">
+			<button onclick="doPayBankAccount();">確認付款</button>
+		</div><!--<div id="myPayCreditCard2CardData">-->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 銀行帳戶2 -->
+
+</body>
+</html>
+<script type="text/javascript" src="js/initPage.js"></script><!--初始化頁面，設定header及footer -->
+
+<script type="text/javascript">
+	var msisdn = getLocalValue('loginmsisdn');
+	var contractid = getLocalValue('logincontractid');
+	var customerid = getLocalValue('logincustomerid');
+
+	if (beEmpty(msisdn) || beEmpty(contractid)){
+		alertNoLogin();
+	}
+
+	function gotomyPayCreditCard2(){ //檢查是否可以進行myPayCreditCard2
+		if (!$("#myPayCreditCard1 input[name='chk1']").is(":checked")){
+			MsgBox('請勾選【本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。】');
+			return;
+		}
+		showPage('#myPayCreditCard2');
+	}	//function gotomyPayCreditCard2(){ //檢查是否可以進行myPayCreditCard2
+
+	function gotomyPayBankAccount2(){ //檢查是否可以進行myPayBankAccount2
+		if (!$("#myPayBankAccount1 input[name='chk1']").is(":checked")){
+			MsgBox('請勾選【本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。】');
+			return;
+		}
+		showPage('#myPayBankAccount2');
+	}	//function gotomyPayBankAccount2(){ //檢查是否可以進行myPayBankAccount2
+
+	$('#myPayCreditCard2').on('pageshow', function () {	//信用卡2，取得帳單資料
+		hightlightNavbarItem(0);	//將navbar中的信用卡設為高亮
+		userAuthentication();		//檢查登入資訊
+		getBillData("myPayCreditCard2");				//取得帳單資訊
+	});	//$('#myPayCreditCard2').on('pageshow', function () {	//信用卡2，取得近六期帳單資料
+
+	$('#myPayBankAccount2').one('pageshow', function () {	//銀行帳戶2，取得銀行清單
+		getBankList("myPayBankAccount2");
+	});	//$('#myPayBankAccount2').one('pageshow', function () {	//銀行帳戶2，取得銀行清單
+
+	$('#myPayBankAccount2').on('pageshow', function () {	//銀行帳戶2，取得帳單資料
+		hightlightNavbarItem(1);	//將navbar中的銀行帳戶設為高亮
+		userAuthentication();		//檢查登入資訊
+		getBillData("myPayBankAccount2");				//取得帳單資訊
+	});	//$('#myPayBankAccount2').on('pageshow', function () {	//銀行帳戶2，取得帳單資料
+
+	$('#myPayRecord').one('pageshow', function () {	//繳款記錄，取得繳款記錄
+		getPayRecord();
+	});	//$('#myPayRecord').one('pageshow', function () {	//繳款記錄，取得繳款記錄
+
+	$('#myPayATMAccountQuery').one('pageshow', function () {	//ATM繳款帳號查詢，取得銀行帳號
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			var sData = "";
+			sData = "Function=GetCustomerProfile&Request=";
+			sData += "<MSISDN>" + msisdn + "</MSISDN>";
+			sData += "<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+				var ResultCode = $(xml).find("ResultCode").text();
+				var ResultText = $(xml).find("ResultText").text();
+				if (ResultCode!='00000'){	//作業失敗
+					GATrackEvent('ATM繳款帳號查詢', 'ATM繳款帳號查詢失敗，無法取得銀行帳號', msisdn + ':' + contractid);
+					MsgBox('無法取得您的銀行帳號');
+					return;
+				}	//if (ResultCode!='00000'){	//作業失敗
+		
+				var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
+
+				if (MainMsisdnFlg=='N'){
+					MsgBox('請以主門號登入服務！');
+					$('#myPayATMAccountQuery #BankAccount').html('請以主門號登入服務！');
+					return;
+				}
+		
+				var ContractId = $(xml).find("ContractId").text();
+				var BillAcctNumber = $(xml).find("BillAcctNumber").text();
+				if (ContractId!=contractid){
+					MsgBox('您的登入資料檢核有誤，請至首頁重新登入');
+					return;
+				}
+				$('#myPayATMAccountQuery #BankAccount').html(BillAcctNumber);
+				//$('#myPayCreditCard2 #msisdn').html(msisdn);
+			});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+		}	//if (notEmpty(msisdn) && notEmpty(contractid)){
+	});	//$('#myPayATMAccountQuery').one('pageshow', function () {	//ATM繳款帳號查詢，取得銀行帳號
+
+	function getBillData(pageid){	//取得帳單資訊
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			var sData = "";
+			sData = "Function=GetCustomerProfile&Request=";
+			sData += "<MSISDN>" + msisdn + "</MSISDN>";
+			sData += "<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+				var ResultCode = $(xml).find("ResultCode").text();
+				var ResultText = $(xml).find("ResultText").text();
+				if (ResultCode!='00000'){	//作業失敗
+					GATrackEvent('繳費作業', '取得帳單資料失敗，無法取得門號資料', msisdn + ':' + contractid);
+					$('#' + pageid + ' #myPayCreditCard2Status').html('無法取得您的門號資料!');
+					$('#' + pageid + ' #myPayCreditCard2Status').show();
+					$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+					return;
+				}	//if (ResultCode!='00000'){	//作業失敗
+
+				var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
+
+				if (MainMsisdnFlg=='N'){
+					MsgBox('請以主門號登入服務！');
+					$('#' + pageid + ' #myPayCreditCard2Status').html('請以主門號登入服務！');
+					$('#' + pageid + ' #myPayCreditCard2Status').show();
+					$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+					return;
+				}
+		
+				var ContractId = $(xml).find("ContractId").text();
+				var CustomerName = $(xml).find("CustomerName").text();
+				if (ContractId!=contractid){
+					$('#' + pageid + ' #myPayCreditCard2Status').html('您的登入資料檢核有誤，請至首頁重新登入');
+					$('#' + pageid + ' #myPayCreditCard2Status').show();
+					$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+					return;
+				}
+				$('#' + pageid + ' #username').html(CustomerName);
+				$('#' + pageid + ' #msisdn').html(msisdn);
+			});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+
+			sData = "Function=GetBillInfo&Request=";
+			sData += "<MSISDN>" + msisdn + "</MSISDN>";
+			sData += "<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得帳單資料
+				var ResultCode = $(xml).find("ResultCode").text();
+				var ResultText = $(xml).find("ResultText").text();
+				if (ResultCode!='00000'){	//作業失敗
+					GATrackEvent('繳費作業', '取得帳單資料失敗', msisdn + ':' + contractid);
+					$('#' + pageid + ' #myPayCreditCard2Status').html('無法取得您的帳單資料：' + ResultText);
+					$('#' + pageid + ' #myPayCreditCard2Status').show();
+					$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+					return;
+				}	//if (ResultCode!='00000'){	//作業失敗
+		
+				var Status = $(xml).find("Status").text();
+				var StatusMsg = $(xml).find("StatusMsg").text();
+				if (Status=='1'){	//顯示錯誤訊息，例如請以主門號登入、查無此門號帳單資訊
+					GATrackEvent('繳費作業', '取得帳單資料失敗', msisdn + ':' + contractid);
+					$('#' + pageid + ' #myPayCreditCard2Status').html(StatusMsg);
+					$('#' + pageid + ' #myPayCreditCard2Status').show();
+					$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+					return;
+				}
+
+				$('#' + pageid + ' #myPayCreditCard2Status').html('');
+				$('#' + pageid + ' #myPayCreditCard2Status').hide();
+				$('#' + pageid + ' #myPayCreditCard2CardData').show();
+				
+				var i = 0;
+				var $btn_text	= null;
+				var $btn_child	= null;
+				var need_pay	= "";
+				$(xml).find("bill").each( function() {
+					i++;
+					if (i==1){
+						need_pay = $(this).children("need_pay").text();
+						if (isNaN(need_pay)){
+							GATrackEvent('繳費作業', '取得帳單資料失敗，無法取得應繳金額', msisdn + ':' + contractid);
+							$('#' + pageid + ' #myPayCreditCard2Status').html('無法取得您的應繳金額');
+							$('#' + pageid + ' #myPayCreditCard2Status').show();
+							$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+							return;
+						}
+						//need_pay=1;	//為了測試，將金額設為1元
+						if (parseInt(need_pay)<1){
+							$('#' + pageid + ' #myPayCreditCard2Status').html('您無欠費，無須繳款！');
+							$('#' + pageid + ' #myPayCreditCard2Status').show();
+							$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+							return;
+						}
+						$('#' + pageid + ' #tdNeedPay').html(need_pay);	//本期應繳金額
+						$('#' + pageid + ' #txtNeedPay').val(need_pay);	//本期應繳金額
+						$('#' + pageid + ' #pay_end_time').text($(this).children("pay_end_time").text());
+						$('#' + pageid + ' #bills_date').text($(this).children("bills_date").text());
+						$('#' + pageid + ' #prior_pay').text($(this).children("prior_pay").text());
+						$('#' + pageid + ' #prior_payed').text($(this).children("prior_payed").text());
+						$('#' + pageid + ' #currt_append').text($(this).children("currt_append").text());
+						$('#' + pageid + ' #currt_pay').text(need_pay);
+					}
+				});	//$(xml).find("bill").each( function() {
+				GATrackEvent('準備進行信用卡繳款', msisdn+':'+contractid, '');
+			});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+		}	//if (notEmpty(msisdn) && notEmpty(contractid)){
+	}	//function getBillData(pageid){	//取得帳單資訊
+	
+	function getBankList(pageid){	//取得銀行清單
+		var sData = "";
+		sData = "Function=GetDepositBankInfo&Request=";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得銀行清單
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				$('#' + pageid + ' #myPayCreditCard2Status').html('無法取得銀行清單：' + ResultText);
+				$('#' + pageid + ' #myPayCreditCard2Status').show();
+				$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+				return;
+			}	//if (ResultCode!='00000'){	//作業失敗
+	
+			var Status = $(xml).find("Status").text();
+			var StatusMsg = $(xml).find("StatusMsg").text();
+			if (beEmpty(Status) || Status!="0"){
+				$('#' + pageid + ' #myPayCreditCard2Status').html('無法取得銀行清單：' + StatusMsg);
+				$('#' + pageid + ' #myPayCreditCard2Status').show();
+				$('#' + pageid + ' #myPayCreditCard2CardData').hide();
+				return;
+			}
+			var s = "";
+			var bank = "";
+			var bankid = "";
+			var bankname = "";
+			$(xml).find("Bank").each( function() {
+				bank = $(this).text();
+				bankid = bank.substring(0, 3);
+				bankname = bank.substring(4);
+				s += "<option value='" + bankid + "'>" + bankname + "</option>";
+			});	//$(xml).find("Bank").each( function() {
+			$('#' + pageid + ' #selBank').append(s);
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function getBankList(){	//取得銀行清單
+	
+	function doPayCreditCard(){	//進行刷卡繳費
+		if (beEmpty(msisdn) || beEmpty(contractid) || beEmpty(customerid)){	//確認目前有登入
+			alertNoLogin();
+			return;
+		}
+		var MSISDN = msisdn;
+		var CardNo1		= $('#myPayCreditCard2 #CardNo1').val();
+		var CardNo2		= $('#myPayCreditCard2 #CardNo2').val();
+		var CardNo3		= $('#myPayCreditCard2 #CardNo3').val();
+		var CardNo4		= $('#myPayCreditCard2 #CardNo4').val();
+		var CardBack	= $('#myPayCreditCard2 #CardBack').val();
+		var ExpireMonth	= $('#myPayCreditCard2 #ExpireMonth').val();
+		var ExpireYear	= $('#myPayCreditCard2 #ExpireYear').val();
+		var NeedPay		= $('#myPayCreditCard2 #txtNeedPay').val();
+
+		if (beEmpty(CardNo1) || isNaN(CardNo1) || CardNo1.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
+		if (beEmpty(CardNo2) || isNaN(CardNo2) || CardNo2.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
+		if (beEmpty(CardNo3) || isNaN(CardNo3) || CardNo3.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
+		if (beEmpty(CardNo4) || isNaN(CardNo4) || CardNo4.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
+		if (beEmpty(CardBack) || isNaN(CardBack) || CardBack.length!=3){MsgBox('請輸入卡片背面末三碼數字'); return;}
+		if (beEmpty(ExpireMonth) || isNaN(ExpireMonth) || ExpireMonth.length!=2){MsgBox('請輸入有效期限月份共兩碼'); return;}
+		if (beEmpty(ExpireYear) || isNaN(ExpireYear) || ExpireYear.length!=4){MsgBox('請輸入有效期限西元年共四碼'); return;}
+		if (beEmpty(NeedPay) || isNaN(NeedPay)){MsgBox('無法取得繳費金額'); return;}
+		if (!(CardNo1.startsWith("3") || CardNo1.startsWith("4") || CardNo1.startsWith("5"))){MsgBox('請使用VISA、JCB或Master卡'); return;}
+
+		var sData = "";
+		sData = "Function=DoPaymentByCTCBService&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<ContractId>" + contractid + "</ContractId>";
+		sData += "<TaxIDNumber>" + customerid + "</TaxIDNumber>";
+		sData += "<CardNumber>" + CardNo1 + CardNo2 + CardNo3 + CardNo4 + CardBack + "</CardNumber>";
+		sData += "<Currency>901</Currency>";
+		sData += "<ExpDate>" + ExpireYear + ExpireMonth + "</ExpDate>";
+		sData += "<PayAmount>" + NeedPay + "</PayAmount>";
+
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				GATrackEvent('信用卡繳費', '失敗', msisdn + ':' + contractid);
+				$('#myPayCreditCard2 #myPayCreditCard2Status').html('繳費失敗：' + ResultText);
+				$('#myPayCreditCard2 #myPayCreditCard2Status').show();
+				$('#myPayCreditCard2 #myPayCreditCard2CardData').hide();
+				return;
+			}	//if (ResultCode!='00000'){	//作業失敗
+			var Status = $(xml).find("Status").text();
+			var StatusMsg = $(xml).find("StatusMsg").text();
+			if (beEmpty(Status) || Status!='0'){	//作業失敗
+				GATrackEvent('信用卡繳費', '失敗', msisdn + ':' + contractid);
+				$('#myPayCreditCard2 #myPayCreditCard2Status').html(StatusMsg);
+				$('#myPayCreditCard2 #myPayCreditCard2Status').show();
+				$('#myPayCreditCard2 #myPayCreditCard2CardData').hide();
+				return;
+			}else{
+				GATrackEvent('信用卡繳費', '成功', msisdn + ':' + contractid);
+				$('#myPayCreditCard2 #myPayCreditCard2Status').html(StatusMsg);
+				$('#myPayCreditCard2 #CardNo1').val('');
+				$('#myPayCreditCard2 #CardNo2').val('');
+				$('#myPayCreditCard2 #CardNo3').val('');
+				$('#myPayCreditCard2 #CardNo4').val('');
+				$('#myPayCreditCard2 #myPayCreditCard2Status').show();
+				$('#myPayCreditCard2 #myPayCreditCard2CardData').hide();
+				return;
+			}	//if (beEmpty(Status) || Status!='0'){	//作業失敗
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function doPayCreditCard(){	//進行刷卡繳費
+
+	function doPayBankAccount(){	//進行銀行銀行帳戶繳費
+		if (beEmpty(msisdn) || beEmpty(contractid) || beEmpty(customerid)){	//確認目前有登入
+			alertNoLogin();
+			return;
+		}
+		var MSISDN = msisdn;
+		var BankID		= $('#myPayBankAccount2 #selBank').val();
+		var BankAccount	= $('#myPayBankAccount2 #BankAccount').val();
+		var NeedPay		= $('#myPayBankAccount2 #txtNeedPay').val();
+
+		if (beEmpty(BankID)){MsgBox('請選擇銀行'); return;}
+		if (beEmpty(BankAccount) || isNaN(BankAccount) || BankAccount.length>30){MsgBox('請輸入正確的銀行帳號'); return;}
+		if (beEmpty(NeedPay) || isNaN(NeedPay)){MsgBox('無法取得繳費金額'); return;}
+//customerid = "Y184969219";	//這是測試用的
+//NeedPay = "1";	//這是測試用的
+		var sData = "";
+		sData = "Function=DoPaymentByMegaService&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<ContractId>" + contractid + "</ContractId>";
+		sData += "<TaxIDNumber>" + customerid + "</TaxIDNumber>";
+		sData += "<BankID>" + BankID + "0000</BankID>";
+		sData += "<BankAccount>" + BankAccount + "</BankAccount>";
+		sData += "<PayAmount>" + NeedPay + "</PayAmount>";
+
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				GATrackEvent('銀行帳戶繳費', '失敗', msisdn + ':' + contractid);
+				$('#myPayBankAccount2 #myPayCreditCard2Status').html('繳費失敗：' + ResultText);
+				$('#myPayBankAccount2 #myPayCreditCard2Status').show();
+				$('#myPayBankAccount2 #myPayCreditCard2CardData').hide();
+				return;
+			}	//if (ResultCode!='00000'){	//作業失敗
+			var Status = $(xml).find("Status").text();
+			var StatusMsg = $(xml).find("StatusMsg").text();
+			if (beEmpty(Status) || Status!='0'){	//作業失敗
+				GATrackEvent('銀行帳戶繳費', '失敗', msisdn + ':' + contractid);
+				$('#myPayBankAccount2 #myPayCreditCard2Status').html(StatusMsg);
+				$('#myPayBankAccount2 #myPayCreditCard2Status').show();
+				$('#myPayBankAccount2 #myPayCreditCard2CardData').hide();
+				return;
+			}else{
+				GATrackEvent('銀行帳戶繳費', '成功', msisdn + ':' + contractid);
+				$('#myPayBankAccount2 #myPayCreditCard2Status').html(StatusMsg);
+				$('#myPayBankAccount2 #myPayCreditCard2Status').show();
+				$('#myPayBankAccount2 #myPayCreditCard2CardData').hide();
+				return;
+			}	//if (beEmpty(Status) || Status!='0'){	//作業失敗
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function doPayBankAccount(){	//進行銀行銀行帳戶繳費
+	
+	function getPayRecord(){	//繳款記錄，取得繳款記錄
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			var sData = "";
+
+			sData = "Function=GetCustomerProfile&Request=";
+			sData += "<MSISDN>" + msisdn + "</MSISDN>";
+			sData += "<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+				var ResultCode = $(xml).find("ResultCode").text();
+				var ResultText = $(xml).find("ResultText").text();
+				if (ResultCode!='00000'){	//作業失敗
+					GATrackEvent('繳款記錄', '取得繳款記錄失敗，無法取得門號資料', msisdn + ':' + contractid);
+					$('#myPayRecord #tblOnlinePayInfo tbody').html('<tr><td>' + '無法取得門號資料！' + '</td></tr>');
+					$('#myPayRecord #tblHistoryPayInfo tbody').html('<tr><td>' + '無法取得門號資料！' + '</td></tr>');
+					//$('#myPayRecord #OnlinePayInfo').html('無法取得門號資料！');
+					//$('#myPayRecord #HistoryPayInfo').html('無法取得門號資料！');
+					return;
+				}	//if (ResultCode!='00000'){	//作業失敗
+
+				var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
+
+				if (MainMsisdnFlg=='N'){
+					MsgBox('請以主門號登入服務！');
+					$('#myPayRecord #tblOnlinePayInfo tbody').html('<tr><td>' + '請以主門號登入服務！' + '</td></tr>');
+					$('#myPayRecord #tblHistoryPayInfo tbody').html('<tr><td>' + '請以主門號登入服務！' + '</td></tr>');
+					//$('#myPayRecord #OnlinePayInfo').html('請以主門號登入服務！');
+					//$('#myPayRecord #HistoryPayInfo').html('請以主門號登入服務！');
+					return;
+				}
+
+				sData = "Function=GetPayInfo&Request=";
+				sData += "<MSISDN>" + msisdn + "</MSISDN>";
+				sData += "<ContractId>" + contractid + "</ContractId>";
+				getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+					var ResultCode = $(xml).find("ResultCode").text();
+					var ResultText = $(xml).find("ResultText").text();
+					if (ResultCode!='00000'){	//作業失敗
+						GATrackEvent('取得繳款記錄', '失敗', msisdn + ':' + contractid);
+						MsgBox('無法取得您的繳款記錄');
+						$('#myPayRecord #tblOnlinePayInfo tbody').html('<tr><td>' + '無法取得您的線上繳款記錄。' + '</td></tr>');
+						$('#myPayRecord #tblHistoryPayInfo tbody').html('<tr><td>' + '無法取得您的歷史繳款記錄。' + '</td></tr>');
+						//$('#myPayRecord #OnlinePayInfo').html('無法取得您的線上繳款記錄。');
+						//$('#myPayRecord #HistoryPayInfo').html('無法取得您的歷史繳款記錄。');
+						return;
+					}	//if (ResultCode!='00000'){	//作業失敗
+
+					var bOnline = true;		//是否有線上繳款記錄
+					var bHistory = true;	//是否有歷史繳款記錄
+
+					var OnlineStatus = $(xml).find("OnlineStatus").text();
+					var OnlineStatusMsg = $(xml).find("OnlineStatusMsg").text();
+
+					if (beEmpty(OnlineStatus)){	//無繳款記錄
+						//$('#myPayRecord #OnlinePayInfo').html('無線上繳款記錄。');
+						$('#myPayRecord #tblOnlinePayInfo tbody').html('<tr><td>' + '無線上繳款記錄。' + '</td></tr>');
+						bOnline = false;
+						//return;
+					}	//if (beEmpty(OnlineStatus)){	//無繳款記錄
+					if (bOnline && OnlineStatus!='0'){	//作業失敗
+						//GATrackEvent('取得線上繳款記錄', '失敗', msisdn + ':' + contractid);
+						$('#myPayRecord #tblOnlinePayInfo tbody').html('<tr><td>' + OnlineStatusMsg + '</td></tr>');
+						//MsgBox('無法取得您的線上繳款記錄：' + OnlineStatusMsg);
+						bOnline = false;
+						//return;
+					}	//if (OnlineStatus!='0'){	//作業失敗
+
+					var GetStatus = $(xml).find("GetStatus").text();
+					var StatusMsg = $(xml).find("StatusMsg").text();
+					if (beEmpty(GetStatus)){	//無繳款記錄
+						//$('#myPayRecord #HistoryPayInfo').html('無歷史繳款記錄。');
+						$('#myPayRecord #tblHistoryPayInfo tbody').html('<tr><td>' + '無歷史繳款記錄。' + '</td></tr>');
+						bHistory = false;
+						//return;
+					}	//if (beEmpty(GetStatus)){	//無繳款記錄
+					if (bHistory && GetStatus!='0'){	//作業失敗
+						//GATrackEvent('取得歷史繳款記錄', '失敗', msisdn + ':' + contractid);
+						$('#myPayRecord #tblHistoryPayInfo tbody').html('<tr><td>' + StatusMsg + '</td></tr>');
+						bHistory = false;
+						//return;
+					}	//if (GetStatus!='0'){	//作業失敗
+			
+					var i = 0;
+					var s = "";
+					if (bOnline){
+						$(xml).find("OnlinePayments").each( function() {
+							s += "<table data-role='table' class='onlinetable' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>";
+							/*
+							s += "	<thead>";
+							s += "		<tr class='ui-bar-d'><td colspan='2'></td></tr>";
+							s += "	</thead>";
+							*/
+							s += "	<tbody>";
+							s += "		<tr><td>入帳日期</td><td>" + $(this).children("pay_date").text()	+ "</td></tr>";
+							s += "		<tr><td>繳款方式</td><td>" + $(this).children("pay_mode").text()	+ "</td></tr>";
+							s += "		<tr><td>繳款金額</td><td>NT$" + $(this).children("amount").text()	+ "</td></tr>";
+							s += "		<tr><td>繳款結果</td><td>" + $(this).children("status").text()	+ "</td></tr>";
+							s += "	</tbody>";
+							s += "</table>";
+						});	//$(xml).find("onlinepayments").each( function() {
+						if (beEmpty(s)){
+							s="無線上繳款記錄";
+						$('#myPayRecord #tblOnlinePayInfo tbody').html('<tr><td>' + s + '</td></tr>');
+						}else{
+							$('#myPayRecord #OnlinePayInfo').html(s);
+							$('#myPayRecord .onlinetable').table();
+							$('#myPayRecord .onlinetable').addClass('ui-body-d ui-shadow table-stripe ui-responsive ui-table ui-table-columntoggle');
+							$('#myPayRecord .onlinetable').css('margin-bottom', '10px');
+						}
+					}	//if (bOnline){
+
+					i = 0;
+					s = "";
+					if (bHistory){
+						$(xml).find("payments").each( function() {
+							if (i==0){	//只找第一筆資料
+								/*
+								s = "<table data-role='table' id='tblHistoryPayInfo' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>";
+								s += "	<thead>";
+								s += "		<tr class='ui-bar-d'><td colspan='2'></td></tr>";
+								s += "	</thead>";
+								s += "	<tbody>";
+								*/
+								s += "		<tr><td>入帳日期</td><td>" + $(this).children("pay_date").text()	+ "</td></tr>";
+								s += "		<tr><td>繳款機構</td><td>" + $(this).children("pay_bu").text()	+ "</td></tr>";
+								s += "		<tr><td>繳款方式</td><td>" + $(this).children("pay_mode").text()	+ "</td></tr>";
+								s += "		<tr><td>繳款金額</td><td>NT$" + $(this).children("amount").text()	+ "</td></tr>";
+								/*
+								s += "	</tbody>";
+								s += "</table>";
+								*/
+							}
+							i++;
+						});	//$(xml).find("payments").each( function() {
+						if (beEmpty(s)) s="<tr><td>無歷史繳款記錄</td></tr>";
+						$('#myPayRecord #tblHistoryPayInfo tbody').html(s);
+					}	//if (bHistory){
+				});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+
+			});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+
+		}	//if (notEmpty(msisdn) && notEmpty(contractid)){
+	}	//function getPayRecord(){	//繳款記錄，取得繳款記錄
+</script>
+

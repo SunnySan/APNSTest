@@ -1,0 +1,793 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- ****************************** 我的帳單 ***********************************-->
+<div data-role="page" id="myBillInfo">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myBillInfo">帳單資訊</a></li>
+				<li><a href="#myBillPlan">我的資費</a></li>
+				<li><a href="#myBillApplyEBill">申請電子帳單</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<p>
+		門號：<span id="myBillInfo-MSISDN"></span>
+		<input type="hidden" id="myBillInfoNeedPay" name="myBillInfoNeedPay" value=""><!--本期需繳款金額-->
+		<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+			<thead>
+				<tr class="ui-bar-d">
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>繳費截止日</td>
+					<td>出帳日</td>
+				</tr>
+				<tr>
+					<td id='pay_end_time1'></td>
+					<td id='bills_date1'></td>
+				</tr>
+				<tr>
+					<td>前期應繳</td>
+					<td>前期已繳</td>
+				</tr>
+				<tr>
+					<td id='prior_pay1'></td>
+					<td id='prior_payed1'></td>
+				</tr>
+				<tr>
+					<td>本期新增</td>
+					<td>本期應繳</td>
+				</tr>
+				<tr>
+					<td id='currt_append1'></td>
+					<td id='currt_pay1' style='color:#FF0000;'></td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+		<a id='doPay' href="myPay.html" rel='external' data-role="button" class="ui-btn-right" data-mini="true">立即繳款</a>
+		<p>
+		<div data-role="collapsible-set" data-content-theme="d" data-iconpos="right" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u">
+		    <div>
+		        <h3>前期帳單查詢</h3>
+		    </div>
+		    <div data-role="collapsible" id="collapsible2">
+		        <h3 id='bill_head2'></h3>
+				<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+					<thead>
+						<tr class="ui-bar-d">
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>繳費截止日</td>
+							<td>出帳日</td>
+						</tr>
+						<tr>
+							<td id='pay_end_time2'></td>
+							<td id='bills_date2'></td>
+						</tr>
+						<tr>
+							<td>前期應繳</td>
+							<td>前期已繳</td>
+						</tr>
+						<tr>
+							<td id='prior_pay2'></td>
+							<td id='prior_payed2'></td>
+						</tr>
+						<tr>
+							<td>本期新增</td>
+							<td>本期應繳</td>
+						</tr>
+						<tr>
+							<td id='currt_append2'></td>
+							<td id='currt_pay2' style='color:#FF0000;'></td>
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+		    <div data-role="collapsible" id="collapsible3">
+		        <h3 id='bill_head3'></h3>
+				<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+					<thead>
+						<tr class="ui-bar-d">
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>繳費截止日</td>
+							<td>出帳日</td>
+						</tr>
+						<tr>
+							<td id='pay_end_time3'></td>
+							<td id='bills_date3'></td>
+						</tr>
+						<tr>
+							<td>前期應繳</td>
+							<td>前期已繳</td>
+						</tr>
+						<tr>
+							<td id='prior_pay3'></td>
+							<td id='prior_payed3'></td>
+						</tr>
+						<tr>
+							<td>本期新增</td>
+							<td>本期應繳</td>
+						</tr>
+						<tr>
+							<td id='currt_append3'></td>
+							<td id='currt_pay3' style='color:#FF0000;'></td>
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+		    <div data-role="collapsible" id="collapsible4">
+		        <h3 id='bill_head4'></h3>
+				<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+					<thead>
+						<tr class="ui-bar-d">
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>繳費截止日</td>
+							<td>出帳日</td>
+						</tr>
+						<tr>
+							<td id='pay_end_time4'></td>
+							<td id='bills_date4'></td>
+						</tr>
+						<tr>
+							<td>前期應繳</td>
+							<td>前期已繳</td>
+						</tr>
+						<tr>
+							<td id='prior_pay4'></td>
+							<td id='prior_payed4'></td>
+						</tr>
+						<tr>
+							<td>本期新增</td>
+							<td>本期應繳</td>
+						</tr>
+						<tr>
+							<td id='currt_append4'></td>
+							<td id='currt_pay4' style='color:#FF0000;'></td>
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+		    <div data-role="collapsible" id="collapsible5">
+		        <h3 id='bill_head5'></h3>
+				<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+					<thead>
+						<tr class="ui-bar-d">
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>繳費截止日</td>
+							<td>出帳日</td>
+						</tr>
+						<tr>
+							<td id='pay_end_time5'></td>
+							<td id='bills_date5'></td>
+						</tr>
+						<tr>
+							<td>前期應繳</td>
+							<td>前期已繳</td>
+						</tr>
+						<tr>
+							<td id='prior_pay5'></td>
+							<td id='prior_payed5'></td>
+						</tr>
+						<tr>
+							<td>本期新增</td>
+							<td>本期應繳</td>
+						</tr>
+						<tr>
+							<td id='currt_append5'></td>
+							<td id='currt_pay5' style='color:#FF0000;'></td>
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+		    <div data-role="collapsible" id="collapsible6">
+		        <h3 id='bill_head6'></h3>
+				<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+					<thead>
+						<tr class="ui-bar-d">
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>繳費截止日</td>
+							<td>出帳日</td>
+						</tr>
+						<tr>
+							<td id='pay_end_time6'></td>
+							<td id='bills_date6'></td>
+						</tr>
+						<tr>
+							<td>前期應繳</td>
+							<td>前期已繳</td>
+						</tr>
+						<tr>
+							<td id='prior_pay6'></td>
+							<td id='prior_payed6'></td>
+						</tr>
+						<tr>
+							<td>本期新增</td>
+							<td>本期應繳</td>
+						</tr>
+						<tr>
+							<td id='currt_append6'></td>
+							<td id='currt_pay6' style='color:#FF0000;'></td>
+						</tr>
+					</tbody>
+				</table>
+		    </div>
+		</div><!--前期帳單查詢-->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 我的帳單 -->
+
+<!-- ****************************** 我的資費 ***********************************-->
+<div data-role="page" id="myBillPlan">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myBillInfo">帳單資訊</a></li>
+				<li><a href="#myBillPlan">我的資費</a></li>
+				<li><a href="#myBillApplyEBill">申請電子帳單</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<p>
+		<table data-role="table" data-mode="columntoggle" border=1 class="ui-body-d table-stripe">
+			<thead><tr class="ui-bar-d"></tr></thead>
+			<tbody>
+				<tr>
+					<td>電話號碼</td>
+					<td><span id="myBillInfo-MSISDN"></span></td>
+				</tr>
+				<tr>
+					<td>目前專案</td>
+					<td id='ProjectName'></td>
+				</tr>
+				<tr>
+					<td>資費</td>
+					<td id='ProjectRate'></td>
+				</tr>
+				<tr>
+					<td>出帳日</td>
+					<td id='BillDate'></td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="NCCRatePlan">
+			<h3 class="PageTitle">帳單試算</h3>
+			<div id="NCCRatePlanData">
+				資料更新中，請稍候...
+			</div>
+			<div id='csNCCRatePlanData' data-role='collapsible-set' data-content-theme='d' data-iconpos='right' data-collapsed-icon='arrow-d' data-expanded-icon='arrow-u'>
+			</div>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer-->
+</div><!-- 我的資費 -->
+
+<!-- ******************************申請電子帳單 ***********************************-->
+<div data-role="page" id="myBillApplyEBill" >
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myBillInfo">帳單資訊</a></li>
+				<li><a href="#myBillPlan">我的資費</a></li>
+				<li><a href="#myBillApplyEBill">申請電子帳單</a></li>
+			</ul>
+		</div><!--/navbar-->
+	</div><!-- /header-->
+	
+	<div data-role="content">
+		<h3>電子帳單寄送服務申請</h3>
+		<label id='myBillApplyEBillTitle' for="myBillApplyEBillEmail">資料更新中，請稍候...</label>
+		<div id='myBillApplyEBillEmailDiv' style="display:none;">
+			門號：<span id="myBillApplyEBill-MSISDN"></span>
+			<br>Email：<input type="text" name="myBillApplyEBillEmail" id="myBillApplyEBillEmail" value="">
+			<ul data-role="listview" data-inset="true">
+				<li data-icon="info"><a href="#myBillApplyEBillAgreement">威寶電信電子帳單服務協定</a></li>
+			</ul>
+			<label>
+				<input type="checkbox" id="chk1" name="chk1">本人已清楚了解上述服務條款內容
+			</label>
+		    <a href="#" data-role="button" onclick="doApplyEBill();return false;">申請電子帳單</a>
+		</div>
+		<a href="#" id="btnRefreshEBill" data-role="button" style="display:none;" onclick="doRefreshEBill();return false;">重新查詢電子帳單申請狀態</a>
+	</div><!-- /content-->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer-->
+</div><!-- 申請電子帳單 -->
+
+<!-- ******************************電子帳單服務協定 ***********************************-->
+<div data-role="page" id="myBillApplyEBillAgreement" >
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myBillInfo">帳單資訊</a></li>
+				<li><a href="#myBillPlan">我的資費</a></li>
+				<li><a href="#myBillApplyEBill">申請電子帳單</a></li>
+			</ul>
+		</div><!--/navbar-->
+	</div><!-- /header-->
+	
+	<div data-role="content">
+		<h3>威寶電信電子帳單服務協定</h3>
+		<br>一、申請對象
+		<br>威寶電信月租型用戶皆可申請【電子帳單服務】。
+		<br>
+		<br>二、服務說明
+		<ol type="decimal">
+		<li>威寶電信（以下簡稱「本公司」）【電子帳單服務】（以下簡稱「本服務」）係提供用戶以電子郵件方式收取帳單。本服務申請成功後，本公司將自生效首期傳送【電子帳單】至用戶指定之電子郵件信箱，並同時寄發實體帳單予用戶，自次期帳單開始，取消郵寄實體帳單，而僅以【電子帳單】傳送至用戶指定之電子郵件信箱。
+		</li>
+		<li>公司戶用戶申請本服務，如需稅務申報，請將電子帳單印出後，即可作為會計憑證。
+		</li>
+		<li>本服務提供六個月內之帳單瀏覽、帳單列印、線上繳款、帳款查詢等服務。
+		</li>
+		<li>用戶若欲取消本服務，可至本服務網頁申請，本公司將自取消成功後之次期帳單開始恢復郵寄實體帳單。
+		</li>
+		<li>用戶申請本服務或變更電子郵件信箱時，應保證其填寫電子郵件信箱正確無誤，以確保將來電子帳單通知函及相關訊息能準確送達；若因用戶輸入資料有誤或未主動即時更新資料所致之損害，應由用戶自行負責。
+		</li>
+		<li>用戶對於【電子帳單】內容不得作任何修改，如有修改對本公司均不生效力。若用戶違反法令或違反本協定之任何條款，致本公司或其關係企業受有損害時，用戶應負擔損害賠償責任。
+		</li>
+		<li>用戶經由本服務所下載或取得之任何資料應自負風險，任何因資料之下載而導致用戶電腦系統之任何損壞或資料流失等，皆由用戶自行負責，本公司對於因此所生損失或損害皆不負任何賠償責任。
+		</li>
+		</ol>
+		<br>三、繳款方式
+		<ol type="decimal">
+		<li>用戶可直接列印【電子帳單】（務必使用「雷射印表機」）後，至本公司各繳款通路進行繳費。如因用戶因素(例如：電子信箱空間已滿、ISP業者網路中斷...等)致無法收取【電子帳單】，請用戶自行至本公司網站或各直營店補印帳單，並應自行承擔因延遲繳款造成之任何費用及損害。
+		</li>
+		<li>用戶亦可辦理轉帳代繳或利用網站公告繳費方式或利用其他繳款途徑進行繳款。
+		</li>
+		<li>已辦理轉帳代繳之用戶仍會以原轉帳方式扣款，請勿重複繳款。
+		</li>
+		</ol>
+		<br>四、服務終止或暫停：
+		       <br>如有下列情形，本公司得終止或暫停本服務之一部或全部，且對用戶不負任何責任：
+		<ol type="decimal">
+		<li>因天災、不可抗力或其他非可歸責於本公司之事由所致之暫停或中斷。
+		</li>
+		<li>對本服務相關軟硬體設備進行搬遷、更換、保養或維修時。
+		</li>
+		<li>如用戶有門號退租、一退一租、過戶、更名、切結非本人申請、銷號、合併/個別出帳或其他門號契約終止等情形時，本公司得逕行停止用戶使用本服務功能，但在用戶原來行動通信契約有效期間內，本公司仍將繼續寄發電子帳單。
+		</li>
+		</ol>
+		<br>五、服務協定之修改
+		       <br>本公司得隨時修改本服務協定條款，如有修改將公佈於本公司網站。修改事項於公佈時即時生效，不另行個別通知用戶。
+		<a href="#myBillApplyEBill" data-role="button">回上頁</a>
+	</div><!-- /content-->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer-->
+</div><!-- 電子帳單服務協定-->
+
+
+</body>
+</html>
+<script type="text/javascript"src="js/initPage.js"></script><!--初始化頁面，設定header及footer-->
+
+<script type="text/javascript">
+	var msisdn = getLocalValue('loginmsisdn');
+	var contractid = getLocalValue('logincontractid');
+
+	if (beEmpty(msisdn)|| beEmpty(contractid)){
+		alertNoLogin();
+	}
+
+	$('#myBillInfo').one('pageshow',function () {	//帳單資訊，取得近六期帳單資料
+		userAuthentication();	//檢查登入資訊
+		
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			$('#myBillInfo #myBillInfo-MSISDN').text(msisdn);
+			var sData="";
+			sData ="Function=GetBillInfo&Request=";
+			sData +="<MSISDN>" + msisdn+ "</MSISDN>";
+			sData +="<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", GetBillInfo_Success);
+		}
+	});	//$('#myBillInfo').one('pageshow', function () {	//帳單資訊，取得近六期帳單資料
+
+	$('#myBillPlan').one('pageshow',function () {	//我的資費，取得資費
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			$('#myBillPlan #myBillInfo-MSISDN').text(msisdn);
+			var sData="";
+			sData ="Function=GetProject&Request=";
+			sData +="<MSISDN>" + msisdn+ "</MSISDN>";
+			sData +="<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", GetProject_Success);
+			getNCCRatePlanData(msisdn,contractid);	//取得NCC要求的帳單試算資料
+		}
+	});	//$('#myBillPlan').one('pageshow', function () {	//我的資費，取得資費
+	
+	$('#myBillApplyEBill').one('pageshow', function () {	//申請電子帳單，查詢電子帳單申請狀態
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			doRefreshEBill();
+		}else{
+			//$('#myBillApplyEBill #myBillApplyEBillTitle').html('請先至首頁登入再使用此功能!');
+			alertNoLogin();
+		}
+	});	//$('#myBillApplyEBill').one('pageshow', function (){	//申請電子帳單，查詢電子帳單申請狀態
+</script>
+
+<script type="text/javascript">
+	function GetBillInfo_Success(xml){	//取得近六期帳單資料
+		var ResultCode = $(xml).find("ResultCode").text();
+		var ResultText = $(xml).find("ResultText").text();
+		if (ResultCode != '00000'){	//作業失敗
+			MsgBox('無法取得您的帳單資料：' + ResultText);
+			return;
+		}	//if (ResultCode != '00000'){	//作業失敗
+
+		var Status = $(xml).find("Status").text();
+		var StatusMsg = $(xml).find("StatusMsg").text();
+		if (Status == '1'){	//顯示錯誤訊息，例如請以主門號登入、查無此門號帳單資訊
+			MsgBox(StatusMsg);
+			return;
+		}
+		
+		var i = 0;
+		var $btn_text	=null;
+		var $btn_child	=null;
+		$(xml).find("bill").each(function() {
+			i++;
+			if (i==1)$('#myBillInfo #myBillInfoNeedPay').val($(this).children("need_pay").text());	//本期應繳金額
+			$('#myBillInfo #pay_end_time' + i).text($(this).children("pay_end_time").text());
+			$('#myBillInfo #bills_date'+ i).text($(this).children("bills_date").text());
+			if (i>1){	//變更collapsible的 header 文字，改為上期帳單日
+				//cachethe`<span class="ui-btn-text">` elementanditschild
+				$btn_text = $('#myBillInfo #collapsible' + i).find('.ui-btn-text');
+				$btn_child = $btn_text.find('.ui-collapsible-heading-status');
+				//overwrite the header text, then append its child to restore the previous structure
+				$btn_text.text($(this).children("bills_date").text()).append($btn_child);
+			}	//if(i>1){	//變更collapsible的 header 文字，改為上期帳單日
+			$('#myBillInfo #prior_pay' + i).text($(this).children("prior_pay").text());
+			$('#myBillInfo #prior_payed' + i).text($(this).children("prior_payed").text());
+			$('#myBillInfo #currt_append' + i).text($(this).children("currt_append").text());
+			$('#myBillInfo #currt_pay' + i).text($(this).children("need_pay").text());
+		});	//$(xml).find("bill").each( function() {
+		var need_pay=$('#myBillInfo #myBillInfoNeedPay').val();
+		if (notEmpty(need_pay) && parseInt(need_pay)>0){
+			$('#doPay').show();
+		}else{
+			$('#doPay').hide();
+		}
+		GATrackEvent('查詢近六期帳單資料', getLocalValue('logincontractid'), '');
+	}	//functionGetBillInfo_Success(xml){	//取得近六期帳單資料
+
+	function GetProject_Success(xml){	//取得資費
+		var ResultCode = $(xml).find("ResultCode").text();
+		var ResultText = $(xml).find("ResultText").text();
+		if (ResultCode != '00000'){	//作業失敗
+			MsgBox('無法取得您的資費資料：' + ResultText);
+			return;
+		}	//if (ResultCode=='00000'){	//作業成功
+
+		$('#myBillPlan #ProjectName').text($(xml).find("ProjectName").text());
+		$('#myBillPlan #ProjectRate').text($(xml).find("ProjectRate").text());
+		$('#myBillPlan #BillDate').text($(xml).find("BillDate").text());
+		GATrackEvent('查詢資費', getLocalValue('logincontractid'), '');
+	}	//functionGetProject_Success(xml){	//取得資費
+	
+	function getNCCRatePlanData(msisdn, contractid){	//取得NCC要求的帳單試算資料
+		var sData ="";
+		sData = "Function=GetNCCRatePlan&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<ContractId>"+ contractid + "</ContractId>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode != '00000'){	//作業失敗
+				$('#myBillPlan #NCCRatePlanData').html('目前無帳單試算資料');
+				//MsgBox('無法取得您的銀行帳號');
+				return;
+			}	//if(ResultCode=='00000'){	//作業成功
+
+			var Status = $(xml).find("Status").text();
+			var StatusMsg = $(xml).find("StatusMsg").text();
+			if (Status != '0'){	//作業失敗
+				StatusMsg = (beEmpty(StatusMsg)?'無資料':StatusMsg);
+				$('#myBillPlan #NCCRatePlanData').html(StatusMsg);
+				//MsgBox('無法取得您的銀行帳號');
+				return;
+			}	//if(Status!='0'){	//作業失敗
+	
+			var DataCount = $(xml).find("DataCount").text();
+			if (parseInt(DataCount)<1){
+				$('#myBillPlan #NCCRatePlanData').html('目前無相關試算資料');
+				return;
+			}
+			
+			var i =0;
+			var BillCycle			="";
+			var OnNetVoice			="";
+			var OffNetVoice			="";
+			var PSTN				="";
+			var OnNetVideo			="";
+			var OffNetVideo			="";
+			var OnNetSMS			="";
+			var OffNetSMS			="";
+			var DataUsage			="";
+			var ProjectName			="";
+			var RealVVSDFee			="";
+			var RecheckVVSDFee		="";
+
+			var s = "";
+			$(xml).find("Item").each( function() {	//取出每一筆試算資料
+				BillCycle	= $(this).children("BillCycle").text();
+				OnNetVoice		= $(this).children("OnNetVoice").text();
+				OffNetVoice		= $(this).children("OffNetVoice").text();
+				PSTN			= $(this).children("PSTN").text();
+				OnNetVideo		= $(this).children("OnNetVideo").text();
+				OffNetVideo		= $(this).children("OffNetVideo").text();
+				OnNetSMS		= $(this).children("OnNetSMS").text();
+				OffNetSMS		= $(this).children("OffNetSMS").text();
+				DataUsage		= $(this).children("DataUsage").text();
+				ProjectName		= $(this).children("ProjectName").text();
+				RealVVSDFee		= $(this).children("RealVVSDFee").text();
+				RecheckVVSDFee	= $(this).children("RecheckVVSDFee").text();
+				s += "<div data-role='collapsible'>";
+				s += "<h2>" + BillCycle + "</h2>";
+				s += "<p>帳單之使用量統計</p>";
+				s += "<table data-role='table' id='table-custom-2' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>";
+				s += "	<thead>";
+				s += "		<tr class='ui-bar-d'><td>語音用量</td></tr>";
+				s += "	</thead>";
+				s += "	<tbody>";
+				s += "		<tr><td>網內：" + OnNetVoice	+ "&nbsp;分鐘</td></tr>";
+				s += "		<tr><td>網外：" + OffNetVoice	+ "&nbsp;分鐘</td></tr>";
+				s += "		<tr><td>市話：" + PSTN			+ "&nbsp;分鐘</td></tr>";
+				s += "	</tbody>";
+				s += "</table>";
+				s += "<table data-role='table' id='table-custom-2' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>";
+				s += "	<thead>";
+				s += "		<tr class='ui-bar-d'><td>影像電話用量</td></tr>";
+				s += "	</thead>";
+				s += "	<tbody>";
+				s += "		<tr><td>網內：" + OnNetVideo	+ "&nbsp;分鐘</td></tr>";
+				s += "		<tr><td>網外：" + OffNetVideo	+ "&nbsp;分鐘</td></tr>";
+				s += "	</tbody>";
+				s += "</table>";
+				s += "<table data-role='table' id='table-custom-2' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>";
+				s += "	<thead>";
+				s += "		<tr class='ui-bar-d'><td>簡訊用量</td></tr>";
+				s += "	</thead>";
+				s += "	<tbody>";
+				s += "		<tr><td>網內：" + OnNetSMS	+ "&nbsp;則</td></tr>";
+				s += "		<tr><td>網外：" + OffNetSMS	+ "&nbsp;則</td></tr>";
+				s += "	</tbody>";
+				s += "</table>";
+				s += "<table data-role='table' id='table-custom-2' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>";
+				s += "	<thead>";
+				s += "		<tr class='ui-bar-d'><td>數據用量</td></tr>";
+				s += "	</thead>";
+				s += "	<tbody>";
+				s += "		<tr><td>" + DataUsage + "&nbsp;MB</td></tr>";
+				s += "	</tbody>";
+				s += "</table>";
+				s += "<p>依您帳單之使用量，您較適用<span style='color:#FF0000;'>" + ProjectName + "</span>方案，提供您日後續約或更動資費時之參考，不含專案折扣費用試算如下。</p>";
+				s += "<table data-role='table' id='table-custom-2' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>";
+				s += "	<thead>";
+				s += "		<tr class='ui-bar-d'><td>當月使用方案</td></tr>";
+				s += "	</thead>";
+				s += "	<tbody>";
+				s += "		<tr><td>依本月使用量試算費用：" + RealVVSDFee + "&nbsp;元</td></tr>";
+				s += "	</tbody>";
+				s += "</table>";
+				s += "<table data-role='table' id='table-custom-2' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>";
+				s += "	<thead>";
+				s += "		<tr class='ui-bar-d'><td>適用方案</td></tr>";
+				s += "	</thead>";
+				s += "	<tbody>";
+				s += "		<tr><td>依本月使用量試算費用：" + RecheckVVSDFee + "&nbsp;元</td></tr>";
+				s += "	</tbody>";
+				s += "</table>";
+				s += "</div>";
+			});	//$(xml).find("Item").each( function() {	//取出每一筆試算資料
+			if (beEmpty(s)){
+				$('#myBillPlan #NCCRatePlanData').html('無資料');
+			}else{
+				$('#myBillPlan #NCCRatePlanData').html('');
+				$('#myBillPlan #csNCCRatePlanData').append(s);
+				$('#myBillPlan #csNCCRatePlanData').trigger('create');
+			}
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function getNCCRatePlanData(msisdn, contractid){	//取得NCC要求的帳單試算資料
+
+	function doRefreshEBill(){	//查詢電子帳單申請狀態
+		var msisdn = getLocalValue('loginmsisdn');
+		var contractid = getLocalValue('logincontractid');
+		if (beEmpty(msisdn) || beEmpty(contractid)){
+			//MsgBox('請先至首頁登入再執行此功能!!');
+			alertNoLogin();
+		}
+		$('#myBillApplyEBill #myBillApplyEBillTitle').text('資料更新中，請稍候...');
+		var sData = "";
+		sData = "Function=DoRTLService&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<FunctionType>E1</FunctionType>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('無法取得您的申請資料：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			
+			if ($(xml).find("Status").text()=='0'){	//正常
+				var r = $(xml).find("POStatus").text();
+
+				if (r=='N')	{checkMajorAccount();return;}	//全都不是，先不顯示填寫Email畫面，先檢查是否主門號
+				if (r=='W')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('已寄發電子帳單確認函，請至電子郵件信箱完成確認。'); showMyBillStatus(1);}	//電子帳單待確認中，顯示訊息文字
+				if (r=='A')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('電子帳單寄送服務申請確認中，系統將在稍後寄送確認函至您填寫的Email，請在收到確認函後，依說明進行確認。'); showMyBillStatus(1);}	//電子帳單申請中，顯示訊息文字
+				if (r=='Y')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('目前為電子帳單會員<br>EMail信箱為【' + $(xml).find("POEmail").text() + '】'); showMyBillStatus(1);$('#myBillApplyEBill #btnRefreshEBill').hide();}	//電子帳單，顯示訊息文字及Email
+				if (r=='S')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('您的門號' + msisdn + '目前已為簡訊帳單會員。電子/簡訊帳單服務，不能同時申請，如欲進行變更申請，請先取消原有服務。'); showMyBillStatus(1);}	//簡訊帳單，顯示訊息文字
+			}else{	//錯誤
+				$('#myBillApplyEBill #myBillApplyEBillTitle').html($(xml).find("StatusMsg").text());	//顯示錯誤訊息
+				showMyBillStatus(1);
+			}	//if ($(xml).find("Status").text()=='0'){	//正常
+			/*
+			alert($(xml).find("Status").text());
+			alert(msisdn);
+			console.log($(xml).find("StatusMsg").text());
+			alert($(xml).find("POStatus").text());
+			alert($(xml).find("POEmail").text());
+			*/
+			GATrackEvent('查詢電子帳單申請狀態', '成功', msisdn + ':' + contractid);
+		});
+	}	//function doRefreshEBill(){	//查詢電子帳單申請狀態
+	
+	function checkMajorAccount(){	//檢查是否主門號
+		var msisdn = getLocalValue('loginmsisdn');
+		var contractid = getLocalValue('logincontractid');
+		var customerid = getLocalValue('logincustomerid');
+		if (beEmpty(msisdn) || beEmpty(contractid) || beEmpty(customerid)){
+			//MsgBox('請先至首頁登入再執行此功能!!');
+			alertNoLogin();
+		}
+		$('#myBillApplyEBill #myBillApplyEBillTitle').text('資料更新中，請稍候...');
+		var sData = "";
+
+		sData = "Function=GetCustomerProfile&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<ContractId>" + contractid + "</ContractId>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				GATrackEvent('申請電子帳單', '查詢是否主門號失敗，無法查詢是否主門號', msisdn + ':' + contractid);
+				MsgBox('無法取得您的門號資料');
+				return;
+			}	//if (ResultCode!='00000'){	//作業失敗
+	
+			var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
+
+			if (MainMsisdnFlg=='N'){
+				$('#myBillApplyEBill #myBillApplyEBillTitle').html('請以主門號登入');	//顯示錯誤訊息
+				showMyBillStatus(1);
+			}else{
+				showMyBillStatus(0);
+			}
+			GATrackEvent('查詢電子帳單申請狀態', '成功', msisdn + ':' + contractid);
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function checkMajorAccount(){	//檢查是否主門號
+
+	function showMyBillStatus(i){	//顯示myBillApplyEBill申請電子帳單頁面的內容，i=0顯示Email資料填寫畫面，i=1只顯示申請狀態及重新查詢畫面
+		if (i==0){
+			//$('#myBillApplyEBill #myBillApplyEBillTitle').text('請輸入您的電子帳單Email信箱');
+			$('#myBillApplyEBill #myBillApplyEBillTitle').text('');
+			$('#myBillApplyEBill #myBillApplyEBill-MSISDN').html(getLocalValue('loginmsisdn'));
+			$('#myBillApplyEBill #myBillApplyEBillEmailDiv').show();
+			$('#myBillApplyEBill #btnRefreshEBill').hide();
+		}else{
+			$('#myBillApplyEBill #myBillApplyEBillEmailDiv').hide();
+			$('#myBillApplyEBill #btnRefreshEBill').show();
+		}
+	}	//function showMyBillStatus(i){	//顯示myBillApplyEBill申請電子帳單頁面的內容，i=0顯示Email資料填寫畫面，i=1只顯示申請狀態及重新查詢畫面
+
+	function doApplyEBill(){	//申請電子帳單
+		var msisdn = getLocalValue('loginmsisdn');
+		var contractid = getLocalValue('logincontractid');
+		if (beEmpty(msisdn) || beEmpty(contractid)){
+			MsgBox('請先至首頁登入再執行此功能!!');
+			return;
+		}
+		var email = $('#myBillApplyEBill #myBillApplyEBillEmail').val();
+		if (beEmpty(email) || !isEmail(email)){
+			MsgBox('電子郵件信箱輸入有誤，請重新輸入');
+			return;
+		}
+		if (!$("#myBillApplyEBill input[name='chk1']").is(":checked")){
+			MsgBox('請詳閱並勾選【本人已清楚了解上述服務條款內容】');
+			return;
+		}
+
+		var sData = "";
+		sData = "Function=DoRTLService&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<FunctionType>E2</FunctionType>";
+		sData += "<Email>" + email + "</Email>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('電子帳單申請失敗' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			
+			if ($(xml).find("Status").text()=='0'){	//成功
+				//sData = "電子帳單寄送服務申請完成，系統將在稍後寄送確認函至" + email + "，";
+				//sData += "<br><span style='color:#FF0000;'>請在收到確認函後，依說明進行確認。</span>"
+				//sData = "電子帳單寄送服務已申請完成<br>" + email;
+				sData = "電子帳單寄送服務申請確認中，系統將在稍後寄送確認函至您填寫的Email，請在收到確認函後，依說明進行確認。";
+				$('#myBillApplyEBill #myBillApplyEBillTitle').html(sData);
+				showMyBillStatus(1);
+				GATrackEvent('申請電子帳單', '成功', msisdn + ':' + contractid);
+			}else{	//錯誤
+				MsgBox('電子帳單申請失敗：' + $(xml).find("StatusMsg").text());
+				GATrackEvent('申請電子帳單', '失敗', msisdn + ':' + contractid);
+			}	//if ($(xml).find("Status").text()=='0'){	//正常
+		});
+	}	//function doApplyEBill(){	//申請電子帳單
+
+</script>

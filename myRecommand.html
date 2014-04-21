@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- ****************************** 最新活動 ***********************************-->
+<div data-role="page" id="myRecommandNewEvent">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myRecommandNewEvent">最新活動</a></li>
+				<li><a href="#myRecommandProgram">優惠方案</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content" class="FullContent" style="overflow:hidden!important;">
+		<div id='maiinList'>
+			<div id='CarouselPromotion' style="width:100%;" class="CarouselMenu"><!--畫面上方的banner促銷訊息-->
+			</div><!--畫面上方的banner促銷訊息-->
+			<div id='itemList' style="margin-top:5px;"></div><!--各項目清單-->
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 最新活動 -->
+
+<!-- ****************************** 優惠方案 ***********************************-->
+<div data-role="page" id="myRecommandProgram">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myRecommandNewEvent">最新活動</a></li>
+				<li><a href="#myRecommandProgram">優惠方案</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content" class="FullContent" style="overflow:hidden!important;">
+		<div id='maiinList'>
+			<div id='CarouselPromotion' style="width:100%;" class="CarouselMenu"><!--畫面上方的banner促銷訊息-->
+			</div><!--畫面上方的banner促銷訊息-->
+			<div id='itemList' style="margin-top:5px;"></div><!--各項目清單-->
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 優惠方案 -->
+
+<!-- ****************************** 訊息詳細內容 ***********************************-->
+<div data-role="page" id="myRecommandDetail">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myRecommandNewEvent">最新活動</a></li>
+				<li><a href="#myRecommandProgram">優惠方案</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id='itemDetail'></div><!--項目詳細內容-->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 訊息詳細內容 -->
+
+
+</body>
+</html>
+<script type="text/javascript" src="js/initPage.js"></script><!--初始化頁面，設定header及footer -->
+
+<script type="text/javascript">
+	var NewEventCarouselReady	= false;
+	var ProgramCarouselReady	= false;
+	
+	$('#myRecommandNewEvent').one('pageshow', function () {	//取得最新活動訊息清單
+		
+		//if (beEmpty(getLocalValue('loginmsisdn'))) $('.CarouselMustLogin').hide();	//將需登入才能使用的項目隱藏
+		
+		var sData = "";
+		sData = "type=Recommand";	//熱門推薦圖檔
+		getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", RecommandNewEvent_Success);
+		sData = "type=NewEvent";	//最新活動訊息
+		getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", NewEvent_Success);
+		GATrackPageView('最新活動');
+		//$('#CarouselMenu #CarouselMenuItems').trigger('synchronise');
+	});	//$('#myRecommandNewEvent').one('pageshow', function () {	//取得最新活動訊息清單
+
+	$('#myRecommandNewEvent').on('pageshow', function () {	//resume 跑馬燈，若不做的話在切換頁面後可能跑馬會停掉
+		//if (NewEventCarouselReady) initCarousel('myRecommandNewEvent');
+		if (NewEventCarouselReady) $('#myRecommandNewEvent #CarouselPromotion #CarouselPromotionItems').trigger('resume');
+	});	//$('#myRecommandNewEvent').on('pageshow', function () {	//resume 跑馬燈，若不做的話在切換頁面後可能跑馬會停掉
+
+	$('#myRecommandProgram').one('pageshow', function () {	//取得優惠方案訊息清單
+		
+		//if (beEmpty(getLocalValue('loginmsisdn'))) $('.CarouselMustLogin').hide();	//將需登入才能使用的項目隱藏
+		
+		var sData = "";
+		sData = "type=Recommand";	//熱門推薦圖檔
+		getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", RecommandProgram_Success);
+		sData = "type=Program";	//優惠方案訊息
+		getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", Program_Success);
+		GATrackPageView('優惠方案');
+	});	//$('#myRecommandProgram').one('pageshow', function () {	//取得優惠方案訊息清單
+
+	$('#myRecommandProgram').on('pageshow', function () {	//resume 跑馬燈，若不做的話在切換頁面後可能跑馬會停掉
+		//if (ProgramCarouselReady) initCarousel('myRecommandProgram');
+		if (ProgramCarouselReady) $('#myRecommandProgram #CarouselPromotion #CarouselPromotionItems').trigger('resume');
+	});	//$('#myRecommandProgram').on('pageshow', function () {	//resume 跑馬燈，若不做的話在切換頁面後可能跑馬會停掉
+
+	var NewEventList	= null;	//儲存所有最新活動訊息的 json
+	var ProgramList	= null;	//儲存所有優惠方案訊息的 json
+
+	function RecommandNewEvent_Success(data){	//取得熱門推薦圖檔
+		var ResultCode = data.ResultCode;
+		var ResultText = data.ResultText;
+		if (ResultCode!='00000'){	//作業失敗
+			$('#myRecommandNewEvent #CarouselPromotion').html('');
+			return;
+		}	//if (ResultCode=='00000'){	//作業成功
+		//有資料，開始產生圖檔及連結跑馬燈
+		var s = "";
+		$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+			if (item.ShowNewEvent=='Y'){	//最新活動
+				s += "<a href='#' onclick=\"showDetail('" + item.MessageId + "', 'myRecommandNewEvent');return false;\"><div style='background-image:url(" + item.SubjectPic + ");'><span>&nbsp;</span></div></a>";
+			}
+		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+		if (notEmpty(s)){
+			$('#myRecommandNewEvent #CarouselPromotion').html("<div id='CarouselPromotionItems'>" + s + "</div><div style='float:none;clear:both;'></div>");
+			initCarousel('myRecommandNewEvent');
+			NewEventCarouselReady = true;
+		}
+	}	//function GetPromotionMessageList_Success(xml){	//取得首頁促銷訊息
+	
+	function RecommandProgram_Success(data){	//取得熱門推薦圖檔
+		var ResultCode = data.ResultCode;
+		var ResultText = data.ResultText;
+		if (ResultCode!='00000'){	//作業失敗
+			$('#myRecommandProgram #CarouselPromotion').html('');
+			return;
+		}	//if (ResultCode=='00000'){	//作業成功
+		//有資料，開始產生圖檔及連結跑馬燈
+		var s = "";
+		$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+			if (item.ShowProgram=='Y'){	//優惠方案
+				s += "<a href='#' onclick=\"showDetail('" + item.MessageId + "', 'myRecommandProgram');return false;\"><div style='background-image:url(" + item.SubjectPic + ");'><span>&nbsp;</span></div></a>";
+			}
+		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+		if (notEmpty(s)){
+			$('#myRecommandProgram #CarouselPromotion').html("<div id='CarouselPromotionItems'>" + s + "</div><div style='float:none;clear:both;'></div>");
+			initCarousel('myRecommandProgram');
+			ProgramCarouselReady = true;
+		}
+	}	//function GetPromotionMessageList_Success(xml){	//取得首頁促銷訊息
+
+	function NewEvent_Success(data){	//取得最新活動訊息
+		var ResultCode = data.ResultCode;
+		var ResultText = data.ResultText;
+		if (ResultCode!='00000'){	//作業失敗
+			$('#myRecommandNewEvent #itemList').html('');
+			return;
+		}	//if (ResultCode=='00000'){	//作業成功
+		//有資料，開始產生圖檔及連結
+		NewEventList = data;	//將json存起來
+		var s = "";
+		s += "<ul data-role='listview' id='newEventListView' style='padding:15px;'>";
+		$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+			s += "<li><a href='#' onclick=\"showDetail('" + item.MessageId + "');return false;\"><img src='images/icon-new.png' class='ui-li-icon ui-corner-none' />" +  item.Subject + "</a></li>";
+		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+		s += "</ul>";
+		$('#myRecommandNewEvent #itemList').html(s);
+		$("#myRecommandNewEvent #newEventListView").listview();
+		if (notEmpty(getParameterByName('p'))){
+			if (getParameterByName('p')=='RecommandNewEvent'){	//從首頁下方跑馬燈連過來，直接顯示詳細內容
+				if (notEmpty(getParameterByName('mid'))) showDetail(getParameterByName('mid'));
+			}
+			if (getParameterByName('p')=='RecommandProgram'){	//從首頁下方跑馬燈連過來，直接顯示詳細內容
+				showPage('#myRecommandProgram');
+			}
+		}
+	}	//function NewEvent_Success(data){	//取得最新活動訊息
+
+	function Program_Success(data){	//取得優惠方案訊息
+		var ResultCode = data.ResultCode;
+		var ResultText = data.ResultText;
+		if (ResultCode!='00000'){	//作業失敗
+			$('#myRecommandProgram #itemList').html('');
+			return;
+		}	//if (ResultCode=='00000'){	//作業成功
+		//有資料，開始產生圖檔及連結
+		ProgramList = data;	//將json存起來
+		var s = "";
+		s += "<ul data-role='listview' id='programListView' style='padding:15px;'>";
+		$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+			s += "<li><a href='#' onclick=\"showDetail('" + item.MessageId + "');return false;\"><img src='images/icon-recommand.png' class='ui-li-icon ui-corner-none' />" +  item.Subject + "</a></li>";
+		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+		s += "</ul>";
+		$('#myRecommandProgram #itemList').html(s);
+		$('#myRecommandProgram #programListView').listview();
+		if (notEmpty(getParameterByName('p'))){
+			if (getParameterByName('p')=='RecommandProgram'){	//從首頁下方跑馬燈連過來，直接顯示詳細內容
+				if (notEmpty(getParameterByName('mid'))) showDetail(getParameterByName('mid'));
+			}
+		}
+	}	//function Program_Success(data){	//取得優惠方案訊息
+
+	function showDetail(mid, pid){	//顯示某項目的詳細內容
+		var pageid = "";
+		if (beEmpty(pid)){
+			pageid = $.mobile.activePage.attr('id');
+		}else{
+			pageid = pid;
+		}
+		if (pageid!=$.mobile.activePage.attr('id')){
+			showPage('#'+pid);
+		}
+		var data = null;
+		if (pageid=='myRecommandNewEvent') data = NewEventList;
+		if (pageid=='myRecommandProgram') data = ProgramList;
+		
+		var s = "";
+		$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+			if (item.MessageId==mid){
+				s = "<h3>" + item.Subject + "</h3>";
+				s += "<div style='text-align:right;'>";
+				//s += "<a class='external' href='http://www.facebook.com/share.php?s=100&p[title]=" + encodeURIComponent('威寶電信：'+item.Subject) + "&p[summary]=" + encodeURIComponent((beEmpty(item.BodyText)?item.Subject:item.BodyText)) + "&p[url]=" + encodeURIComponent("http://www.vibo.com.tw/") + "' target='_blank'><img src='images/faceBook.png' /></a>";
+				s += "<a class='external' href='https://www.facebook.com/dialog/feed?app_id=523256637765757&display=page&name=" + encodeURIComponent('威寶電信：'+item.Subject) + "&caption=" + encodeURIComponent((beEmpty(item.BodyText)?item.Subject:item.BodyText)) + "&link=http%3A%2F%2Fwww.vibo.com.tw%2F&redirect_uri=http%3A%2F%2Fwww.vibo.com.tw%2F' target='_blank' onclick=\"GATrackEvent('FB分享', '" + mid + "', '" + item.Subject + "');\"><img src='images/faceBook.png' /></a>";
+				s += "<a class='external' href='http://www.plurk.com/?qualifier=shares&status=" + encodeURIComponent("http://www.vibo.com.tw/")  + " (" + encodeURIComponent('威寶電信：'+item.Subject) + ")' target='_blank' onclick=\"GATrackEvent('Plurk分享', '" + mid + "', '" + item.Subject + "');\"><img src='images/plurk.png' /></a>";
+				s += "<a class='external' href='http://twitter.com/home/?status=" + encodeURIComponent('威寶電信：'+item.Subject)  + "  " + encodeURIComponent("http://www.vibo.com.tw/") + "' target='_blank' onclick=\"GATrackEvent('Twitter分享', '" + mid + "', '" + item.Subject + "');\"><img src='images/twitter.png' /></a>";
+				s += "</div>";
+				if (notEmpty(item.SubText1)) s += item.SubText1;
+				if (notEmpty(item.SubText2)) s += "<br>" + item.SubText2;
+				if (notEmpty(item.SubjectPic)) s += "<br>" + "<img src='" + item.SubjectPic + "' style='margin-top:10px;margin-bottom:10px;'>";
+				if (notEmpty(item.BodyText)) s += "<br>" + item.BodyText.replace(/\n/g, '<br>');
+				if (notEmpty(item.BodyPic)) s += "<br>" + "<img src='" + item.BodyPic + "' style='margin-top:10px;margin-bottom:5px;'>";
+				if (notEmpty(item.BodyText2)){
+					s += "<div data-role='collapsible' id='itemDetailCollapsible'>";
+					s += "<h4 style='text-align:left;'>貼心提醒</h4>";
+					s += "<p>" + item.BodyText2.replace(/\n/g, '<br>') + "</p>";
+					s += "</div>";
+				}
+				if (notEmpty(item.LinkURL)){
+					s += "<a href='" + item.LinkURL + "' data-role='button' class='itemDetailButton external' target='_blank' style='text-align:left;'>了解更多</a>";
+				}
+				if (pageid=='myRecommandNewEvent'){ GATrackEvent('觀看最新活動', mid, item.Subject); }
+				if (pageid=='myRecommandProgram'){ GATrackEvent('觀看優惠方案', mid, item.Subject); }
+			}
+		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+		//s += "<a href='#' data-role='button' class='itemDetailButton' onclick=\"showPage('#" + pageid + "');\">回訊息列表</a>";
+		s += "<a href='#" + pageid + "' data-role='button' class='itemDetailButton' style='text-align:left;'>回訊息列表</a>";
+		$('#myRecommandDetail #itemDetail').html(s);
+		$('#myRecommandDetail #itemDetail #itemDetailCollapsible').collapsible();
+		$('#myRecommandDetail #itemDetail .itemDetailButton').button();
+		showPage('#myRecommandDetail');
+
+		//$('#' + pageid + ' #maiinList').fadeOut(function(){$('#' + pageid + ' #itemDetail').fadeIn();});
+	}	//function showDetail(mid){	//顯示某項目的詳細內容
+	
+	function showList(){	//沒在用了
+		var pageid = $.mobile.activePage.attr('id');
+		$('#' + pageid + ' #itemDetail').fadeOut(function(){$('#' + pageid + ' #maiinList').fadeIn();});
+		if (pageid=='myRecommandNewEvent'){if (NewEventCarouselReady) $('#myRecommandNewEvent #CarouselPromotion #CarouselPromotionItems').trigger('resume');}	//若不做的話在切換頁面後可能跑馬會停掉
+		if (pageid=='myRecommandProgram'){if (ProgramCarouselReady) $('#myRecommandProgram #CarouselPromotion #CarouselPromotionItems').trigger('resume');}		//若不做的話在切換頁面後可能跑馬會停掉
+		//if (pageid=='myRecommandProgram'){if (ProgramCarouselReady) initCarousel(pageid);}		//若不做的話在切換頁面後可能跑馬會停掉
+	}
+
+	function initCarousel(pid){	//產生 banner 跑馬燈
+		//var CarouselPromotionHeight = $(window).height()*3/20;	//banner促銷訊息跑馬燈的高度，以螢幕寬度的3/20計算，若螢幕寬度為480，則跑馬燈高度為72
+		var CarouselPromotionHeight = $(window).width()*30/72;	//首頁促銷訊息跑馬燈的高度，以螢幕寬度的30/72計算，若螢幕寬度為480，則跑馬燈高度為200
+		CarouselPromotionHeight	= Math.ceil(CarouselPromotionHeight);	//無條件進位，取大於這個數的最小整數
+		var CarouselPromotionWidth = $(window).width();	//banner促銷訊息跑馬燈的寬度
+		$('#' + pid + ' #CarouselPromotion #CarouselPromotionItems').css('width', CarouselPromotionWidth);
+		$('#' + pid + ' #CarouselPromotion #CarouselPromotionItems div').css('width', CarouselPromotionWidth);
+		$('#' + pid + ' #CarouselPromotion #CarouselPromotionItems img').css('width', CarouselPromotionWidth);
+		$('#' + pid + ' #CarouselPromotion').css('height', CarouselPromotionHeight);
+		$('#' + pid + ' #CarouselPromotion #CarouselPromotionItems').css('height', CarouselPromotionHeight);
+		$('#' + pid + ' #CarouselPromotion #CarouselPromotionItems div').css('height', CarouselPromotionHeight);
+		$('#' + pid + ' #CarouselPromotion #CarouselPromotionItems img').css('height', CarouselPromotionHeight);
+		$('#' + pid + ' #CarouselPromotion #CarouselPromotionItems').carouFredSel({
+			items: {
+				visible: 1,
+				start: 0
+			},
+			responsive: false,
+			auto: {
+				duration    : 1000,
+				timeoutDuration: 4000,
+				pauseOnHover: false
+			},
+			padding: [0, 0, 0, 0],
+			scroll: {
+				items: 1,
+				duration: 500
+			},
+			swipe: {
+				onMouse: true,
+				onTouch: true
+			}
+		});
+		//$('#' + pid).on({ 'swipeleft' : function(e){ e.preventDefault(); } });
+		//$('#' + pid).on({ 'swiperight' : function(e){ e.preventDefault(); } });
+	}	//function initCarousel(pid){	//產生 banner 跑馬燈
+
+	//若<a> 中有 "class=external"，點取連結時連到OS的 browser
+	$(document).on('click', ".external", function (e) {
+		if (isRunInApp()){
+			e.preventDefault();
+			var targetURL = $(this).attr("href");
+			window.open(targetURL, "_system");
+		}
+	});
+</script>

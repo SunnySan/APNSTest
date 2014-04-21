@@ -1,0 +1,794 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+
+<body>
+
+
+<!-- ****************************** 首頁 ***********************************-->
+<div data-role="page" id="home">
+	<div data-role="header" data-position="fixed" class="vibo-header" style="top:0px!important;position:fixed;">
+		<div class="header-padding"></div>
+		<a id="homeLogin" href="#userLogin" class="ui-btn-right" data-icon="star" data-theme="g">登入</a>
+	</div><!-- /header -->
+	
+	<div data-role="content" style="border:0px !important;padding:0px !important;margin:0px !important;overflow:hidden !important;">
+		<div id="main-bg-container">
+			<img id="main-bg" src="images/main-bg.png" alt="" width="100%" border="0" usemap="#Map">
+			<span id="home-text1" class="home-text">我的帳單</span>
+			<span id="home-text2" class="home-text">我的服務</span>
+			<span id="home-text3" class="home-text">資料修改</span>
+			<span id="home-text4" class="home-text">線上繳費</span>
+			<span id="home-text5" class="home-text">門市/查詢</span>
+			<span id="home-text6" class="home-text">客戶服務</span>
+			<span id="home-text7" class="home-text">威寶粉絲團</span>
+			<span id="home-text8" class="home-text">Wi-Fi熱點</span>
+		</div>
+		<!--<img src="images/main-menu-ad.jpg" alt="" width="100%" height="72" border="0">-->
+		<div id='CarouselPromotion' style="width:100%;" class="CarouselMenu"><!--首頁促銷訊息-->
+			<img src='images/defaultHomeBanner.jpg' />
+		</div><!--首頁促銷訊息-->
+		<map name="Map">
+			<area shape="rect" id="rect1" coords="0,0,479,268" href="#" rel="external">
+			<area shape="rect" id="rect2" coords="480,0,959,268" href="#" rel="external">
+			<area shape="rect" id="rect3" coords="0,269,479,537" href="#" rel="external">
+			<area shape="rect" id="rect4" coords="480,269,959,537" href="#" rel="external">
+			<area shape="rect" id="rect5" coords="0,538,479,806" href="myQuery.html" rel="external">
+			<area shape="rect" id="rect6" coords="480,538,959,806" href="myCustomer.html" rel="external">
+			<area shape="rect" id="rect7" coords="0,538,479,806" href="https://www.facebook.com/vibotelecom?fref=ts" rel="external" target="_blank" class="external" onclick="GATrackEvent('首頁點選威寶粉絲團', '成功', '');">
+			<area shape="rect" id="rect8" coords="480,538,959,806" href="myWifi.html" rel="external">
+		</map>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-tap-toggle="false" data-position="fixed" style="border:0px !important;padding:0px !important;margin:0px !important;bottom:0px !important;position:fixed;">
+		<div class="footer-copyright">
+			威寶電信版權所有 Copyright© 2013 All Rights Reserved.
+		</div>
+	</div><!-- /footer -->
+</div><!-- 首頁 -->
+
+<!-- ****************************** 用戶登入 ***********************************-->
+<div data-role="page" id="userLogin" data-position="fixed">
+	<div data-role="header" class="vibo-header">
+		<div class="header-padding"></div>
+		<a href="#home" class="ui-btn-right" data-icon="home" data-theme="g">首頁</a>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 class="PageTitle">用戶登入</h3>
+		<form id="frmUserLogin">
+			<label for="txtLoginMSISDN">威寶電信門號</label>
+			<input type="tel" name="txtLoginMSISDN" id="txtLoginMSISDN" minlength="10" maxlength="10" value="">
+			<label for="txtLoginPassword">密碼(同威寶官網用戶登入密碼)</label>
+			<input type="password" name="txtLoginPassword" id="txtLoginPassword" value="">
+			<label>
+				<input type="checkbox" id="chkRememberMe" name="chkRememberMe">記住門號
+			</label>
+			<div data-role="controlgroup" data-type="horizontal">
+			    <a href="#" data-role="button" onclick="doUserLogin();return false;">登入</a>
+			    <a href="#" data-role="button" onclick="doCancelLogin();return false;">取消</a>
+			</div>
+			<ul data-role="listview" data-inset="true" data-content-theme="d">
+				<li><a href="#userLoginForgetPassword">申請密碼/忘記密碼</a></li>
+				<!--<li><a href="#userLoginChangePassword">變更密碼</a></li>-->
+				<li><a href="#userLoginGuide">登入說明</a></li>
+			</ul>
+		</form>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-tap-toggle="false" data-position="fixed">
+		<div class="footer-copyright">
+			威寶電信版權所有 Copyright© 2013 All Rights Reserved.
+		</div>
+	</div><!-- /footer -->
+</div><!-- 用戶登入 -->
+
+<!-- ****************************** 申請密碼/忘記密碼 ***********************************-->
+<div data-role="page" id="userLoginForgetPassword" data-position="fixed">
+	<div data-role="header" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role='controlgroup' data-type='horizontal' class='ui-btn-right'>
+		    <a href='#' data-role='button' data-rel='back' data-icon='back' data-theme="g">上頁</a>
+		    <a href='#home' data-role='button' data-icon='home' data-theme="g">首頁</a>
+		</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 class="PageTitle">申請密碼/忘記密碼</h3>
+		<form id="frmForgetPassword">
+			<label for="txtForgetPasswordMSISDN">威寶電信門號</label>
+			<input type="tel" name="txtForgetPasswordMSISDN" id="txtForgetPasswordMSISDN" value="">
+			<label for="txtForgetPasswordCustomerId">身分證號/統一編號</label>
+			<input type="text" name="txtForgetPasswordCustomerId" id="txtForgetPasswordCustomerId" value="">
+		    <a href="#" data-role="button" onclick="doForgetPassword();return false;">申請密碼</a>
+		</form>
+
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-tap-toggle="false" data-position="fixed">
+		<div class="footer-copyright">
+			威寶電信版權所有 Copyright© 2013 All Rights Reserved.
+		</div>
+	</div><!-- /footer -->
+</div><!-- 申請密碼/忘記密碼 -->
+
+<!-- ****************************** 變更密碼 ***********************************-->
+<div data-role="page" id="userLoginChangePassword" data-position="fixed">
+	<div data-role="header" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role='controlgroup' data-type='horizontal' class='ui-btn-right'>
+		    <a href='#' data-role='button' data-rel='back' data-icon='back' data-theme="g">上頁</a>
+		    <a href='#home' data-role='button' data-icon='home' data-theme="g">首頁</a>
+		</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<form id="frmChangePassword">
+			<label for="txtChangePasswordMSISDN">威寶電信門號</label>
+			<input type="text" name="txtChangePasswordMSISDN" id="txtChangePasswordMSISDN" value="">
+			<label for="txtChangePasswordOldPassword">舊密碼</label>
+			<input type="password" name="txtChangePasswordOldPassword" id="txtChangePasswordOldPassword" value="">
+			<label for="txtChangePasswordNewPassword1">新密碼</label>
+			<input type="password" name="txtChangePasswordNewPassword1" id="txtChangePasswordNewPassword1" value="">
+			<label for="txtChangePasswordNewPassword2">請再輸入一次新密碼</label>
+			<input type="password" name="txtChangePasswordNewPassword2" id="txtChangePasswordNewPassword2" value="">
+		    <a href="#" data-role="button" onclick="doChangePassword();return false;">變更密碼</a>
+		</form>
+
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-tap-toggle="false" data-position="fixed">
+		<div class="footer-copyright">
+			威寶電信版權所有 Copyright© 2013 All Rights Reserved.
+		</div>
+	</div><!-- /footer -->
+</div><!-- 變更密碼 -->
+
+<!-- ****************************** 用戶登出 ***********************************-->
+<div data-role="page" id="userLogout" data-position="fixed">
+	<div data-role="header" class="vibo-header">
+		<div class="header-padding"></div>
+		<a href="#home" class="ui-btn-right" data-icon="home" data-theme="g">首頁</a>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 class="PageTitle">用戶登出</h3>
+		<label for="text-1">確定登出？</label>
+		<div data-role="controlgroup" data-type="horizontal">
+		    <a href="#" data-role="button" onclick="doUserLogout();return false;">確定</a>
+		    <a href="#home" data-role="button">取消</a>
+		</div>
+		
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-tap-toggle="false" data-position="fixed">
+		<div class="footer-copyright">
+			威寶電信版權所有 Copyright© 2013 All Rights Reserved.
+		</div>
+	</div><!-- /footer -->
+</div><!-- 用戶登出 -->
+
+<!-- ****************************** 登入說明 ***********************************-->
+<div data-role="page" id="userLoginGuide" data-position="fixed">
+	<div data-role="header" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role='controlgroup' data-type='horizontal' class='ui-btn-right'>
+		    <a href='#' data-role='button' data-rel='back' data-icon='back' data-theme="g">上頁</a>
+		    <a href='#home' data-role='button' data-icon='home' data-theme="g">首頁</a>
+		</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 style="color:#0080FF;text-align:left;">用戶登入</h3>
+		歡迎使用威寶電信網站各項功能及服務，用戶請輸入門號與密碼。(同威寶官網用戶登入密碼)。
+		
+		<h3 style="color:#0080FF;text-align:left;">申請密碼</h3>
+		歡迎您加入威寶電信，申請密碼請先輸入門號及身分證字號或統一編號，按下送出後，我們立即會將您的密碼以簡訊方式通知您，請以此密碼登入即可享受威寶電信網站各項功能及服務。
+		
+		<h3 style="color:#0080FF;text-align:left;">忘記密碼</h3>
+		請輸入您的手機號碼與身分證字號或統一編號，按下送出後，我們立即會將您的密碼以簡訊方式通知您，請以此密碼登入即可享受威寶電信網站各項功能及服務。
+		
+		<h3 style="color:#0080FF;text-align:left;">變更密碼</h3>
+		歡迎使用威寶電信網站各項功能及服務，您可自行設定密碼，密碼需為4~6個數字組合。
+
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-tap-toggle="false" data-position="fixed">
+		<div class="footer-copyright">
+			威寶電信版權所有 Copyright© 2013 All Rights Reserved.
+		</div>
+	</div><!-- /footer -->
+</div><!-- 登入說明 -->
+
+</body>
+</html>
+
+<script type="text/javascript">
+	
+	$('#home').one('pageshow',function(event){
+		var MainHeight = $(window).height()-$("#home div[data-role='header']").outerHeight(true)-$("#home div[data-role='footer']").outerHeight(true);	//全螢幕扣掉 header & footer 的高度
+		var CarouselPromotionHeight = $(window).width()*30/72;	//首頁促銷訊息跑馬燈的高度，以螢幕寬度的30/72計算，若螢幕寬度為480，則跑馬燈高度為200
+		var IconHeight = (MainHeight-CarouselPromotionHeight)/4;	//剩餘畫面1/3高度做為每個 map icon的高
+
+		CarouselPromotionHeight	= Math.ceil(CarouselPromotionHeight);	//無條件進位，取大於這個數的最小整數
+		IconHeight				= Math.ceil(IconHeight);				//無條件進位，取大於這個數的最小整數
+
+		$('#CarouselPromotion').height(CarouselPromotionHeight);
+		$('#main-bg').height(IconHeight*4);
+		$('#main-bg-container').height(IconHeight*4);
+		//alert($('#main-bg-container').height());
+		$("#home div[data-role='content']").height(MainHeight);
+		//alert($("#home div[data-role='content']").height());
+		
+		var x = ($(window).width())/2;	//各選單Map區塊的X軸寬度
+		var y = IconHeight;	//各選單Map區塊的Y軸高度
+
+		$("#home #rect1").attr('coords', x*0 + ',' + y*0 + ',' + x*1 + ',' + y*1 );
+		$("#home #rect2").attr('coords', x*1 + ',' + y*0 + ',' + x*2 + ',' + y*1 );
+		$("#home #rect3").attr('coords', x*0 + ',' + y*1 + ',' + x*1 + ',' + y*2 );
+		$("#home #rect4").attr('coords', x*1 + ',' + y*1 + ',' + x*2 + ',' + y*2 );
+		$("#home #rect5").attr('coords', x*0 + ',' + y*2 + ',' + x*1 + ',' + y*3 );
+		$("#home #rect6").attr('coords', x*1 + ',' + y*2 + ',' + x*2 + ',' + y*3 );
+		$("#home #rect7").attr('coords', x*0 + ',' + y*3 + ',' + x*1 + ',' + y*4 );
+		$("#home #rect8").attr('coords', x*1 + ',' + y*3 + ',' + x*2 + ',' + y*4 );
+		
+		var x1 = y/5;	//各選單文字的X軸基準點
+		var y1 = $("#home div[data-role='header']").outerHeight(true) + y/5;	//各選單文字的Y軸基準點
+
+		$("#home #home-text1").css('left', x*0 + x1 + 'px');
+		$("#home #home-text1").css('top', y*0 + y1 + 'px');
+		$("#home #home-text2").css('left', x*1 + x1 + 'px');
+		$("#home #home-text2").css('top', y*0 + y1 + 'px');
+		$("#home #home-text3").css('left', x*0 + x1 + 'px');
+		$("#home #home-text3").css('top', y*1 + y1 + 'px');
+		$("#home #home-text4").css('left', x*1 + x1 + 'px');
+		$("#home #home-text4").css('top', y*1 + y1 + 'px');
+		$("#home #home-text5").css('left', x*0 + x1 + 'px');
+		$("#home #home-text5").css('top', y*2 + y1 + 'px');
+		$("#home #home-text6").css('left', x*1 + x1 + 'px');
+		$("#home #home-text6").css('top', y*2 + y1 + 'px');
+		$("#home #home-text7").css('left', x*0 + x1 + 'px');
+		$("#home #home-text7").css('top', y*3 + y1 + 'px');
+		$("#home #home-text8").css('left', x*1 + x1 + 'px');
+		$("#home #home-text8").css('top', y*3 + y1 + 'px');
+		//showPage('#userLogin');
+	});
+
+	$('#userLogin').one('pageshow',function(event){
+		GATrackPageView('用戶登入');
+	});
+	
+	$('#userLoginForgetPassword').one('pageshow',function(event){
+		GATrackPageView('申請密碼');
+	});
+
+	$('#userLogout').one('pageshow',function(event){
+		GATrackPageView('用戶登出');
+	});
+
+	$('#home').on('pageshow',function(event){
+		checkLoginStatus();
+		//取得PushMessage(訊息提醒)
+		getPushMessage();
+		//取得首頁促銷訊息
+		var sData = "";
+		sData = "type=HomeBanner";
+		getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", GetPromotionMessageList_Success, false);
+		$("#home div[data-role='footer']").show();
+	});
+	
+
+	$('#userLogin').on('pageshow',function(event){
+		var localmsisdn = getLocalValue('msisdn');
+		if (beEmpty(localmsisdn)) localmsisdn = '';
+		$('#frmUserLogin #txtLoginMSISDN').val(localmsisdn);
+		//$('#frmUserLogin #txtLoginPassword').val(getLocalValue('password'));	//只記門號不記密碼
+		$('#frmUserLogin #txtLoginPassword').val('');	//只記門號不記密碼
+	});
+
+</script>
+
+<script type="text/javascript">
+	//var gMSISDN		= "";
+
+	//檢查登入狀態
+	function checkLoginStatus(){
+		var i = 0;
+		if (beEmpty(getLocalValue('loginmsisdn'))){	//未登入
+			$('#home #homeLogin .ui-btn-text').text('登入');
+			$('#home #homeLogin').attr('href', '#userLogin');
+			$('#home #main-bg').attr('src', 'images/main-bg-disable.png');	//換為四個項目是灰色的底圖
+			for (i=1;i<5;i++) $('#home #rect' + i).attr('href', '#');	//取消四個項目的連結
+			for (i=1;i<5;i++) $('#home #home-text' + i).css('color', '#777777');	//把四個項目的文字變淡
+		}else{
+			userAuthentication();	//檢查登入資訊是否正確
+			$('#home #homeLogin .ui-btn-text').text('登出');
+			$('#home #homeLogin').attr('href', '#userLogout');
+			$('#home #main-bg').attr('src', 'images/main-bg.png');	//換為正常底圖
+			$('#home #rect1').attr('href', 'myBill.html');
+			$('#home #rect2').attr('href', 'myService.html');
+			$('#home #rect3').attr('href', 'myData.html');
+			$('#home #rect4').attr('href', 'myPay.html');
+			for (i=1;i<5;i++) $('#home #home-text' + i).css('color', '#222222');
+		}
+	}	//function checkLoginStatus(){
+	
+	//用戶登入
+	function doUserLogin(){
+		var msisdn		= $('#frmUserLogin #txtLoginMSISDN').val();
+		var password	= $('#frmUserLogin #txtLoginPassword').val();
+		if (beEmpty(msisdn) || beEmpty(password)){
+			MsgBox('請輸入門號及密碼!');
+			return;
+		}
+		var sData = "";
+		sData = "Function=DoAuthCheck&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<Password>" + password + "</Password>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", doUserLogin_Success);
+	}	//function doUserLogin(){
+	
+	function doUserLogin_Success(xml){
+		var ResultCode = $(xml).find("ResultCode").text();
+		var ResultText = $(xml).find("ResultText").text();
+		if (ResultCode!='00000'){	//作業失敗
+			GATrackEvent('用戶登入失敗', $('#frmUserLogin #txtLoginMSISDN').val(), '');
+			//MsgBox('登入失敗：' + ResultText);
+			MsgBox('登入失敗');
+			return;
+		}	//if (ResultCode=='00000'){	//作業成功
+
+		var msisdn		= $('#frmUserLogin #txtLoginMSISDN').val();
+		var password	= $('#frmUserLogin #txtLoginPassword').val();
+		var contractid = $(xml).find("ContractId").text();
+		var customerid = $(xml).find("CustomerId").text();
+
+		setLocalValue('loginmsisdn', msisdn);			//將門號存起來
+		setLocalValue('logincontractid', contractid);	//將ContractId存起來
+		setLocalValue('logincustomerid', customerid);	//將CustomerId存起來
+		setLocalValue('loginpassword', password);	//將Password存起來
+
+		doPushMessageRegister(msisdn, contractid);	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
+		
+		if ($('#frmUserLogin #chkRememberMe').is(':checked')){	//記住門號
+			setLocalValue('msisdn', msisdn);
+			//setLocalValue('password', password);	//只記門號不記密碼
+		}else{
+			setLocalValue('msisdn', '');
+			setLocalValue('password', '');
+		}
+		GATrackEvent('用戶登入成功', msisdn,  contractid);
+		MsgBox('您已成功登入!', function(){showPage('#home');});
+	}
+
+	//用戶登出
+	function doUserLogout(){
+		GATrackEvent('用戶登出', '成功', getLocalValue('loginmsisdn') + ':' + getLocalValue('logincontractid'));
+		clearLoginInfo();	//清除登入資料
+		MsgBox('您已登出!', function(){showPage('#home');});
+	}	//function doUserLogout(){
+	
+	//用戶取消登入
+	function doCancelLogin(){
+		if (!isRunInApp() || getPlatformName()=="iOS"){	//執行在手機瀏覽器或iOS作業系統，不顯示【離開】按鍵
+			$('<div>').simpledialog2({
+				mode: 'button',
+				headerText: '取消登入通知',
+				headerClose: false,
+				themeDialog: 'f',
+				buttonPrompt: '此功能僅適威寶用戶門號，請按<繼續使用>後使用部分功能',
+				buttons : {
+					'繼續使用': {
+						click: function () { 
+							showPage("#home");
+						}
+					}
+				}
+			});
+		}else{
+			$('<div>').simpledialog2({
+				mode: 'button',
+				headerText: '取消登入通知',
+				headerClose: false,
+				themeDialog: 'f',
+				buttonPrompt: '此功能僅適威寶用戶門號，若您不再使用請按<離開>，或繼續使用此部分功能',
+				buttons : {
+					'離開': {
+						click: function () { 
+							if (isRunInApp()) navigator.app.exitApp(); else window.close();
+						},
+	        			icon: "delete"
+					},
+					'繼續使用': {
+						click: function () { 
+							showPage("#home");
+						}
+					}
+				}
+			});
+		}	//if (!isRunInApp() || getPlatformName()=="iOS"){	//執行在手機瀏覽器或iOS作業系統，不顯示【離開】按鍵
+	}	//function doCancelLogin(){
+
+	function getPushMessage(){	//準備取得PushMessage(訊息提醒)
+		var txtCurrDate = getCurrentDate();	//今天日期，格式為：2013/10/3
+		var txtLastPushMessageDate = getLocalValue('PushMessage');	//上次擷取訊息的時間
+
+		if (!isLogin()) return;	//未登入的使用者不需推播
+		
+		if (txtLastPushMessageDate!=txtCurrDate){	//從上次擷取訊息至今已超過一天，重新抓資料
+			var sData = "type=PushMessage";
+			getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", GetPushMessage_Success, false);
+		}
+	}	//function getPushMessage(){	//取得PushMessage(訊息提醒)
+
+	function GetPushMessage_Success(data){	//取得PushMessage(訊息提醒)
+		var ResultCode = data.ResultCode;
+		var ResultText = data.ResultText;
+		if (ResultCode!='00000'){	//作業失敗
+			//$('#CarouselPromotion').html('');	//不用把html清除，顯示預設圖檔
+			return;
+		}	//if (ResultCode=='00000'){	//作業成功
+		//有資料，開始產生頁面內容
+		var s = "";
+		var j = 0;
+
+		$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+			if (j==0){
+				s = item.Subject + "<br>";
+				if (notEmpty(item.LinkURL)){
+					//s += "<a class='popButton' href='" + item.LinkURL + "' class='external' target='_blank' data-rel='dialog' data-role='button'>詳細</a>";
+					/*
+					if (isRunInApp()){
+						s += "<a href='" + item.LinkURL + "' class='external' target='_system' data-rel='dialog' data-role='button' style='margin-left:15px;margin-right:15px;' onclick='$.mobile.sdCurrentDialog.close();'>詳細</a>";
+						
+					}else{
+						s += "<a href='" + item.LinkURL + "' class='external' target='_blank' data-rel='dialog' data-role='button' style='margin-left:15px;margin-right:15px;' onclick='$.mobile.sdCurrentDialog.close();'>詳細</a>";
+					}
+					*/
+					s += "<a href='" + item.LinkURL + "' class='external' target='_blank' data-rel='dialog' data-role='button' data-icon='forward' data-iconpos='left'>詳細</a>";
+				}else{
+					if (item.ShowNewEvent=='Y'){	//最新活動
+						s += "<a href='myRecommand.html?p=RecommandNewEvent&mid=" + item.MessageId + "' rel='external' data-role='button' data-icon='forward' data-iconpos='left'>詳細</a>";
+					}else if (item.ShowProgram=='Y'){	//優惠方案
+						s += "<a href='myRecommand.html?p=RecommandProgram&mid=" + item.MessageId + "' rel='external' data-role='button' data-icon='forward' data-iconpos='left'>詳細</a>";
+					}
+				}
+				if (notEmpty(s)){
+					GATrackEvent('顯示首頁訊息提醒', item.MessageId, item.Subject);
+				}
+			}
+			j++;
+		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+		if (notEmpty(s)){
+			//$('#inlinecontenttext').html(s);
+			//$('#inlinecontent').simpledialog2();
+			$('#main-bg').removeAttr("usemap");
+			$('<div>').simpledialog2({
+				mode: 'button',
+				headerText: '最新活動',
+				headerClose: false,
+				themeDialog: 'f',
+				buttonPrompt: s,
+				buttons : {
+					'關閉': {
+						click: function () { 
+							$('#main-bg').attr("usemap", "#Map");
+							//$.mobile.sdCurrentDialog.close();
+							$(document).trigger('simpledialog', {'method':'close'});
+						},
+						icon: 'delete'
+					}
+				},
+				callbackClose: function(){
+					$('#main-bg').attr("usemap", "#Map");
+				}
+			});
+			setLocalValue('PushMessage', getCurrentDate());	//將今天日期紀錄起來
+		}
+	}	//function GetPushMessage_Success(data){	//取得PushMessage(訊息提醒)
+
+	function GetPromotionMessageList_Success(data){	//取得首頁促銷訊息
+		var ResultCode = data.ResultCode;
+		var ResultText = data.ResultText;
+		if (ResultCode!='00000'){	//作業失敗
+			//$('#CarouselPromotion').html('');	//不用把html清除，顯示預設圖檔
+			return;
+		}	//if (ResultCode=='00000'){	//作業成功
+		//有資料，開始產生跑馬燈		
+		var s = "";
+		$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+			if (notEmpty(item.LinkURL)){
+				s += "<a href='" + item.LinkURL + "' class='external' target='_blank' data-rel='dialog'><div style='background-image:url(" + item.SubjectPic + ");'><span>&nbsp;</span></div></a>";
+			}else{
+				if (item.ShowNewEvent=='Y'){	//最新活動
+					s += "<a href='myRecommand.html?p=RecommandNewEvent&mid=" + item.MessageId + "' rel='external'><div style='background-image:url(" + item.SubjectPic + ");'><span>&nbsp;</span></div></a>";
+				}else if (item.ShowProgram=='Y'){	//優惠方案
+					s += "<a href='myRecommand.html?p=RecommandProgram&mid=" + item.MessageId + "' rel='external'><div style='background-image:url(" + item.SubjectPic + ");'><span>&nbsp;</span></div></a>";
+				}
+			}
+		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+
+		if (notEmpty(s)){
+			var CarouselPromotionHeight = $(window).width()*30/72;	//首頁促銷訊息跑馬燈的高度，以螢幕寬度的30/72計算，若螢幕寬度為480，則跑馬燈高度為200
+			var CarouselPromotionWidth = $(window).width();	//首頁促銷訊息跑馬燈的寬度
+			$('#home #CarouselPromotion').html("<div id='CarouselPromotionItems'>" + s + "</div><div style='float:none;clear:both;'></div>");
+			$('#home #CarouselPromotion #CarouselPromotionItems').css('width', CarouselPromotionWidth);
+			$('#home #CarouselPromotion #CarouselPromotionItems div').css('width', CarouselPromotionWidth);
+			$('#home #CarouselPromotion #CarouselPromotionItems img').css('width', CarouselPromotionWidth);
+			$('#home #CarouselPromotion #CarouselPromotionItems').css('height', CarouselPromotionHeight);
+			$('#home #CarouselPromotion #CarouselPromotionItems div').css('height', CarouselPromotionHeight);
+			$('#home #CarouselPromotion #CarouselPromotionItems img').css('height', CarouselPromotionHeight);
+			$('#home #CarouselPromotion #CarouselPromotionItems').carouFredSel({
+				items: {
+					visible: 1,
+					start: 0
+				},
+				responsive: false,
+				auto: {
+					duration    : 1000,
+					timeoutDuration: 4000,
+					pauseOnHover: true
+				},
+				padding: [0, 0, 0, 0],
+				scroll: {
+					items: 1,
+					duration: 500
+				},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+				}
+			});
+			$('#home').on({ 'swipeleft' : function(e){ e.preventDefault(); } });
+			$('#home').on({ 'swiperight' : function(e){ e.preventDefault(); } });
+		}
+	}	//function GetPromotionMessageList_Success(xml){	//取得首頁促銷訊息
+
+	//若<a> 中有 "class=external"，點取連結時連到OS的 browser
+	$(document).on('click', ".external", function (e) {
+		if (isRunInApp()){
+			e.preventDefault();
+			var targetURL = $(this).attr("href");
+			var ref = window.open(targetURL, "_system");
+		}
+	});
+
+	//申請密碼
+	function doForgetPassword(){
+		var msisdn		= $('#frmForgetPassword #txtForgetPasswordMSISDN').val();
+		var customerid	= $('#frmForgetPassword #txtForgetPasswordCustomerId').val().toUpperCase();
+
+		if (beEmpty(msisdn) || beEmpty(customerid)){
+			MsgBox('請輸入門號及證號!');
+			return;
+		}
+		var sData = "";
+		sData = "Function=DoForgetPwd&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<CustomerId>" + customerid + "</CustomerId>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('作業失敗：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			if ($(xml).find("Status").text()=='0'){
+				MsgBox('作業完成：' + $(xml).find("StatusMsg").text());
+				GATrackEvent('申請密碼', '成功', msisdn);
+				$('#userLoginForgetPassword #txtForgetPasswordMSISDN').val('');
+				$('#userLoginForgetPassword #txtForgetPasswordCustomerId').val('');
+			}else{
+				MsgBox('作業失敗：' + $(xml).find("StatusMsg").text());
+				GATrackEvent('申請密碼', '失敗', msisdn);
+			}
+		});
+	}	//function doForgetPassword(){
+	
+	//變更密碼
+	function doChangePassword(){
+		var msisdn			= $('#frmChangePassword #txtChangePasswordMSISDN').val();
+		var oldpassword		= $('#frmChangePassword #txtChangePasswordOldPassword').val();
+		var newpassword1	= $('#frmChangePassword #txtChangePasswordNewPassword1').val();
+		var newpassword2	= $('#frmChangePassword #txtChangePasswordNewPassword2').val();
+		
+		if (beEmpty(msisdn) || beEmpty(oldpassword) || beEmpty(newpassword1) || beEmpty(newpassword2)){
+			MsgBox('請輸入所有欄位!');
+			return;
+		}
+
+		if (newpassword1!=newpassword2){
+			MsgBox('兩個新密碼的值不相同!');
+			return;
+		}
+
+		if (newpassword1.length<4 || newpassword1.length>6){
+			MsgBox('密碼長度需為4~6碼!');
+			return;
+		}
+
+		var sData = "";
+		sData = "Function=DoPwdChange&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<OldPassword>" + oldpassword + "</OldPassword>";
+		sData += "<NewPassword>" + newpassword1 + "</NewPassword>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('作業失敗：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			if ($(xml).find("Status").text()=='0'){
+				MsgBox('作業完成：' + $(xml).find("StatusMsg").text());
+				GATrackEvent('變更密碼', '成功', msisdn);
+			}else{
+				MsgBox('作業失敗：' + $(xml).find("StatusMsg").text());
+				GATrackEvent('變更密碼', '失敗', msisdn);
+			}
+		});
+	}	//function doChangePassword(){
+
+	function doPushMessageRegister(msisdn, contractid){	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
+		if (!isRunInApp()) return;	//若在browser執行，則不註冊GCM/APNS
+		var DeviceType = getPlatformName();
+		if (notEmpty(DeviceType) && DeviceType=='iOS')		DeviceType = "I";
+		if (notEmpty(DeviceType) && DeviceType=='Android')	DeviceType = "A";
+		if (beEmpty(DeviceType) || (DeviceType!='I' && DeviceType!='A')) return;	//若不是Android或iOS裝置，則不註冊GCM/APNS
+		var hasRegistered = getLocalValue("PushMessageRegister");
+		if (beEmpty(hasRegistered) || hasRegistered!='Y'){	//尚未註冊GCM/APNS，開始進行註冊
+			showBlockUI();
+			var pushNotification;
+			pushNotification = window.plugins.pushNotification;
+			if (DeviceType=='A'){	//Android裝置
+				pushNotification.register(
+					successHandler,
+					errorHandler, {
+					"senderID":"998389896458",
+					"ecb":"onNotificationGCM"
+				});
+			}else{	//iOS裝置
+				pushNotification.register(
+					tokenHandler,
+					errorHandler, {
+						"badge":"true",
+						"sound":"true",
+						"alert":"true",
+						"ecb":"onNotificationAPN"
+				});
+			}	//if (DeviceType=='A'){	//Android裝置
+		}	//if (beEmpty(hasRegistered) || hasRegistered!='Y'){	//尚未註冊GCM/APNS，開始進行註冊
+	}	//function doPushMessageRegister(msisdn, contractid){	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
+
+	function successHandler (result) {
+		setLocalValue(PushMessageRegister, 'Y');
+		alert('result = ' + result);
+	}
+
+	function errorHandler (error) {
+		alert('error = ' + error);
+	}
+
+	function tokenHandler (result) {
+		// Your iOS push server needs to know the token before it can push to this device
+		// here is where you might want to send it the token for later use.
+		
+		alert('device token = ' + result);
+		var sData = "";
+		sData = "ServiceId=myvibo";
+		sData += "&DeviceId=" + result;
+		sData += "&DeviceType=" + "I";
+		sData += "&DeviceId=" + result;
+		sData += "&MSISDN=" + getLocalValue(loginmsisdn);
+		sData += "&ContractId=" + getLocalValue(logincontractid);
+		sData += "&ResponseType=" + "xml";
+
+		getDataFromServer("ajaxPushMessageAddDevice.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				pushNotification.unregister(successHandler, errorHandler);
+				MsgBox('訊息通知註冊失敗失敗：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			setLocalValue(PushMessageRegister, 'Y');
+		});
+
+	}	//function tokenHandler (result) {
+
+	// iOS
+	function onNotificationAPN (event) {	//收到APNS推播訊息
+		if ( event.alert ){
+			navigator.notification.alert(event.alert);
+		}
+		
+		if ( event.sound ){
+			var snd = new Media(event.sound);
+			snd.play();
+		}
+		
+		if ( event.badge ){
+			pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+		}
+	}	//function onNotificationAPN (event) {	//收到APNS推播訊息
+
+	// Android
+	function onNotificationGCM(e) {	//收到GCM推播訊息
+		$("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
+		
+		switch( e.event )
+		{
+			case 'registered':
+				if ( e.regid.length > 0 )
+				{
+					$("#app-status-ul").append('<li>REGISTERED -> REGID:' + e.regid + "</li>");
+					// Your GCM push server needs to know the regID before it can push to this device
+					// here is where you might want to send it the regID for later use.
+					console.log("regID = " + e.regid);
+				}
+			break;
+			
+			case 'message':
+				// if this flag is set, this notification happened while we were in the foreground.
+				// you might want to play a sound to get the user's attention, throw up a dialog, etc.
+				if ( e.foreground )
+				{
+					//$("#app-status-ul").append('<li>--INLINE NOTIFICATION--' + '</li>');
+					
+					// if the notification contains a soundname, play it.
+					//var my_media = new Media("/android_asset/www/"+e.soundname);
+					//my_media.play();
+				}
+				else
+				{  // otherwise we were launched because the user touched a notification in the notification tray.
+					if ( e.coldstart )
+					{
+						//$("#app-status-ul").append('<li>--COLDSTART NOTIFICATION--' + '</li>');
+					}
+					else
+					{
+						//$("#app-status-ul").append('<li>--BACKGROUND NOTIFICATION--' + '</li>');
+					}
+				}
+				
+				//$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+				//$("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
+			break;
+			
+			case 'error':
+				//$("#app-status-ul").append('<li>ERROR -> MSG:' + e.msg + '</li>');
+			break;
+			
+			default:
+				//$("#app-status-ul").append('<li>EVENT -> Unknown, an event was received and we do not know what it is</li>');
+			break;
+		}
+	}	//function onNotificationGCM(e) {	//收到GCM推播訊息
+
+</script>

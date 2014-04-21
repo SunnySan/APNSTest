@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&region=TW&language=zh-TW"></script>
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- ****************************** 登入Wi-Fi ***********************************-->
+<div data-role="page" id="myWifiLoginWifi">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myWifiLoginWifi">登入Wi-Fi</a></li>
+				<li><a href="#myWifiQueryWifiHotSpot">查Wi-Fi熱點</a></li>
+				<li><a href="#myWifiLoginDesc">說明</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div style="font-weight:bold;">開啟Wi-Fi</div>
+		請至手機>>設定>>開啟Wi-Fi
+		<br>
+		<br><div style="font-weight:bold;">威寶「手機Wi-Fi無線上網」設定方式</div>
+		1.搜尋選擇CHT Wi-Fi(HiNet)
+		<br>2.行動裝置瀏覽器開啟Wi-Fi登入
+		<br>3.選擇<漫遊>-業者<威寶電信>
+		<br>4.登入威寶電信門號/密碼(密碼同威寶電信官網)即可連結Wi-Fi上網
+
+		<a id="myWifiLoginWifiLink" name="myWifiLoginWifiLink" href='#' class='external' target='_blank' data-role='button' data-iconpos='left'>詳細說明</a>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 登入Wi-Fi -->
+
+<!-- ****************************** 查Wi-Fi熱點 ***********************************-->
+<div data-role="page" id="myWifiQueryWifiHotSpot">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myWifiLoginWifi">登入Wi-Fi</a></li>
+				<li><a href="#myWifiQueryWifiHotSpot">查Wi-Fi熱點</a></li>
+				<li><a href="#myWifiLoginDesc">說明</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id="map_container" class="ui-bar-c ui-corner-all ui-shadow" style="margin:5px;padding:5px;">
+			<div id="map_canvas" style="height:100%;width:100%;"></div>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 查Wi-Fi熱點 -->
+
+<!-- ****************************** 說明 ***********************************-->
+<div data-role="page" id="myWifiLoginDesc">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myWifiLoginWifi">登入Wi-Fi</a></li>
+				<li><a href="#myWifiQueryWifiHotSpot">查Wi-Fi熱點</a></li>
+				<li><a href="#myWifiLoginDesc">說明</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<iframe id="myWifiLoginDescIframe" name="myWifiLoginDescIframe" src="https://www.vibo.com.tw/CWS/epaper_upload/20140110/vibowifi_Phone.htm" width="100%"></iframe>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 說明 -->
+
+
+</body>
+</html>
+<script type="text/javascript" src="js/initPage.js"></script><!--初始化頁面，設定header及footer -->
+
+<script type="text/javascript">
+	$('#myWifiLoginWifi').one('pageshow', function () {	//依據不同OS(Android/iOS)，顯示不同的設定連結
+		var os = getPlatformName();
+		if (os == "iOS")		$("#myWifiLoginWifi #myWifiLoginWifiLink").attr('href', 'http://www.vibo.com.tw/CWS/epaper_upload/20140110/vibowifi_Phone_a.htm');
+		if (os == "Android")	$("#myWifiLoginWifi #myWifiLoginWifiLink").attr('href', 'http://www.vibo.com.tw/CWS/epaper_upload/20140110/vibowifi_Phone_g.htm');
+	});	//$('#myWifiLoginWifi').one('pageshow', function () {	//依據不同OS(Android/iOS)，顯示不同的設定連結
+
+	$('#myWifiLoginDesc').one('pageshow', function () {	//設定內嵌iframe網頁的高度
+		var MainHeight = $(window).height()-$("#myWifiLoginDesc div[data-role='header']").outerHeight(true)-$("#myWifiLoginDesc div[data-role='footer']").outerHeight(true);	//全螢幕扣掉 header & footer 的高度
+		$("#myWifiLoginDescIframe").height(MainHeight);
+	});	//$('#myWifiLoginDesc').one('pageshow', function () {	//設定內嵌iframe網頁的高度
+	
+	var infos = [];
+	
+	$('#myWifiQueryWifiHotSpot').one('pageshow', function () {
+		
+		//if (beEmpty(getLocalValue('loginmsisdn'))) $('.CarouselMustLogin').hide();	//將需登入才能使用的項目隱藏
+		
+		//showBlockUI();
+		
+		$('#map_container').width($(window).width() - 24);
+		$('#map_container').height(($(window).height() - $("#myWifiQueryWifiHotSpot div[data-role='header']").outerHeight(true) - $("#myWifiQueryWifiHotSpot div[data-role='footer']").outerHeight(true) - 24 ) );
+
+		var clientPosition = new google.maps.LatLng('25.0517202', '121.5590735');	//預設為南京東路店
+
+		var options = { 
+			zoom : 14,
+			center : clientPosition,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		};
+		var $content = $("#map_canvas");
+		var map = new google.maps.Map ($content[0], options);
+
+		google.maps.event.addListener(map, 'click', function() {
+			closeInfos();
+		});
+	
+
+		if(navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				clientPosition = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+				
+				var marker1 = new google.maps.Marker ( 
+				{ 
+					map : map, 
+					animation : google.maps.Animation.DROP,
+					'title': '您目前的位置',
+					position : clientPosition  
+				});  
+				marker1.info = new google.maps.InfoWindow({
+					content: '您目前的位置'
+				});
+				
+				google.maps.event.addListener(marker1, 'click', function() {
+					closeInfos();
+					marker1.info.open(map, marker1);
+					infos[0]=marker1.info;
+				});
+				//畫一個圈圈
+				var populationOptions = {
+					strokeColor: "#FF0000",
+					strokeOpacity: 0.5,
+					strokeWeight: 2,
+					fillColor: "#FF0000",
+					fillOpacity: 0.2,
+					map: map,
+					center: clientPosition,
+					radius: 500
+				};
+				cityCircle = new google.maps.Circle(populationOptions);
+				
+				map.setCenter(clientPosition);	//將用戶位置放置於地圖中央
+
+				//標出附近的WiFi熱點
+				$.getJSON( "https://vshop.vibo.com.tw/myvibowifi/gethotspot.php?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude, function(data) { 
+					//找出前 N 個與用戶距離最近的熱點
+					var		iTop	= 10;	//要找的熱點個數，若要找不同的數目請修改此值
+					var		k		= 0;		//找到幾筆資料
+
+					k = 0;
+					$.each( data, function(i, marker) {
+						if (marker.lat!='0' && marker.lon!='0' && k<iTop){	//座標為0應該有問題，不顯示
+							var marker1 = new google.maps.Marker ( 
+							{ 
+								map : map, 
+								animation : google.maps.Animation.DROP,
+								'icon': 'images/pin_green.png',
+								'title': marker.name,
+								position : new google.maps.LatLng(marker.lat, marker.lon)  
+							});  
+							marker1.info = new google.maps.InfoWindow({
+								content: '<h4>' + marker.name + '</h4>' + marker.address
+							});
+							
+							google.maps.event.addListener(marker1, 'click', function() {
+								closeInfos();
+								marker1.info.open(map, marker1);
+								infos[0]=marker1.info;
+							});
+							k++;
+						}	//if (marker.lat!='0' && marker.lon!='0' && k<iTop){	//座標為0應該有問題，不顯示
+					});	//$.each( data, function(i, marker) {
+					if (k==0) MsgBox("您附近並無熱點!");
+				});	//標出附近的WiFi熱點
+
+				//unBlockUI();
+				GATrackEvent('取得附近WiFi熱點', '成功', '');
+			}, function() {
+				//unBlockUI();
+				MsgBox("無法取得您目前所在的位置，請確認是否有開啟GPS定位服務!");
+				GATrackEvent('取得附近WiFi熱點', '失敗：無法取得您目前所在的位置', '');
+			},
+			{ maximumAge: 60000, timeout: 30000, enableHighAccuracy: true }
+			);	//navigator.geolocation.getCurrentPosition(function(position) {
+		} else {
+			// Browser doesn't support Geolocation
+			//unBlockUI();
+			MsgBox("您的裝置不支援座標功能!");
+			GATrackEvent('取得附近WiFi熱點', '失敗：您的裝置不支援座標功能', '');
+			map.setCenter(clientPosition);
+		}	//if(navigator.geolocation) {
+	});	//$('#myQueryStorePosition').on('pageshow', function () {
+
+	function closeInfos(){
+		if(infos.length > 0){
+			/* detach the info-window from the marker ... undocumented in the API docs */
+			infos[0].set("marker", null);
+			/* and close it */
+			infos[0].close();
+			/* blank the array */
+			infos.length = 0;
+		}
+	}
+</script>
+

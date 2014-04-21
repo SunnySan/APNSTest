@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- ****************************** 基本服務 ***********************************-->
+<div data-role="page" id="myServiceBasic">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myServiceBasic">基本服務</a></li>
+				<li><a href="#myServiceVAS">加值服務</a></li>
+				<li><a href="#myServiceTraffic">上網傳輸量</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id="myServiceBasicStatus"></div>
+		<div id="myServiceBasicData">
+			<h3>服務名稱及狀態</h3>
+			<form>
+				<fieldset id="myServiceBasicList" data-role="controlgroup" data-iconpos="right">
+				</fieldset>
+				<label><input type="checkbox" id="chk1" name="chk1">本人已知悉並同意上述相關業務事項</label>
+				<a href="#" data-role="button" onclick="doChangeServiceBasic();return false;">變更服務</a>
+			</form>
+			注意事項：
+			<br>申請本服務，無需收取服務費用。
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 基本服務 -->
+
+<!-- ****************************** 加值服務 ***********************************-->
+<div data-role="page" id="myServiceVAS">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myServiceBasic">基本服務</a></li>
+				<li><a href="#myServiceVAS">加值服務</a></li>
+				<li><a href="#myServiceTraffic">上網傳輸量</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id="myServiceVASStatus"></div>
+		<div id="myServiceVASData">
+			<h3>您已申請的加值服務</h3>
+			<table id="myServiceVASTable" data-role="table" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+						<td>服務名稱</td>
+						<td>目前狀態</td>
+					</tr>
+				</thead>
+				<tbody>
+					<!--
+					<tr>
+						<td>服務名稱</td>
+						<td>目前狀態</td>
+					</tr>
+					-->
+				</tbody>
+			</table>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 加值服務 -->
+
+<!-- ****************************** 上網傳輸量 ***********************************-->
+<div data-role="page" id="myServiceTraffic">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myServiceBasic">基本服務</a></li>
+				<li><a href="#myServiceVAS">加值服務</a></li>
+				<li><a href="#myServiceTraffic">上網傳輸量</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3>上網傳輸量查詢—未出帳</h3>
+		本功能協助數據計量型客戶，了解當期計費週期國內上網傳輸量使用情形。        
+		<table id="myServiceTrafficTable" data-role="table" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive" style="margin-top:15px!important;margin-bottom:15px!important;">
+			<thead>
+				<tr class="ui-bar-d">
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>VMall 傳輸量：本期未出帳累計通訊量 (已扣除免費通訊量 )</td>
+					<td id="myServiceTrafficVMall"></td>
+				</tr>
+				<tr>
+					<td>行動網際網路傳輸量：本期未出帳累計通訊量 (已扣除免費通訊量 )</td>
+					<td id="myServiceTrafficInternet"></td>
+				</tr>
+			</tbody>
+		</table>
+		注意事項：
+		<ol type="decimal">
+			<li>目前僅提供(1)未出帳及(2)六小時前結束連線的國內上網記錄供用戶查詢。</li>
+            <li>此查詢功能提供的國內行動上網傳輸使用量僅供參考，實際數據服務使用傳輸費金額仍以帳單核算結果為準。</li>
+            <li>用戶如有申請變更帳單計費週期等服務異動，將影響此功能查詢結果；詳洽客服專線。</li>
+        </ol>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 上網傳輸量 -->
+
+
+</body>
+</html>
+<script type="text/javascript" src="js/initPage.js"></script><!--初始化頁面，設定header及footer -->
+
+<script type="text/javascript">
+	var msisdn = getLocalValue('loginmsisdn');
+	var contractid = getLocalValue('logincontractid');
+	var customerid = getLocalValue('logincustomerid');
+	if (beEmpty(msisdn) || beEmpty(contractid) || beEmpty(customerid)){
+		alertNoLogin();
+	}
+
+	var servicebasic = null;
+	
+	$('#myServiceBasic').one('pageshow', function () {	//檢查登入資訊
+		userAuthentication();
+	});	//$('#myServiceBasic').one('pageshow', function () {	//檢查登入資訊
+
+	$('#myServiceBasic').on('pageshow', function () {	//基本服務，取得資料
+		$('#myServiceBasic #myServiceBasicStatus').html('');
+		if (beEmpty(msisdn) || beEmpty(customerid)){
+			alertNoLogin();
+			return;
+		}
+		var sData = "";
+		sData = "Function=GetServiceStatus&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<ContractID>" + contractid + "</ContractID>";
+		sData += "<CustomerId>" + customerid + "</CustomerId>";
+		sData += "<ServiceType>1</ServiceType>";	//0:加值服務、1:基本服務
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				GATrackEvent('查詢基本服務', '失敗', msisdn + ':' + contractid);
+				MsgBox('無法取得您的服務資料：' + ResultText);
+				$('#myServiceBasic #myServiceBasicStatus').html('無法取得您的服務資料：' + ResultText);
+				$('#myServiceBasic #myServiceBasicStatus').show();
+				$('#myServiceBasic #myServiceBasicData').hide();
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+
+			var Status = $(xml).find("Status").text();
+			var StatusMsg = $(xml).find("StatusMsg").text();
+			
+			if (beEmpty(Status) || Status!='0'){
+				StatusMsg = (beEmpty(StatusMsg)?'無法取得服務資料':StatusMsg);
+				$('#myServiceBasic #myServiceBasicStatus').html(StatusMsg);
+				$('#myServiceBasic #myServiceBasicStatus').show();
+				$('#myServiceBasic #myServiceBasicData').hide();
+				return;
+			}
+
+			var serv_no			= "";
+			var serv_name		= "";
+			var serv_fee_type	= "";
+			var fee_month		= "";
+			var status			= "";
+			var s				= "";
+			servicebasic = xml;	//把xml資料存起來，變更服務時需比對有哪些服務被變更了
+			//s = "<legend>服務名稱及狀態</legend>";
+			$(xml).find("services").each( function() {	//每一項是一個服務
+				serv_no			= $(this).children("serv_no").text();
+				serv_name		= $(this).children("serv_name").text();
+				serv_fee_type	= $(this).children("serv_fee_type").text();
+				fee_month		= $(this).children("fee_month").text();
+				status			= $(this).children("status").text();
+				s += "<input type='checkbox' name='" + serv_no + "' id='" + serv_no + "'" + (status=='1'?'checked':'') + ">";
+				s += "<label for='" + serv_no + "'>" + serv_name + "</label>";
+			});	//$(xml).find("services").each( function() {	//每一項是一個服務
+			$('#myServiceBasic #myServiceBasicData').show();
+			$('#myServiceBasic #myServiceBasicList').html(s);
+			$('#myServiceBasic #myServiceBasicList').trigger('create');
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	});	//$('#myServiceBasic').one('pageshow', function () {	//基本服務，取得資料
+
+	$('#myServiceVAS').on('pageshow', function () {	//加值服務，取得資料
+		if (beEmpty(msisdn) || beEmpty(customerid)){
+			alertNoLogin();
+			return;
+		}
+		var sData = "";
+		sData = "Function=GetServiceStatus&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<ContractID>" + contractid + "</ContractID>";
+		sData += "<CustomerId>" + customerid + "</CustomerId>";
+		sData += "<ServiceType>0</ServiceType>";	//0:加值服務、1:基本服務
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				GATrackEvent('查詢加值服務', '失敗', msisdn + ':' + contractid);
+				MsgBox('無法取得您的服務資料：' + ResultText);
+				$('#myServiceVAS #myServiceVASStatus').html('無法取得您的服務資料：' + ResultText);
+				$('#myServiceVAS #myServiceVASStatus').show();
+				$('#myServiceVAS #myServiceVASData').hide();
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+
+			var Status = $(xml).find("Status").text();
+			var StatusMsg = $(xml).find("StatusMsg").text();
+			
+			if (beEmpty(Status) || Status!='0'){
+				StatusMsg = (beEmpty(StatusMsg)?'無法取得服務資料':StatusMsg);
+				$('#myServiceVAS #myServiceVASStatus').html(StatusMsg);
+				$('#myServiceVAS #myServiceVASStatus').show();
+				$('#myServiceVAS #myServiceVASData').hide();
+				return;
+			}
+
+			var serv_no			= "";
+			var serv_name		= "";
+			var serv_fee_type	= "";
+			var fee_month		= "";
+			var status			= "";
+			var s				= "";
+			$(xml).find("services").each( function() {	//每一項是一個服務
+				serv_no			= $(this).children("serv_no").text();
+				serv_name		= $(this).children("serv_name").text();
+				serv_fee_type	= $(this).children("serv_fee_type").text();
+				fee_month		= $(this).children("fee_month").text();
+				status			= $(this).children("status").text();
+				if (status=='1'){
+					s += "<tr>";
+					s += "	<td>" + serv_name + "</td>";
+					//s += "	<td>" + (status=='0'?'未申請':'<span style=\"color:#FF0000;\">已申請</span>') + "</td>";
+					s += "	<td>已申請</td>";
+					s += "</tr>";
+				}
+			});	//$(xml).find("services").each( function() {	//每一項是一個服務
+			if (beEmpty(s)) s="<tr><td colspan='2'>目前無申請項目</td></tr>";
+			$('#myServiceVAS #myServiceVASData').show();
+			$('#myServiceVAS #myServiceVASTable tbody').html(s);
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	});	//$('#myServiceVAS').one('pageshow', function () {	//加值服務，取得資料
+
+	$('#myServiceTraffic').on('pageshow', function () {	//上網傳輸量，取得資料
+		if (beEmpty(msisdn) || beEmpty(contractid)){
+			alertNoLogin();
+			return;
+		}
+		var sData = "";
+		sData = "Function=GetNetVolume&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<ContractId>" + contractid + "</ContractId>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('無法取得您的傳輸量資料：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			var vmall = $(xml).find("WAPVolume").text();
+			var internet = $(xml).find("InternetVolume").text();
+			if (!isNaN(vmall)) vmall += "KB";
+			if (!isNaN(internet)) internet += "KB";
+			$('#myServiceTraffic #myServiceTrafficVMall').html(vmall);
+			$('#myServiceTraffic #myServiceTrafficInternet').html(internet);
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	});	//$('#myServiceTraffic').on('pageshow', function () {	//上網傳輸量，取得資料
+
+	function doChangeServiceBasic(){	//變更基本服務
+		var serv_no			= "";
+		var serv_name		= "";
+		var serv_fee_type	= "";
+		var status			= "";
+		var temp			= "";
+		var temp1			= "";
+		var s				= "";
+		var s1				= "";
+
+		if (!$("#myServiceBasic input[name='chk1']").is(":checked")){
+			MsgBox('確定要變更服務？請勾選「本人已知悉並同意上述相關業務事項」');
+			return;
+		}
+
+		$("#myServiceBasic #myServiceBasicList input[type='checkbox']").each( function() {	//掃過所有服務，看哪些項目的狀態被變更了
+			//alert($(this).attr('id') + ":" + $(this).attr('checked'));
+			temp1 = $(this).attr('id');
+			if ($(this).is(":checked")){
+				temp = '1';	//要申請此服務
+			}else{
+				temp = '0';	//不申請此服務
+			}
+			/*
+			if (beEmpty($(this).attr('checked')) || $(this).attr('checked')!='checked'){
+				temp = '0';	//不申請此服務
+			}else{
+				temp = '1';	//要申請此服務
+			}
+			
+			alert(temp);
+			*/
+			$(servicebasic).find("services").each( function() {	//每一項是一個服務
+				serv_no			= $(this).children("serv_no").text();
+				serv_name		= $(this).children("serv_name").text();
+				serv_fee_type	= $(this).children("serv_fee_type").text();
+				status			= $(this).children("status").text();
+				//console.log(serv_no);
+				if (serv_no==temp1 && status!=temp){	//此服務狀態已變更
+					s += serv_name + ',' + serv_fee_type + ',' + temp + ';';
+					s1 += (beEmpty(s1)?serv_name:', '+serv_name);
+				}	//if (serv_no==$(this).attr('id') && status!=temp){	//此服務狀態已變更
+			});	//$(servicebasic).find("services").each( function() {	//每一項是一個服務
+		});	//$("#myServiceBasic #myServiceBasicList input[type='checkbox']").each( function() {	//掃過所有服務，看哪些項目的狀態被變更了
+		
+		if (notEmpty(s1)){	//有服務被變更過，讓用戶確認
+			$('<div>').simpledialog2({
+				mode: 'button',
+				headerText: '服務變更通知',
+				headerClose: false,
+				themeDialog: 'f',
+				buttonPrompt: '請問您是否確定要變更【' + s1 + '】的服務狀態？',
+				buttons : {
+					'確定變更': {
+						click: function () { 
+							doChangeServices('1', s, s1);	//送至 server 執行, 0:加值服務、1:基本服務
+						}
+					},
+					'再想一想': {
+						click: function () { 
+						},
+	        			icon: "delete"
+					}
+				}
+			})
+		}else{
+			MsgBox('沒有服務被變更');
+		}	//if (notEmpty(s1)){	//有服務被變更過，讓用戶確認
+	}	//function doChangeServiceBasic(){	//變更基本服務
+	
+	function doChangeServices(type, status, service){	//執行服務變更，type=0:加值服務、1:基本服務
+		var sData = "";
+		sData = "Function=DoServiceStatusChange&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<ContractId>" + contractid + "</ContractId>";
+		sData += "<ServiceType>" + type + "</ServiceType>";	//0:加值服務、1:基本服務
+		sData += "<ServicesStatus>" + status + "</ServicesStatus>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				GATrackEvent('變更基本服務', '失敗', msisdn + ':' + contractid);
+				MsgBox('無法變更您的服務狀態：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			
+			if ($(xml).find("Status").text()!='0'){
+				GATrackEvent('變更基本服務', '失敗', msisdn + ':' + contractid);
+				MsgBox('變更服務狀態失敗：' + $(xml).find("Status").text());
+				return;
+			}	//if ($(xml).find("Status").text()!='0'){
+			GATrackEvent('變更基本服務', '成功', msisdn + ':' + contractid);
+			MsgBox("【" + service + "】申請/取消服務已送出，系統將於1小時內為您處理完成。");
+			$('#myServiceBasic #myServiceBasicStatus').html('您已申請/取消基本服務，系統目前正在處理中。');
+			$('#myServiceBasic #myServiceBasicStatus').show();
+			$('#myServiceBasic #myServiceBasicData').hide();
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+
+	}	//function doChangeServices(type, status, service){	//執行服務變更，type=0:加值服務、1:基本服務
+</script>
+

@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<!--<script src="js/plugins/Calendar.js"></script>--><!--iOS APP用的 Calendar 函數 -->
+	<!--<script src="js/plugins/SocialSharing.js"></script>--><!--"分享"功能，config.xml中的 version="2.3" 是給 PhoneGap 2.X 版用的 -->
+	
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- ****************************** 繳費提醒 ***********************************-->
+<div data-role="page" id="mySettingsBillReminder">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li class="reminder"><a href="#mySettingsBillReminder">繳費提醒</a></li>
+				<li><a href="#mySettingsFollowViboFB">加入威寶電信粉絲團</a></li>
+				<li class="socialshare"><a href="#mySettingsShareMyVIBO">分享MyVIBO</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3>電話帳單繳費提醒</h3>
+		<fieldset id="fsFeedbackBefore" data-role="controlgroup">
+			<label><input type="radio" name="rad0" id="rad0a" value="0" checked>取消提醒</label>
+			<label><input type="radio" name="rad0" id="rad0b" value="1">每月1日</label>
+			<label><input type="radio" name="rad0" id="rad0c" value="11">每月11日</label>
+			<label><input type="radio" name="rad0" id="rad0d" value="21">每月21日</label>
+		</fieldset>
+
+		<!--
+		<fieldset data-role="controlgroup">
+			<input type="checkbox" name="chk1" id="chk1">
+			<label for="chk1">每月1日</label>
+			<input type="checkbox" name="chk2" id="chk2">
+			<label for="chk2">每月11日</label>
+			<input type="checkbox" name="chk3" id="chk3">
+			<label for="chk3">每月21日</label>
+		</fieldset>
+		-->
+		<!--<button onclick="doBillReminder();">確認</button>-->
+		<!--<a href="#" data-role="button" id="btnReminder" onclick="doBillReminder();return false;">確認</a>-->
+		<button id="btnReminder" onclick="doBillReminder();">確認</button>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 繳費提醒 -->
+
+<!-- ****************************** 加入威寶電信粉絲團 ***********************************-->
+<div data-role="page" id="mySettingsFollowViboFB">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li class="reminder"><a href="#mySettingsBillReminder">繳費提醒</a></li>
+				<li><a href="#mySettingsFollowViboFB">加入威寶電信粉絲團</a></li>
+				<li class="socialshare"><a href="#mySettingsShareMyVIBO">分享MyVIBO</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<a href="http://www.facebook.com/vibotelecom" class="external" target="_blank" data-role="button" onclick="GATrackEvent('加入威寶電信粉絲團', 'Click', '');">加入威寶電信粉絲團</a>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 加入威寶電信粉絲團 -->
+
+<!-- ****************************** 分享 MyVIBO ***********************************-->
+<div data-role="page" id="mySettingsShareMyVIBO">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li class="reminder"><a href="#mySettingsBillReminder">繳費提醒</a></li>
+				<li><a href="#mySettingsFollowViboFB">加入威寶電信粉絲團</a></li>
+				<li class="socialshare"><a href="#mySettingsShareMyVIBO">分享MyVIBO</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<button onclick="doShareMyVIBO();">分享MyVIBO</button>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 分享 MyVIBO -->
+
+</body>
+</html>
+<script type="text/javascript" src="js/initPage.js"></script><!--初始化頁面，設定header及footer -->
+
+<script type="text/javascript">
+	//若<a> 中有 "class=external"，點取連結時連到OS的 browser
+	$(document).on('click', ".external", function (e) {
+		if (isRunInApp()){
+			e.preventDefault();
+			var targetURL = $(this).attr("href");
+			window.open(targetURL, "_system");
+		}
+	});
+
+	$('#mySettingsBillReminder').one('pageshow', function () {	//若為不支援的設備，則隱藏繳費提醒
+		if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
+			$('.reminder').hide();
+			showPage('#mySettingsFollowViboFB');
+		}	//if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
+		if (!isRunInApp()){	//只有APP才能"分享MyVIBO"
+			$('.socialshare').hide();
+		}	//if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
+	});	//$('#myRecommandNewEvent').one('pageshow', function () {	//取得最新活動訊息清單
+
+	$('#mySettingsFollowViboFB').one('pageshow', function () {	//若為不支援的設備，則隱藏繳費提醒
+		if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
+			$('.reminder').hide();
+		}	//if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
+	});	//$('#mySettingsFollowViboFB').one('pageshow', function () {	//取得最新活動訊息清單
+
+	$('#mySettingsBillReminder').on('pageshow', function () {	//設定帳單提醒項目
+		var r = getLocalValue('BillReminder');
+		if (notEmpty(r)){
+			if (r=='1') $("#mySettingsBillReminder input[name='rad0']")[1].checked = true;
+			if (r=='11') $("#mySettingsBillReminder input[name='rad0']")[2].checked = true;
+			if (r=='21') $("#mySettingsBillReminder input[name='rad0']")[3].checked = true;
+		}
+		$("#mySettingsBillReminder input[name='rad0']:radio").checkboxradio("refresh");
+		/*
+		var r1 = getLocalValue('BillReminder1');
+		var r2 = getLocalValue('BillReminder2');
+		var r3 = getLocalValue('BillReminder3');
+
+		if (notEmpty(r1) && r1=='Y') $('#mySettingsBillReminder #chk1').attr('checked', 'checked');
+		if (notEmpty(r2) && r2=='Y') $('#mySettingsBillReminder #chk2').attr('checked', 'checked');
+		if (notEmpty(r3) && r3=='Y') $('#mySettingsBillReminder #chk3').attr('checked', 'checked');
+		$("#mySettingsBillReminder input[type='checkbox']").checkboxradio("refresh");	//要 refresh 才能生效
+		*/
+	});	//$('#mySettingsBillReminder').on('pageshow', function () {	//設定帳單提醒項目
+		
+	function doBillReminder(){	//設定帳單提醒
+		/*
+		var r1old = (getLocalValue('BillReminder1')=='Y'?true:false);
+		var r2old = (getLocalValue('BillReminder2')=='Y'?true:false);
+		var r3old = (getLocalValue('BillReminder3')=='Y'?true:false);
+		var r1 = false;
+		var r2 = false;
+		var r3 = false;
+		if ($("#mySettingsBillReminder input[name='chk1']").is(":checked")) r1 = true;
+		if ($("#mySettingsBillReminder input[name='chk2']").is(":checked")) r2 = true;
+		if ($("#mySettingsBillReminder input[name='chk3']").is(":checked")) r3 = true;
+		if (r1!=r1old){
+			if (r1) addNotificationIOS(1); else cancelNotificationIOS(1);
+		}
+		if (r2!=r2old){
+			if (r2) addNotificationIOS(11); else cancelNotificationIOS(11);
+		}
+		if (r3!=r3old){
+			if (r3) addNotificationIOS(21); else cancelNotificationIOS(21);
+		}
+		*/
+		enableReminder(0);
+		var r = $("#mySettingsBillReminder input[name='rad0']:radio:checked").val();
+
+		if (r=='0'){
+			cancelNotificationIOS(function(message){MsgBox('作業成功!');enableReminder(1);}, function(message){MsgBox('訊息刪除失敗：' + message);enableReminder(1);});	//清除所有通知
+			;	//清除所有通知
+		}else{
+			cancelNotificationIOS(addNotificationIOS, function(message){MsgBox('訊息刪除失敗：' + message);enableReminder(1);});	//先清除所有通知
+		}
+	}
+	
+	function addNotificationIOS(message){
+		var remindTimes = 12;	//總共提醒幾次，若為12則每月提醒一次，共提醒12個月，
+		var startHour = 12;		//每次開始提醒的小時
+		var startMinute = 00;	//每次開始提醒的分鐘
+		var endHour = 18;		//每次結束提醒的小時
+		var endMinute = 00;		//每次結束提醒的分鐘
+		var startDate = null;	//每次開始提醒時間的 Date 物件
+		var endDate = null;		//每次結束提醒時間的 Date 物件
+		var beginString = "";	//第一次提醒的時間字串
+		var endString = "";		//最後一次提醒的時間字串
+		var d = new Date();
+		var curr_date = d.getDate();	//目前日期
+		var curr_month = d.getMonth(); //目前月份，are zero based
+		var curr_year = d.getFullYear();	//目前西元年(四位數)
+		
+		var iDay = parseInt($("#mySettingsBillReminder input[name='rad0']:radio:checked").val());
+		
+		if (curr_date>=iDay){	//目前日期已超過或等於本月提醒日期，改由下月開始提醒
+			startDate = getNextMonth(new Date(curr_year, curr_month, iDay, startHour, endMinute,0));
+			endDate = getNextMonth(new Date(curr_year, curr_month, iDay, endHour, endMinute,0));
+		}else{
+			startDate = new Date(curr_year, curr_month, iDay, startHour, endMinute,0);
+			endDate = new Date(curr_year, curr_month, iDay, endHour, endMinute,0);
+		}
+
+		beginString = startDate.getFullYear() + "年" + (startDate.getMonth()+1) + "月" + startDate.getDate() + "日" + startDate.getHours() + "點" + startDate.getMinutes() + "分";
+		
+		var title = "威寶帳單繳費通知";
+		var location = "";
+		var notes = "您好，帳單繳費提醒。\n如果您已繳費，請忽略此訊息，謝謝您。\n關閉提醒 :\n請至 MyVIBO 應用程式的設定>>繳費提醒";
+		//var success = function(message) { alert("Success: " + JSON.stringify(message)); };
+		//var error = function(message) { alert("Error: " + message); };
+		var i = 0;
+		
+		for (i=0;i<remindTimes;i++){	//跑迴圈，每月建立一個提醒
+			if (i>0){
+				startDate = getNextMonth(startDate);
+				endDate = getNextMonth(endDate);
+			}
+			if (i==remindTimes-1){
+				window.plugins.calendar.createEvent(title,location,notes,startDate,endDate
+					,function(message){
+						endString = startDate.getFullYear() + "年" + (startDate.getMonth()+1) + "月" + startDate.getDate() + "日" + startDate.getHours() + "點" + startDate.getMinutes() + "分";
+						MsgBox("日曆提醒已設定完成，將於" + beginString + "至" + endString + "的每月" + iDay + "日提醒您!");
+						setLocalValue('BillReminder', iDay.toString());
+						enableReminder(1);
+						GATrackEvent('設定日曆提醒', '成功', '');
+					},function(message){
+						MsgBox("無法建立日曆提醒：" + message);
+						enableReminder(1);
+						GATrackEvent('設定日曆提醒', '失敗', '');
+					});	//建立日曆提醒
+			}else{
+				window.plugins.calendar.createEvent(title,location,notes,startDate,endDate
+					,function(message){
+						return;
+					},function(message){
+						MsgBox("無法建立日曆提醒：" + message);
+						enableReminder(1);
+						GATrackEvent('設定日曆提醒', '失敗', '');
+					});	//建立日曆提醒
+			}
+		}	//for (i=0;i<remindTimes;i++){	//跑迴圈，每月建立一個提醒
+		/*
+		if (i==1) setLocalValue('BillReminder1', 'Y');
+		if (i==11) setLocalValue('BillReminder2', 'Y');
+		if (i==21) setLocalValue('BillReminder3', 'Y');
+		*/
+	}
+	
+	function getNextMonth(d){	//找下個月的日期
+		var date = d.getDate();			//目前日期
+		var month = d.getMonth(); 		//目前月份，are zero based
+		var year = d.getFullYear();		//目前西元年(四位數)
+		var hour = d.getHours();		//時
+		var minute = d.getMinutes();	//分
+		var second = d.getSeconds();	//秒
+		var newDate = null;
+		if (month==11){	//換年
+			newDate = new Date(year+1, 0, date, hour, minute, second);
+		}else{
+			newDate = new Date(year, month+1, date, hour, minute, second);
+		}
+		return newDate;
+	}
+
+	function cancelNotificationIOS(success, error){	//刪除所有通知
+		var d = new Date();
+		//刪除從兩年前至兩年後，共四年的標題為【威寶帳單繳費通知】的日曆項目
+		window.plugins.calendar.deleteEvent("威寶帳單繳費通知", "", "", new Date(new Date(d).setMonth(d.getMonth()-24)), new Date(new Date(d).setMonth(d.getMonth()+24)),success,error);
+		/*
+		if (i==1) setLocalValue('BillReminder1', 'N');
+		if (i==11) setLocalValue('BillReminder2', 'N');
+		if (i==21) setLocalValue('BillReminder3', 'N');
+		*/
+	}
+	
+	function enableReminder(i){	//enable 或 disable 繳費提醒的確認按鈕，0表示disable、1表示enable
+		if (i==0){
+			$('#mySettingsBillReminder #btnReminder').text('系統設定中，請稍候...');
+			$('#mySettingsBillReminder #btnReminder').button('disable');
+		}else{
+			$('#mySettingsBillReminder #btnReminder').text('確認');
+			$('#mySettingsBillReminder #btnReminder').button('enable');
+		}
+		$('#mySettingsBillReminder #btnReminder').button('refresh');
+	}	//function enableReminder(i){	//enable 或 disable 繳費提醒的確認按鈕
+	
+	function doShareMyVIBO(){	//分享MyVIBO
+		window.plugins.socialsharing.share('下載威寶MyVIBO App，馬上擁有行動客服小幫手!', null, null, 'https://vshop.vibo.com.tw/myviboinstall/index.html')
+		GATrackEvent('分享MyVIBO', '成功', '');
+	}
+</script>

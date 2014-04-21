@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.vibo.myvibo.app" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>MyVIBO</name>
+    <description>
+        這是威寶用戶專屬的APP.
+    </description>
+    <author email="sunnysun@vibo.com.tw" href="http://www.vibo.com.tw">
+        威寶電信
+    </author>
+    <preference name="phonegap-version" value="2.9.0" />
+    <feature name="http://api.phonegap.com/1.0/device" />
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="portrait" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="show-splash-screen-spinner" value="false" />
+    <preference name="splash-screen-duration" value="5000" />
+    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="disable-cursor" value="false" />
+    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-installLocation" value="auto" />
+    <icon src="icon.png" />
+    <icon gap:density="ldpi" gap:platform="android" src="res/icon/36.png" />
+    <icon gap:density="mdpi" gap:platform="android" src="res/icon/48.png" />
+    <icon gap:density="hdpi" gap:platform="android" src="res/icon/72.png" />
+    <icon gap:density="xhdpi" gap:platform="android" src="res/icon/96.png" />
+    <icon gap:platform="ios" height="57" src="res/icon/57.png" width="57" />
+    <icon gap:platform="ios" height="72" src="res/icon/72.png" width="72" />
+    <icon gap:platform="ios" height="76" src="res/icon/76.png" width="76" />
+    <icon gap:platform="ios" height="114" src="res/icon/114.png" width="114" />
+    <icon gap:platform="ios" height="120" src="res/icon/120.png" width="120" />
+    <icon gap:platform="ios" height="144" src="res/icon/144.png" width="144" />
+    <icon gap:platform="ios" height="152" src="res/icon/152.png" width="152" />
+    <icon gap:platform="winphone" src="res/icon/windows-phone/icon-48.png" />
+    <icon gap:platform="winphone" gap:role="background" src="res/icon/windows-phone/icon-173.png" />
+    <gap:splash gap:density="ldpi" gap:platform="android" src="res/screen/240x320.png" />
+    <gap:splash gap:density="mdpi" gap:platform="android" src="res/screen/320x480.png" />
+    <gap:splash gap:density="hdpi" gap:platform="android" src="res/screen/480x800.png" />
+    <gap:splash gap:density="xhdpi" gap:platform="android" src="res/screen/480x800.png" />
+    <gap:splash gap:platform="ios" height="480" src="res/screen/320x480.png" width="320" />
+    <gap:splash gap:platform="ios" height="960" src="res/screen/480x800.png" width="640" />
+    <gap:splash gap:platform="ios" height="1024" src="res/screen/480x800.png" width="768" />
+    <gap:splash gap:platform="ios" height="768" src="res/screen/480x800.png" width="1024" />
+    <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
+    <gap:plugin name="com.adobe.plugins.gaplugin" />
+    <gap:plugin name="nl.x-services.plugins.calendar" />
+    <gap:plugin name="nl.x-services.plugins.socialsharing" version="2.3" />
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+	<feature name="Device">
+		<param name="android-package" value="org.apache.cordova.Device" />
+	</feature>
+    <access origin="*" />
+    <gap:platform name="ios" />
+	<gap:platform name="android" />
+</widget>

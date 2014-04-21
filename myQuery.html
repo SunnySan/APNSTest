@@ -1,0 +1,874 @@
+﻿<!DOCTYPE html>
+<html>
+	<title>MyVIBO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
+	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
+	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&region=TW&language=zh-TW"></script>
+	
+	<script src="cordova.js"></script><!--給PhoneGap用的-->
+	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
+	<script type="text/javascript" src="js/initPhoneGap.js"></script><!--初始化PhoneGap-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- ****************************** 門市查詢-定位 ***********************************-->
+<div data-role="page" id="myQueryStorePosition">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myQueryStorePosition">門市查詢</a></li>
+				<li><a href="#myQueryRoaming">漫遊國家</a></li>
+				<li><a href="#myQueryService">好用服務</a></li>
+			</ul>
+		</div><!-- /navbar -->
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myQueryStorePosition">定位</a></li>
+				<li><a href="#myQueryStoreArea">區域查詢</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id="map_container" class="ui-bar-c ui-corner-all ui-shadow" style="margin:5px;padding:5px;">
+			<div id="map_canvas" style="height:100%;width:100%;"></div>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 門市查詢-定位 -->
+
+<!-- ****************************** 門市查詢-區域查詢 ***********************************-->
+<div data-role="page" id="myQueryStoreArea">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myQueryStorePosition">門市查詢</a></li>
+				<li><a href="#myQueryRoaming">漫遊國家</a></li>
+				<li><a href="#myQueryService">好用服務</a></li>
+			</ul>
+		</div><!-- /navbar -->
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myQueryStorePosition">定位</a></li>
+				<li><a href="#myQueryStoreArea">區域查詢</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+
+		<div id='selectCity' class='StoreAreaDiv'>
+			<div id="selectCityStatus">資料更新中，請稍候...</div>
+			<!--城市及地區選擇-->
+			<div id="collapsible-set-city" data-role="collapsible-set" data-theme="c" data-content-theme="d">
+				<!--
+				<div data-role="collapsible">
+					<h2>Filtered list</h2>
+					<ul data-role="listview">
+						<li><a href="index.html">Adam Kinkaid</a></li>
+						<li><a href="index.html">Alex Wickerham</a></li>
+					</ul>
+				</div>
+				-->
+			</div>
+		</div>
+
+		<!--某地區店點列表-->
+		<div id='cityStores' class='StoreAreaDiv' style="display:none;">
+			<div id="cityStoresStatus" style="display:none;">資料更新中，請稍候...</div>
+			<ul id="cityStoreList" data-role='listview' data-inset="true">
+			</ul>
+			<button onclick="showStoreAreaDiv('selectCity');">重新選擇</button>
+		</div>
+
+		<!--某店點地圖-->
+		<div id="map_container_store_div" class="StoreAreaDiv" style="display:none;">
+			<div id="map_container_store" class="ui-bar-c ui-corner-all ui-shadow" style="margin:5px;padding:5px;">
+				<div id="map_canvas_store" style="height:100%;width:100%;"></div>
+			</div>
+			<button id="map_container_button" onclick="showStoreAreaDiv('selectCity');">重新選擇</button>
+		</div>
+
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 門市查詢-區域查詢 -->
+
+<!-- ****************************** 漫遊國家 ***********************************-->
+<div data-role="page" id="myQueryRoaming">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myQueryStorePosition">門市查詢</a></li>
+				<li><a href="#myQueryRoaming">漫遊國家</a></li>
+				<li><a href="#myQueryService">好用服務</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id="collapsible-set-country" data-role="collapsible-set" data-theme="f" data-content-theme="d"><!--漫遊國家列表-->
+			<!--
+			<div data-role="collapsible">
+				<h2>Middle East 中東</h2>
+				<ul data-role="listview">
+					<li><a href="index.html">Adam Kinkaid</a></li>
+					<li><a href="index.html">Alex Wickerham</a></li>
+				</ul>
+			</div>
+			-->
+		</div><!-- /漫遊國家列表 -->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 漫遊國家 -->
+
+<!-- ****************************** 好用服務 ***********************************-->
+<div data-role="page" id="myQueryService">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myQueryStorePosition">門市查詢</a></li>
+				<li><a href="#myQueryRoaming">漫遊國家</a></li>
+				<li><a href="#myQueryService">好用服務</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<ul data-role="listview" style="margin-top:0px;margin-bottom:15px;padding-left:15px;padding-right:15px;">
+			<!--<li class="AndroidOnly"><a href="https://play.google.com/store/apps/details?id=com.vibostore&feature=search_result#?t=W251bGwsMSwxLDEsImNvbS52aWJvc3RvcmUiXQ.." target="_blank" class="external" onclick="GATrackEvent('好用服務', '點選VApp', '');">VApp</a></li>-->
+			<li><a href="#myQueryBillCalc" onclick="GATrackEvent('好用服務', '點選帳單試算', '');">資費試算</a></li>
+		</ul>
+		<ul data-role="listview" data-inset="true" data-divider-theme="c"><!-- 常用電話 -->
+			<li data-role="list-divider">
+				<h2>常用電話</h2>
+				<p style="white-space:normal;">通話費率依用戶資費方案或依服務說明之計費方式。</p>
+			</li>
+			
+			<li>
+				<div data-role="collapsible-set" data-theme="c" data-content-theme="b"><!--常用電話列表-->
+					<div data-role="collapsible"><!-- 計程車叫車 -->
+						<h2>計程車叫車</h2>
+						<div data-role="collapsible">
+							<h2>全省</h2>
+							<ul data-role="listview">
+								<li><a href="tel:55688">台灣大車隊&nbsp;55688</a></li>
+							</ul>
+						</div>
+						<div data-role="collapsible">
+							<h2>台北</h2>
+							<ul data-role="listview">
+								<li><a href="tel:55178">大都會衛星&nbsp;55178</a></li>
+								<li><a href="tel:0227662222">婦協無線電</a></li>
+								<li><a href="tel:02-8787-5557">志英無線電</a></li>
+								<li><a href="tel:02-2343-5000">義交大隊</a></li>
+								<li><a href="tel:02-2736-6677">青溪</a></li>
+								<li><a href="tel:02-8787-3002">大愛</a></li>
+								<li><a href="tel:02-2753-3388">友好家禾衛星</a></li>
+							</ul>
+						</div>
+						<div data-role="collapsible">
+							<h2>台中</h2>
+							<ul data-role="listview">
+								<li><a href="tel:04-22878888">飛狗</a></li>
+								<li><a href="tel:0800-055-178">大都會衛星車隊</a></li>
+								<li><a href="tel:04-24366666">台中</a></li>
+							</ul>
+						</div>
+						<div data-role="collapsible">
+							<h2>台南</h2>
+							<ul data-role="listview">
+								<li><a href="tel:06-2088888">鳳凰</a></li>
+								<li><a href="tel:06-2697633">高立</a></li>
+								<li><a href="tel:0800-719999">大都會南部衛星車隊</a></li>
+							</ul>
+						</div>
+						<div data-role="collapsible">
+							<h2>高雄</h2>
+							<ul data-role="listview">
+								<li><a href="tel:0800001006">高雄市免費代叫計程車服務</a></li>
+							</ul>
+						</div>
+					</div><!-- /計程車叫車 -->
+					<div data-role="collapsible" data-theme="c" data-content-theme="b"><!-- 美食外送 -->
+						<h2>美食外送</h2>
+							<ul data-role="listview">
+								<li><a href="tel:02-40666888">麥當勞</a></li>
+								<li><a href="tel:02-4128000">肯德基</a></li>
+								<li><a href="tel:02-4129889">必勝客</a></li>
+								<li><a href="tel:02-4125252">達美樂</a></li>
+								<li><a href="tel:0800-07-6666">拿坡里</a></li>
+							</ul>
+					</div><!-- /美食外送 -->
+					<div data-role="collapsible" data-theme="c" data-content-theme="b"><!-- 政府機關 -->
+						<h2>政府機關</h2>
+							<ul data-role="listview">
+								<li><a href="tel:1999">市政諮詢專線 1999</a></li>
+							</ul>
+					</div><!-- /政府機關 -->
+				</div>
+			</li>
+		</ul><!-- /常用電話 -->
+		<ul data-role="listview" data-inset="true" data-divider-theme="c"><!-- 生活好站 -->
+			<li data-role="list-divider">
+				<h2>生活好站</h2>
+				<p style="white-space:normal;">生活好站為連結至各外部的便利服務網站，相關連結內容為各網站擁有</p>
+			</li>
+			<li>
+				<div data-role="collapsible-set" data-theme="c" data-content-theme="d"><!--生活好站列表-->
+					<div data-role="collapsible"><!-- 交通 -->
+						<h2>交通</h2>
+						<ul data-role="listview">
+							<li><a href="http://www.railway.gov.tw/pda/index.aspx" target="_blank" class="external">台灣鐵路管理局</a></li>
+							<li class="AndroidOnly"><a href="https://play.google.com/store/apps/details?id=com.ecom.thsrc" target="_blank" class="external">台灣高鐵</a></li>
+							<li><a href="http://its.taipei.gov.tw/m/menu.aspx?lang=CHT" target="_blank" class="external">臺北市即時交通資訊網</a></li>
+						</ul>
+					</div><!-- /交通 -->
+					<div data-role="collapsible"><!-- 政府機關 -->
+						<h2>政府機關</h2>
+						<ul data-role="listview">
+							<li><a href="http://www.cwb.gov.tw/pda/" target="_blank" class="external">氣象局</a></li>
+							<li><a href="http://pda.freeway.gov.tw/m/" target="_blank" class="external">高速公路交通資訊</a></li>
+							<li><a href="http://pda.msg.nat.gov.tw/" target="_blank" class="external">我的貼身e管家</a></li>
+						</ul>
+					</div><!-- /政府機關 -->
+					<div data-role="collapsible"><!-- 新聞 -->
+						<h2>新聞</h2>
+						<ul data-role="listview">
+							<li><a href="http://m.udn.com./xhtml/index.jsp" target="_blank" class="external">聯合新聞網</a></li>
+							<li><a href="http://www.appledaily.com.tw/mobile" target="_blank" class="external">蘋果日報</a></li>
+							<li><a href="http://m.epochtimes.com/" target="_blank" class="external">大紀元新聞網</a></li>
+						</ul>
+					</div><!-- /新聞 -->
+					<div data-role="collapsible"><!-- 社群 -->
+						<h2>社群</h2>
+						<ul data-role="listview">
+							<li><a href="http://tw.m.yahoo.com/" target="_blank" class="external">YAHOO奇摩手機版</a></li>
+							<li><a href="http://m.google.com.tw" target="_blank" class="external">Google行動版</a></li>
+							<li><a href="http://m.facebook.com/" target="_blank" class="external">facebook手機版</a></li>
+							<li><a href="http://www.plurk.com/m/" target="_blank" class="external">Plurk手機版</a></li>
+							<li><a href="http://picasaweb.google.com/m" target="_blank" class="external">Picasa相簿手機版</a></li>
+							<li><a href="http://5i01.com/" target="_blank" class="external">mobile01手機版</a></li>
+						</ul>
+					</div><!-- /社群 -->
+				</div>
+			</li>
+		</ul><!-- /生活好站 -->
+
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 好用服務 -->
+
+<!-- ****************************** 資費試算 ***********************************-->
+<div data-role="page" id="myQueryBillCalc">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myQueryStorePosition">門市查詢</a></li>
+				<li><a href="#myQueryRoaming">漫遊國家</a></li>
+				<li><a href="#myQueryService">好用服務</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 style="margin-top:0px;margin-bottom:10px;">資費試算</h3>
+		<div id="myQueryBillCalcInput" name="myQueryBillCalcInput">
+			貼心幫您試算適合的威寶方案及預估金額
+			<br>請輸入您每月的行動電話使用行為
+			<hr>
+			您的"語音通話"使用量
+			<table border="0">
+				<tr><td>威寶電信</td><td><input type="text" id="VoiceVIBO" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>中華電信</td><td><input type="text" id="VoiceCHT" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>台灣大哥大</td><td><input type="text" id="VoiceTWN" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>遠傳電信</td><td><input type="text" id="VoiceFET" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>其他業者</td><td><input type="text" id="VoiceOther" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>市內電話</td><td><input type="text" id="VoiceCity" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+			</table>
+			<hr>
+			您的"簡訊"使用量
+			<table border="0">
+				<tr><td>威寶電信</td><td><input type="text" id="SMSVIBO" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>則數</td></tr>
+				<tr><td>中華電信</td><td><input type="text" id="SMSCHT" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>則數</td></tr>
+				<tr><td>台灣大哥大</td><td><input type="text" id="SMSTWN" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>則數</td></tr>
+				<tr><td>遠傳電信</td><td><input type="text" id="SMSFET" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>則數</td></tr>
+				<tr><td>其他業者</td><td><input type="text" id="SMSOther" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>則數</td></tr>
+			</table>
+			<hr>
+			您的"影像通話"使用量
+			<table border="0">
+				<tr><td>威寶電信</td><td><input type="text" id="VideoVIBO" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>中華電信</td><td><input type="text" id="VideoCHT" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>台灣大哥大</td><td><input type="text" id="VideoTWN" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>遠傳電信</td><td><input type="text" id="VideoFET" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+				<tr><td>其他業者</td><td><input type="text" id="VideoOther" size="10" value="0" data-mini="true" style="text-align:right;"></td><td>分鐘</td></tr>
+			</table>
+			<hr>
+			您的"手機上網"使用量
+			<fieldset data-role="controlgroup" data-type="horizontal">
+				<input type="radio" name="DATAKB" id="DATAKBa" value="1000000" checked="checked">
+				<label for="DATAKBa">輕量</label>
+				<input type="radio" name="DATAKB" id="DATAKBb" value="2000000">
+				<label for="DATAKBb">中量</label>
+				<input type="radio" name="DATAKB" id="DATAKBc" value="5000000">
+				<label for="DATAKBc">重量</label>
+			</fieldset>
+			<button onclick="domyQueryBillCalc();">確認</button>
+	
+			<div data-role="collapsible" data-content-theme="b">
+				<h2>使用注意事項：</h2>
+				<p>
+					<ol type="decimal" style="padding-left:15px;">
+						<li>資費試算係指一般客戶正常使用各家業者所提供之一般基本資費方案，故以上試算僅供參考，如試算金額與實際帳單金額不符，須視實際狀況各用戶使用行為及各家業者資費方案與優惠內容為準。</li>
+						<li>威寶各資費優惠內容所換算之語音、影像電話分鐘數、上網使用量、簡訊則數，僅供費率選擇參考用，實際可用分鐘數因個人使用行為之不同而有所差異，建議您可詳閱各資費方案網頁說明、參考每月帳單金額、進行資費試算，或洽免付費客服專線0800-66-1234威寶客服專線諮詢費率相關問題。</li>
+						<li>本資費試算適用智慧型手機或有加掛上網功能的手機，且傳輸量限1G以上使用。(註：1GB容量：MP3歌曲下載：256首(一首平均4MB))</li>
+					</ol>
+				</p>
+			</div>
+		</div><!--<div id="myQueryBillCalcInput" name="myQueryBillCalcInput">-->
+		<div id="myQueryBillCalcResult" name="myQueryBillCalcResult" style="display:none;">
+			試算結果 威寶超便宜!!
+			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive" style="margin-top:15px;margin-bottom:15px;">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>推薦資費方案</td>
+						<td id="VIBOProject"></td>
+					</tr>
+					<tr>
+						<td>每月帳單金額</td>
+						<td id="VIBOCharge"></td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="#myQueryStorePosition" data-role="button">查詢服務據點，立刻申辦去</a>
+			<button onclick="$('#myQueryBillCalc #myQueryBillCalcResult').hide();$('#myQueryBillCalc #myQueryBillCalcInput').show();">重新試算</button>
+		</div><!--<div id="myQueryBillCalcResult" name="myQueryBillCalcResult" style="display:none;">-->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 資費試算 -->
+
+</body>
+</html>
+<script type="text/javascript" src="js/initPage.js"></script><!--初始化頁面，設定header及footer -->
+
+<script type="text/javascript">
+	
+	var infos = [];
+	
+	$('#myQueryStorePosition').one('pageshow', function () {
+		
+		//if (beEmpty(getLocalValue('loginmsisdn'))) $('.CarouselMustLogin').hide();	//將需登入才能使用的項目隱藏
+		
+		//showBlockUI();
+		
+		$('#map_container').width($(window).width() - 24);
+		$('#map_container').height(($(window).height() - $("#myQueryStorePosition div[data-role='header']").outerHeight(true) - $("#myQueryStorePosition div[data-role='footer']").outerHeight(true) - 24 ) );
+
+		var clientPosition = new google.maps.LatLng('25.0517202', '121.5590735');	//預設為南京東路店
+
+		var options = { 
+			zoom : 14,
+			center : clientPosition,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		};
+		var $content = $("#map_canvas");
+		var map = new google.maps.Map ($content[0], options);
+
+		google.maps.event.addListener(map, 'click', function() {
+			closeInfos();
+		});
+	
+
+		if(navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				clientPosition = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+				
+				var marker1 = new google.maps.Marker ( 
+				{ 
+					map : map, 
+					animation : google.maps.Animation.DROP,
+					'title': '您目前的位置',
+					position : clientPosition  
+				});  
+				marker1.info = new google.maps.InfoWindow({
+					content: '您目前的位置'
+				});
+				
+				google.maps.event.addListener(marker1, 'click', function() {
+					closeInfos();
+					marker1.info.open(map, marker1);
+					infos[0]=marker1.info;
+				});
+				//畫一個圈圈
+				var populationOptions = {
+					strokeColor: "#FF0000",
+					strokeOpacity: 0.5,
+					strokeWeight: 2,
+					fillColor: "#FF0000",
+					fillOpacity: 0.2,
+					map: map,
+					center: clientPosition,
+					radius: 500
+				};
+				cityCircle = new google.maps.Circle(populationOptions);
+				
+				map.setCenter(clientPosition);	//將用戶位置放置於地圖中央
+
+				//標出附近的直營店
+				$.getJSON( getServerBaseURL()+'ajaxBSCAPIBridge.jsp?Function=GetRetail&Request=&ResponseType=json', function(data) { 
+					if (!data.GetRetailRes || data.GetRetailRes.ResultCode!='00000'){
+						MsgBox('無法取得資料');
+						//unBlockUI();
+						return;
+					}
+					//找出前 N 個與用戶距離最近的店點
+					var		iTop	= 5;	//要找的店點個數，若要找不同的數目請修改此值
+					var		dLat	= parseFloat(position.coords.latitude);	//用戶目前的緯度
+					var		dLng	= parseFloat(position.coords.longitude);	//用戶目前的經度
+					var		dDef	= 0.0;		//與店點的距離
+					var		d		= [];		//儲存所有距離
+					var		j		= 0;
+					var		k		= 0;		//找到幾筆資料
+					$.each( data.GetRetailRes.stores, function(i, marker) {
+						if (marker.latitude!='0' && marker.longitude!='0'){	//座標為0是加盟店，不顯示
+							dDef = Math.abs(dLat-parseFloat(marker.latitude)) + Math.abs(dLng-parseFloat(marker.longitude));
+							//console.log(dDef);
+							d.push(dDef);
+							//console.log('d' + d.length + '=' + d[d.length-1]);
+						}	//if (marker.latitude!='0' && marker.longitude!='0'){	//座標為0是加盟店，不顯示
+					});	//$.each( data.GetRetailRes.stores, function(i, marker) {
+
+					d.sort();	//將距離排序
+
+					k = 0;
+					for (j=0;j<iTop;j++){	//最近的 N 個距離值
+						$.each( data.GetRetailRes.stores, function(i, marker) {
+							if (marker.latitude!='0' && marker.longitude!='0'){	//座標為0是加盟店，不顯示
+								dDef = Math.abs(dLat-parseFloat(marker.latitude)) + Math.abs(dLng-parseFloat(marker.longitude));
+								if (k<=iTop && dDef==(d[j])){	//距離相同，取出此店點資料
+									//console.log(marker.name+dDef);
+									var marker1 = new google.maps.Marker ( 
+									{ 
+										map : map, 
+										animation : google.maps.Animation.DROP,
+										'icon': 'images/pin_green.png',
+										'title': marker.name,
+										position : new google.maps.LatLng(marker.latitude, marker.longitude)  
+									});  
+									marker1.info = new google.maps.InfoWindow({
+										content: '<h4>' + marker.name + '</h4>' + marker.address + '<br>' + marker.operateTime
+									});
+									
+									google.maps.event.addListener(marker1, 'click', function() {
+										closeInfos();
+										marker1.info.open(map, marker1);
+										infos[0]=marker1.info;
+									});
+									k++;
+								}	//if (dDef.equals(d[j])){	//距離相同，取出此店點資料
+							}	//if (marker.latitude!='0' && marker.longitude!='0'){	//座標為0是加盟店，不顯示
+						});	//$.each( data.GetRetailRes.stores, function(i, marker) {
+					}	//for (j=0;j<iTop;j++){	//最近的 N 個距離值
+				});	//標出附近的直營店
+
+				//unBlockUI();
+				GATrackEvent('門市手機定位', '成功', '');
+			}, function() {
+				//unBlockUI();
+				MsgBox("無法取得您目前所在的位置，請確認是否有開啟GPS定位服務!");
+				GATrackEvent('門市手機定位', '失敗：無法取得您目前所在的位置', '');
+			},
+			{ maximumAge: 60000, timeout: 30000, enableHighAccuracy: true }
+			);	//navigator.geolocation.getCurrentPosition(function(position) {
+		} else {
+			// Browser doesn't support Geolocation
+			//unBlockUI();
+			MsgBox("您的裝置不支援座標功能!");
+			GATrackEvent('門市手機定位', '失敗：您的裝置不支援座標功能', '');
+			map.setCenter(clientPosition);
+		}	//if(navigator.geolocation) {
+	});	//$('#myQueryStorePosition').on('pageshow', function () {
+
+	function closeInfos(){
+		if(infos.length > 0){
+			/* detach the info-window from the marker ... undocumented in the API docs */
+			infos[0].set("marker", null);
+			/* and close it */
+			infos[0].close();
+			/* blank the array */
+			infos.length = 0;
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	$('#myQueryStoreArea').one('pageshow', function () {
+		
+		//if (beEmpty(getLocalValue('loginmsisdn'))) $('.CarouselMustLogin').hide();	//將需登入才能使用的項目隱藏
+		
+		//showBlockUI();
+		
+		//找出全省的縣市及區域
+		$.getJSON( getServerBaseURL()+'ajaxBSCAPIBridge.jsp?Function=GetZipCode&Request=<FunctionType>1</FunctionType>&ResponseType=json', function(data) { 
+			if (!data.GetZipCodeRes || data.GetZipCodeRes.ResultCode!='00000' || !data.GetZipCodeRes.Status || data.GetZipCodeRes.Status!='0'){
+				MsgBox('無法取得資料');
+				//unBlockUI();
+				return;
+			}
+			var temp	= "";	//city
+			//var temp1	= "";	//town
+			var towns = null;	//存放所有縣市及區域列表
+			var s		= "";
+			
+			towns = data.GetZipCodeRes;
+			$.each( data.GetZipCodeRes.cities, function(i, item) {
+				if (item.city!=temp){	//新city，從 towns 找此縣市的區域
+					if (beEmpty(s)){
+						s += "<div data-role='collapsible'>";
+						s += "	<h2>" + item.city +  "</h2>";
+						s += "	<ul data-role='listview' class='citylistview'>";
+						s += getTownList(towns, item.city);
+						//s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+					}else{
+						s += "	</ul>";
+						s += "</div>";
+						s += "<div data-role='collapsible'>";
+						s += "	<h2>" + item.city +  "</h2>";
+						s += "	<ul data-role='listview' class='citylistview'>";
+						s += getTownList(towns, item.city);
+						//s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+					}
+					temp = item.city;
+				//}else{	//相同city，不同town
+				//		s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+				}
+			});
+			if (notEmpty(s)){
+				s += "	</ul>";
+				s += "</div>";
+			}
+			//console.log(s);
+			$('#selectCityStatus').hide();
+			$('#collapsible-set-city').append(s);
+			$('#collapsible-set-city').trigger('create');
+			//unBlockUI();
+		});
+		//unBlockUI();
+	});	//$('#myQueryStoreArea').one('pageshow', function () {
+	
+	$('#myQueryStoreArea').on('pageshow', function () {
+		showStoreAreaDiv('selectCity');
+	});	//$('#myQueryStorePosition').on('pageshow', function () {
+	
+	function getTownList(data, city){	//找某縣市的區域
+		var s = "";
+		$.each( data.towns, function(i, item) {
+			if (item.city==city){	//新city，從 towns 找此縣市的區域
+				s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+			}
+		});
+		return s;
+	}
+</script>
+
+<script type="text/javascript">
+	function doSelectArea(zipcode){	//顯示某區域的店點
+		//showBlockUI();
+		$('#cityStoresStatus').show();
+		$('#cityStoreList').hide();
+		$.getJSON( getServerBaseURL() +'ajaxBSCAPIBridge.jsp?Function=GetRetail&Request=<ZipCode>' + zipcode + '</ZipCode>&ResponseType=json', function(data) { 
+			if (!data.GetRetailRes || data.GetRetailRes.ResultCode!='00000' || data.GetRetailRes.ResultText=='No Data'){
+				MsgBox('無資料');
+				//unBlockUI();
+				showStoreAreaDiv('selectCity');
+				return;
+			}
+			var temp	= "";	//city
+			//var temp1	= "";	//town
+			var s		= "";
+			if (data.GetRetailRes.stores.name){	//只有一筆資料
+				var item = data.GetRetailRes.stores;
+				if (item.latitude!='0' && item.longitude!='0'){	//座標為0是加盟店，不顯示
+					s += "<li><a href='#' onclick=\"showMapStore('" + item.name + "', '" + item.latitude + "', '" + item.longitude + "', '" + item.address + "', '" + item.operateTime + "');\">";
+					s += "<img src='images/Android-Maps-128.png' />";
+					s += "<h2>" + item.name + "</h2>";
+					s += "<p>" + item.address + "<br>" + item.operateTime + "</p></a>";
+					s += "</li>";
+				}	//if (item.latitude!='0' && item.longitude!='0'){	//座標為0是加盟店，不顯示
+			}else{	//有多筆資料
+				$.each( data.GetRetailRes.stores, function(i, item) {
+					if (item.latitude!='0' && item.longitude!='0'){	//座標為0是加盟店，不顯示
+						s += "<li><a href='#' onclick=\"showMapStore('" + item.name + "', '" + item.latitude + "', '" + item.longitude + "', '" + item.address + "', '" + item.operateTime + "');\">";
+						s += "<img src='images/Android-Maps-128.png' />";
+						s += "<h2>" + item.name + "</h2>";
+						s += "<p>" + item.address + "<br>" + item.operateTime + "</p></a>";
+						s += "</li>";
+					}	//if (item.latitude!='0' && item.longitude!='0'){	//座標為0是加盟店，不顯示
+				});
+			}
+			if (beEmpty(s)){
+				$('#cityStoresStatus').html('無資料');
+			}else{
+				$('#cityStoresStatus').hide();
+				$('#cityStoreList').show();
+				$('#cityStoreList').html(s);
+				$('#cityStoreList').listview('refresh');
+			}
+			//unBlockUI();
+		});
+		//unBlockUI();
+		showStoreAreaDiv('cityStores');
+	}
+
+	function showMapStore(name, latitude, longitude, address, operateTime){	//顯示某間店點的地圖
+
+		showStoreAreaDiv('map_container_store_div');	//若在map_container_store_div=hidden時就先畫地圖的話，此地圖會只顯示1/4
+
+		$('#map_container_store_div').width($(window).width() - 30);
+		$('#map_container_store_div').height(($(window).height() - $("#myQueryStoreArea div[data-role='header']").outerHeight(true) - $("#myQueryStoreArea div[data-role='footer']").outerHeight(true) ) );
+		$('#map_container_store').height(($(window).height() - $("#myQueryStoreArea div[data-role='header']").outerHeight(true) - $("#myQueryStoreArea div[data-role='footer']").outerHeight(true) - $("#myQueryStoreArea #map_container_button").outerHeight(true) ) );
+		//alert($('#map_container_store').height());
+
+		var clientPosition = new google.maps.LatLng(latitude, longitude);
+		
+		var options = { 
+			zoom : 14,
+			center : clientPosition,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		};
+		var $content = $("#map_canvas_store");
+		var map = new google.maps.Map ($content[0], options);
+
+		var marker1 = new google.maps.Marker ( 
+		{ 
+			map : map, 
+			animation : google.maps.Animation.DROP,
+			'icon': 'images/pin_green.png',
+			'title': name,
+			position : new google.maps.LatLng(latitude, longitude)  
+		});  
+		marker1.info = new google.maps.InfoWindow({
+			content: '<h4>' + name + '</h4>' + address + '<br>' + operateTime
+		});
+		
+		google.maps.event.addListener(marker1, 'click', function() {
+			marker1.info.open(map, marker1);
+		});
+
+		//畫一個圈圈
+		var populationOptions = {
+			strokeColor: "#FF0000",
+			strokeOpacity: 0.5,
+			strokeWeight: 2,
+			fillColor: "#FF0000",
+			fillOpacity: 0.2,
+			map: map,
+			center: clientPosition,
+			radius: 500
+		};
+		cityCircle = new google.maps.Circle(populationOptions);
+		
+		map.setCenter(clientPosition);
+
+	}
+
+	function showStoreAreaDiv(id){	//顯示myQueryStoreArea頁面中的某個區塊
+		$('#myQueryStoreArea .StoreAreaDiv').hide();
+		$('#myQueryStoreArea #' + id).show();
+	}
+</script>
+
+<script type="text/javascript">
+	$('#myQueryRoaming').one('pageshow', function () {
+		
+		//if (beEmpty(getLocalValue('loginmsisdn'))) $('.CarouselMustLogin').hide();	//將需登入才能使用的項目隱藏
+		
+		showBlockUI();
+		
+		//找出漫遊國家資料
+		$.getJSON( getServerBaseURL()+'ajaxBSCAPIBridge.jsp?Function=GetRoamingCountries&Request=&ResponseType=json', function(data) { 
+			if (!data.GetRoamingCountriesRes || data.GetRoamingCountriesRes.ResultCode!='00000'){
+				MsgBox('無法取得資料');
+				unBlockUI();
+				return;
+			}
+			var temp1	= "";	//Continent
+			var temp2	= "";	//Country
+			//var towns = null;	//存放所有縣市及區域列表
+			var s		= "";
+			var s1		= "";
+			var s2		= "";
+			var s3		= "";
+			
+			//towns = data.GetZipCodeRes;
+			var Continent	= null;
+			var Country 	= null;
+			//var MNOs		= null;
+			var MNO			= null;
+			var MNODesc		= null;
+			$.each( data.GetRoamingCountriesRes.Partners, function(i, item) {
+				Continent	= item.Continent;
+				Country		= item.Country.replace(/\andamp;/g, '&');	//處理 & 符號;
+				s3 = "";
+				$.each( item.MNOList, function(j, mno) {	//該國的漫遊配合業者
+					if (notEmpty(mno.MNO)) s3 += "<tr><td>" + mno.MNO + "</td><td>" + mno.MNODesc + "</td></tr>";
+				});
+				if (notEmpty(s3)){
+					//s3 = s3.replace(/\#x0D;/g, '<br>');	//處理換行符號
+					s3 = s3.replace(/\andamp;/g, '&');	//處理 & 符號
+					s3 = "<table data-role='table' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive' style='table-layout:fixed;width:100%;'><thead><tr class='ui-bar-d'><td>漫遊網路</td><td>手機顯示</td></tr></thead><tbody>" + s3 + "</tbody></table>";
+				}else{
+					s3 = "<p>無資料</p>";
+				}
+				//console.log(s3);
+				if (item.Continent!=temp1){	//新Continent，產生第一層collapsible
+					if (beEmpty(s)){
+						s += "<div data-role='collapsible'>";
+						s += "	<h2>" + Continent + "</h2>";
+						s += "	<div data-role='collapsible'>";
+						s += "		<h2>" + Country + "</h2>";
+						s += s3;
+					}else{
+						s += "	</div>";
+						s += "</div>";
+						s += "<div data-role='collapsible'>";
+						s += "	<h2>" + Continent + "</h2>";
+						s += "	<div data-role='collapsible'>";
+						s += "		<h2>" + Country + "</h2>";
+						s += s3;
+					}	//if (beEmpty(s)){
+					temp1 = item.Continent;
+				}else{	//相同Continent
+					if (item.Country!=temp2){	//新Country，產生第二層collapsible
+						s += "	</div>";
+						s += "	<div data-role='collapsible'>";
+						s += "		<h2>" + Country + "</h2>";
+						s += s3;
+						temp2 = item.Country;
+					}else{
+						s += s3;
+
+					}
+
+				}	//if (item.Continent!=temp1){	//新city，從 towns 找此縣市的區域
+			});
+			if (notEmpty(s)){
+				s += "	</div>";
+				s += "</div>";
+			}
+			//console.log(s);
+			$('#myQueryRoaming #collapsible-set-country').html(s);
+			$('#myQueryRoaming #collapsible-set-country').trigger('create');
+			unBlockUI();
+		});
+	});	//$('#myQueryRoaming').one('pageshow', function () {
+
+	//若<a> 中有 "class=external"，點取連結時連到OS的 browser
+	$(document).on('click', ".external", function (e) {
+		if (isRunInApp()){
+			e.preventDefault();
+			var targetURL = $(this).attr("href");
+			window.open(targetURL, "_system");
+		}
+	});
+	
+	$('#myQueryService').one('pageshow', function () {
+		var p = getPlatformName();
+		if (notEmpty(p) && p!="Android"){
+			$('#myQueryService .AndroidOnly').hide();
+		}
+	});	//$('#myQueryService').one('pageshow', function () {
+
+	function domyQueryBillCalc(){	//進行資費試算
+		$("#myQueryBillCalc input[type=text]").each(function(){
+			var input = $(this);
+			if (isNaN(input.val())){
+				MsgBox('所有欄位均為數字，請勿輸入其他文字!');
+				return;
+			}
+		});
+
+		var sData = "";
+		sData = "Function=GetRatePlan&Request=";
+		$("#myQueryBillCalc input[type=text]").each(function(){
+			var input = $(this);
+			sData += "<" + input.attr('id') + ">" + input.val() + "</" + input.attr('id') + ">";
+		});
+		sData += "<DATAKB>" + $("#myQueryBillCalc input[name='DATAKB']:radio:checked").val() + "</DATAKB>";
+		sData += "<CompeteMode>N</CompeteMode>";
+		//console.log(sData);
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				GATrackEvent('資費試算', '失敗', ResultText);
+				MsgBox('無法取得試算資料：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+
+			var Status = $(xml).find("Status").text();
+			var StatusMsg = $(xml).find("StatusMsg").text();
+			if (Status!='0'){	//作業失敗
+				GATrackEvent('資費試算', '失敗', StatusMsg);
+				MsgBox('取得試算資料失敗：' + StatusMsg);
+				return;
+			}	//if (Status!='0'){	//作業失敗
+
+			var VIBOProject = $(xml).find("VIBOProject").text();
+			var VIBOCharge = $(xml).find("VIBOCharge").text();
+			$('#myQueryBillCalc #VIBOProject').html(VIBOProject);
+			$('#myQueryBillCalc #VIBOCharge').html(VIBOCharge);
+			$('#myQueryBillCalc #myQueryBillCalcResult').show();
+			$('#myQueryBillCalc #myQueryBillCalcInput').hide();
+			GATrackEvent('資費試算', '成功', '');
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function domyQueryBillCalc(){	//進行資費試算
+</script>

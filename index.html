@@ -784,6 +784,7 @@ alert('6');
 				// you might want to play a sound to get the user's attention, throw up a dialog, etc.
 				if ( e.foreground )
 				{
+					alert(e.payload.MSG);
 					//$("#app-status-ul").append('<li>--INLINE NOTIFICATION--' + '</li>');
 					
 					// if the notification contains a soundname, play it.

@@ -656,6 +656,7 @@
 	}	//function doChangePassword(){
 
 	function doPushMessageRegister(msisdn, contractid){	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
+alert('1');
 		if (!isRunInApp()) return;	//若在browser執行，則不註冊GCM/APNS
 		var DeviceType = getPlatformName();
 		if (notEmpty(DeviceType) && DeviceType=='iOS')		DeviceType = "I";
@@ -663,10 +664,12 @@
 		if (beEmpty(DeviceType) || (DeviceType!='I' && DeviceType!='A')) return;	//若不是Android或iOS裝置，則不註冊GCM/APNS
 		var hasRegistered = getLocalValue("PushMessageRegister");
 		if (beEmpty(hasRegistered) || hasRegistered!='Y'){	//尚未註冊GCM/APNS，開始進行註冊
+alert('2');
 			showBlockUI();
 			var pushNotification;
 			pushNotification = window.plugins.pushNotification;
 			if (DeviceType=='A'){	//Android裝置
+alert('3');
 				pushNotification.register(
 					successHandler,
 					errorHandler, {
@@ -674,6 +677,7 @@
 					"ecb":"onNotificationGCM"
 				});
 			}else{	//iOS裝置
+alert('4');
 				pushNotification.register(
 					tokenHandler,
 					errorHandler, {

@@ -728,6 +728,7 @@ alert('4');
 
 	// iOS
 	function onNotificationAPN (event) {	//收到APNS推播訊息
+		setLocalValue(PushMessageRegister, 'Y');
 		if ( event.alert ){
 			navigator.notification.alert(event.alert);
 		}

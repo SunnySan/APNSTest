@@ -663,7 +663,7 @@ alert('1');
 		if (notEmpty(DeviceType) && DeviceType=='Android')	DeviceType = "A";
 		if (beEmpty(DeviceType) || (DeviceType!='I' && DeviceType!='A')) return;	//若不是Android或iOS裝置，則不註冊GCM/APNS
 		var hasRegistered = getLocalValue("PushMessageRegister");
-		if (beEmpty(hasRegistered) || hasRegistered!='Y'){	//尚未註冊GCM/APNS，開始進行註冊
+		if (beEmpty(hasRegistered) || hasRegistered!='Y' || msisdn!=getLocalValue('msisdn')){	//尚未註冊GCM/APNS，或目前登入的用戶與前次登入的門號不同，開始進行註冊
 alert('hasRegistered=' + hasRegistered);
 			//showBlockUI();
 			var pushNotification;

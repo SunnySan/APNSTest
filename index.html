@@ -657,11 +657,17 @@
 
 	function doPushMessageRegister(msisdn, contractid){	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
 alert('1');
-		if (!isRunInApp()) return;	//若在browser執行，則不註冊GCM/APNS
+		if (!isRunInApp()){	//若在browser執行，則不註冊GCM/APNS
+			MsgBox('您已成功登入!', function(){showPage('#home');});
+			return;
+		}
 		var DeviceType = getPlatformName();
 		if (notEmpty(DeviceType) && DeviceType=='iOS')		DeviceType = "I";
 		if (notEmpty(DeviceType) && DeviceType=='Android')	DeviceType = "A";
-		if (beEmpty(DeviceType) || (DeviceType!='I' && DeviceType!='A')) return;	//若不是Android或iOS裝置，則不註冊GCM/APNS
+		if (beEmpty(DeviceType) || (DeviceType!='I' && DeviceType!='A')){	//若不是Android或iOS裝置，則不註冊GCM/APNS
+			MsgBox('您已成功登入!', function(){showPage('#home');});
+			return;
+		}
 		var hasRegistered = getLocalValue("PushMessageRegister");
 		if (beEmpty(hasRegistered) || hasRegistered!='Y' || msisdn!=getLocalValue('msisdn')){	//尚未註冊GCM/APNS，或目前登入的用戶與前次登入的門號不同，開始進行註冊
 alert('hasRegistered=' + hasRegistered);
@@ -687,6 +693,9 @@ alert('4');
 						"ecb":"onNotificationAPN"
 				});
 			}	//if (DeviceType=='A'){	//Android裝置
+		}else{
+			window.plugins.toast.showShortCenter('您已成功登入!');
+			showPage('#home');
 		}	//if (beEmpty(hasRegistered) || hasRegistered!='Y'){	//尚未註冊GCM/APNS，開始進行註冊
 	}	//function doPushMessageRegister(msisdn, contractid){	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
 
@@ -717,12 +726,13 @@ alert('4');
 			var ResultText = $(xml).find("ResultText").text();
 			if (ResultCode!='00000'){	//作業失敗
 				pushNotification.unregister(successHandler, errorHandler);
-				MsgBox('訊息通知註冊失敗：' + ResultText);
+				MsgBox('訊息通知註冊失敗：' + ResultText, function(){showPage('#home');});
 				return;
 			}	//if (ResultCode=='00000'){	//作業成功
 			setLocalValue('PushMessageRegister', 'Y');
 			unBlockUI();
 			window.plugins.toast.showShortCenter('訊息通知註冊成功');
+			showPage('#home');
 		}, false);
 
 	}	//function tokenHandler (result) {
@@ -772,10 +782,11 @@ cordova.exec(null, null, 'Notification', 'alert', ['13', 'Notification', 'OK']);
 						var ResultText = $(xml).find("ResultText").text();
 						if (ResultCode!='00000'){	//作業失敗
 							pushNotification.unregister(successHandler, errorHandler);
-							MsgBox('訊息通知註冊失敗：' + ResultText);
+							MsgBox('訊息通知註冊失敗：' + ResultText, function(){showPage('#home');});
 							return;
 						}else{
-							MsgBox('訊息通知註冊成功');
+							window.plugins.toast.showShortCenter('訊息通知註冊成功');
+							showPage('#home');
 						}	//if (ResultCode=='00000'){	//作業成功
 						setLocalValue('PushMessageRegister', 'Y');
 					});

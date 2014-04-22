@@ -691,7 +691,7 @@ alert('4');
 	}	//function doPushMessageRegister(msisdn, contractid){	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
 
 	function successHandler (result) {
-		//setLocalValue(PushMessageRegister, 'Y');
+		//setLocalValue('PushMessageRegister', 'Y');
 		alert('result = ' + result);
 	}
 
@@ -720,7 +720,7 @@ alert('4');
 				MsgBox('訊息通知註冊失敗：' + ResultText);
 				return;
 			}	//if (ResultCode=='00000'){	//作業成功
-			setLocalValue(PushMessageRegister, 'Y');
+			setLocalValue('PushMessageRegister', 'Y');
 			unBlockUI();
 			window.plugins.toast.showShortCenter('訊息通知註冊成功');
 		}, false);
@@ -729,7 +729,7 @@ alert('4');
 
 	// iOS
 	function onNotificationAPN (event) {	//收到APNS推播訊息
-		setLocalValue(PushMessageRegister, 'Y');
+		setLocalValue('PushMessageRegister', 'Y');
 		if ( event.alert ){
 			navigator.notification.alert(event.alert);
 		}
@@ -777,7 +777,7 @@ cordova.exec(null, null, 'Notification', 'alert', ['13', 'Notification', 'OK']);
 						}else{
 							MsgBox('訊息通知註冊成功');
 						}	//if (ResultCode=='00000'){	//作業成功
-						setLocalValue(PushMessageRegister, 'Y');
+						setLocalValue('PushMessageRegister', 'Y');
 					});
 				}
 				//unBlockUI();

@@ -56,6 +56,7 @@
     <gap:plugin name="org.apache.cordova.geolocation" version="0.3.6" />
     <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
     <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
+    <gap:plugin name="nl.x-services.plugins.toast" version="1.0" />
 
     <gap:plugin name="com.phonegap.plugin.statusbar" />
     

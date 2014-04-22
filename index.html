@@ -664,7 +664,7 @@ alert('1');
 		if (beEmpty(DeviceType) || (DeviceType!='I' && DeviceType!='A')) return;	//若不是Android或iOS裝置，則不註冊GCM/APNS
 		var hasRegistered = getLocalValue("PushMessageRegister");
 		if (beEmpty(hasRegistered) || hasRegistered!='Y'){	//尚未註冊GCM/APNS，開始進行註冊
-alert('2');
+alert(hasRegistered);
 			//showBlockUI();
 			var pushNotification;
 			pushNotification = window.plugins.pushNotification;
@@ -691,7 +691,7 @@ alert('4');
 	}	//function doPushMessageRegister(msisdn, contractid){	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
 
 	function successHandler (result) {
-		setLocalValue(PushMessageRegister, 'Y');
+		//setLocalValue(PushMessageRegister, 'Y');
 		alert('result = ' + result);
 	}
 
@@ -717,12 +717,13 @@ alert('4');
 			var ResultText = $(xml).find("ResultText").text();
 			if (ResultCode!='00000'){	//作業失敗
 				pushNotification.unregister(successHandler, errorHandler);
-				MsgBox('訊息通知註冊失敗失敗：' + ResultText);
+				MsgBox('訊息通知註冊失敗：' + ResultText);
 				return;
 			}	//if (ResultCode=='00000'){	//作業成功
 			setLocalValue(PushMessageRegister, 'Y');
-			//unBlockUI();
-		}, false);
+			unBlockUI();
+			window.plugins.toast.showShortCenter('訊息通知註冊成功');
+		});
 
 	}	//function tokenHandler (result) {
 

@@ -656,8 +656,9 @@
 	}	//function doChangePassword(){
 
 	function doPushMessageRegister(msisdn, contractid){	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
-alert('1');
+//alert('1');
 		if (!isRunInApp()){	//若在browser執行，則不註冊GCM/APNS
+			unBlockUI();
 			MsgBox('您已成功登入!', function(){showPage('#home');});
 			return;
 		}
@@ -665,17 +666,18 @@ alert('1');
 		if (notEmpty(DeviceType) && DeviceType=='iOS')		DeviceType = "I";
 		if (notEmpty(DeviceType) && DeviceType=='Android')	DeviceType = "A";
 		if (beEmpty(DeviceType) || (DeviceType!='I' && DeviceType!='A')){	//若不是Android或iOS裝置，則不註冊GCM/APNS
+			unBlockUI();
 			MsgBox('您已成功登入!', function(){showPage('#home');});
 			return;
 		}
 		var hasRegistered = getLocalValue("PushMessageRegister");
 		if (beEmpty(hasRegistered) || hasRegistered!='Y' || msisdn!=getLocalValue('msisdn')){	//尚未註冊GCM/APNS，或目前登入的用戶與前次登入的門號不同，開始進行註冊
-alert('hasRegistered=' + hasRegistered);
-			//showBlockUI();
+//alert('hasRegistered=' + hasRegistered);
+			showBlockUI();
 			var pushNotification;
 			pushNotification = window.plugins.pushNotification;
 			if (DeviceType=='A'){	//Android裝置
-alert('3');
+//alert('3');
 				pushNotification.register(
 					successHandler,
 					errorHandler, {
@@ -683,7 +685,7 @@ alert('3');
 					"ecb":"onNotificationGCM"
 				});
 			}else{	//iOS裝置
-alert('4');
+//alert('4');
 				pushNotification.register(
 					tokenHandler,
 					errorHandler, {
@@ -694,6 +696,7 @@ alert('4');
 				});
 			}	//if (DeviceType=='A'){	//Android裝置
 		}else{
+			unBlockUI();
 			window.plugins.toast.showShortCenter('您已成功登入!');
 			showPage('#home');
 		}	//if (beEmpty(hasRegistered) || hasRegistered!='Y'){	//尚未註冊GCM/APNS，開始進行註冊
@@ -701,18 +704,18 @@ alert('4');
 
 	function successHandler (result) {
 		//setLocalValue('PushMessageRegister', 'Y');
-		alert('result = ' + result);
+		//alert('result = ' + result);
 	}
 
 	function errorHandler (error) {
-		alert('error = ' + error);
+		alert('推播通知發生錯誤 = ' + error);
 	}
 
 	function tokenHandler (result) {
 		// Your iOS push server needs to know the token before it can push to this device
 		// here is where you might want to send it the token for later use.
 		
-		alert('device token = ' + result);
+		//alert('device token = ' + result);
 		var sData = "";
 		sData = "ServiceId=myvibo";
 		sData += "&DeviceId=" + result;
@@ -724,17 +727,16 @@ alert('4');
 		getDataFromServer("ajaxPushMessageAddDevice.jsp", sData, "xml", function(xml){
 			var ResultCode = $(xml).find("ResultCode").text();
 			var ResultText = $(xml).find("ResultText").text();
+			unBlockUI();
 			if (ResultCode!='00000'){	//作業失敗
 				pushNotification.unregister(successHandler, errorHandler);
 				MsgBox('訊息通知註冊失敗：' + ResultText, function(){showPage('#home');});
 				return;
 			}	//if (ResultCode=='00000'){	//作業成功
 			setLocalValue('PushMessageRegister', 'Y');
-			unBlockUI();
 			window.plugins.toast.showShortCenter('訊息通知註冊成功');
 			showPage('#home');
-		}, false);
-
+		});
 	}	//function tokenHandler (result) {
 
 	// iOS
@@ -757,14 +759,14 @@ alert('4');
 	// Android
 	function onNotificationGCM(e) {	//收到GCM推播訊息
 		//$("#app-status-ul").append('<li>EVENT -> RECEIVED:' + e.event + '</li>');
-cordova.exec(null, null, 'Notification', 'alert', ['11', 'Notification', 'OK']);
+//cordova.exec(null, null, 'Notification', 'alert', ['11', 'Notification', 'OK']);
 		switch( e.event )
 		{
 			case 'registered':
-cordova.exec(null, null, 'Notification', 'alert', ['12', 'Notification', 'OK']);
+//cordova.exec(null, null, 'Notification', 'alert', ['12', 'Notification', 'OK']);
 				if ( e.regid.length > 0 )
 				{
-cordova.exec(null, null, 'Notification', 'alert', ['13', 'Notification', 'OK']);
+//cordova.exec(null, null, 'Notification', 'alert', ['13', 'Notification', 'OK']);
 					//$("#app-status-ul").append('<li>REGISTERED -> REGID:' + e.regid + "</li>");
 					// Your GCM push server needs to know the regID before it can push to this device
 					// here is where you might want to send it the regID for later use.
@@ -791,16 +793,16 @@ cordova.exec(null, null, 'Notification', 'alert', ['13', 'Notification', 'OK']);
 						setLocalValue('PushMessageRegister', 'Y');
 					});
 				}
-				//unBlockUI();
+				unBlockUI();
 			break;
 			
 			case 'message':
-cordova.exec(null, null, 'Notification', 'alert', ['14', 'Notification', 'OK']);
+//cordova.exec(null, null, 'Notification', 'alert', ['14', 'Notification', 'OK']);
 				// if this flag is set, this notification happened while we were in the foreground.
 				// you might want to play a sound to get the user's attention, throw up a dialog, etc.
 				if ( e.foreground )
 				{
-cordova.exec(null, null, 'Notification', 'alert', ['14', 'Notification', 'OK']);
+//cordova.exec(null, null, 'Notification', 'alert', ['14', 'Notification', 'OK']);
 //alert(e.payload.message);
 					//$("#app-status-ul").append('<li>--INLINE NOTIFICATION--' + '</li>');
 					
@@ -812,12 +814,12 @@ cordova.exec(null, null, 'Notification', 'alert', ['14', 'Notification', 'OK']);
 				{  // otherwise we were launched because the user touched a notification in the notification tray.
 					if ( e.coldstart )
 					{
-cordova.exec(null, null, 'Notification', 'alert', ['15', 'Notification', 'OK']);
+//cordova.exec(null, null, 'Notification', 'alert', ['15', 'Notification', 'OK']);
 						//$("#app-status-ul").append('<li>--COLDSTART NOTIFICATION--' + '</li>');
 					}
 					else
 					{
-cordova.exec(null, null, 'Notification', 'alert', ['16', 'Notification', 'OK']);
+//cordova.exec(null, null, 'Notification', 'alert', ['16', 'Notification', 'OK']);
 						//$("#app-status-ul").append('<li>--BACKGROUND NOTIFICATION--' + '</li>');
 					}
 				}
@@ -827,12 +829,14 @@ cordova.exec(null, null, 'Notification', 'alert', ['16', 'Notification', 'OK']);
 			break;
 			
 			case 'error':
-			alert('error');
+				unBlockUI();
+				alert('推播通知發生錯誤');
 				//$("#app-status-ul").append('<li>ERROR -> MSG:' + e.msg + '</li>');
 			break;
 			
 			default:
-			alert('default');
+				unBlockUI();
+				//alert('default');
 				//$("#app-status-ul").append('<li>EVENT -> Unknown, an event was received and we do not know what it is</li>');
 			break;
 		}

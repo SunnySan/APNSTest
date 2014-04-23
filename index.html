@@ -746,6 +746,10 @@
 			navigator.notification.alert(event.alert);
 		}
 		
+		if ( event.exp ){
+			navigator.notification.alert(event.exp);
+		}
+
 		if ( event.sound ){
 			var snd = new Media(event.sound);
 			snd.play();

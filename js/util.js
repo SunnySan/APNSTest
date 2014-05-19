@@ -150,15 +150,19 @@ function showBlockUI(){
 */
 	
 	$.blockUI({ 
-		message: '<img src="images/loading.gif">資料更新中，請稍候...</img>',
+		message: '<img src="images/loading.gif" /><div>資料更新中，請稍候...</div>',
+		overlayCSS: { backgroundColor: '#000', opacity: 0 },
 		css:{
 			border: 'none',
 			padding: '15px',
-			backgroundColor: '#000',
+			width: '80%',
+			left: '5%',
+			textAlign: 'center',
+			backgroundColor: '#343434',
 			'-webkit-border-radius': '10px',
 			'-moz-border-radius': '10px',
-			opacity: 0.95,
-			color: '#00FF00'
+			opacity: 1,
+			color: '#FFFFFF'
 		}
 	}); 
 
@@ -228,193 +232,52 @@ function showPage(pageId){
 	$.mobile.changePage(pageId,{transition: 'slide'});
 }
 
-/**********設定header區塊的高度，已經沒有在用了**********/
-function setHeaderHeight(){
-	var pageid = $.mobile.activePage.attr('id');
-	var iHeight;
-	/*
-	iHeight = 47/window.devicePixelRatio;	//在 pixel ratio = 1 時，高度為 54
-	if (iHeight<32) iHeight = 32;	//小於32的話，header上的button會跑到外面去
-	*/
-	iHeight = 40;
-	/*以下資料改為寫在 style.css 中
-	$("#" + pageid + " .ui-header").css('background-size', 'auto ' + iHeight + 'px');
-	$("#" + pageid + " .ui-header").height(iHeight);
-	*/
-	var i = 0;
-	$("#" + pageid + " div[data-role='header'] div[data-role='navbar']").each(function(){
-	    //if (i==0) $(this).css('margin-top', iHeight);
-	    iHeight += $(this).height();
-	    i++;
-	});
-	if (i>0) $("#" + pageid + " .ui-header").height(iHeight);
-}
-
-/*******以下這個沒在用了***********/
-function setHeaderHeightWithNavbar(){
-	var pageid = $.mobile.activePage.attr('id');
-	var iHeight;
-	/*
-	iHeight = 47/window.devicePixelRatio;	//在 pixel ratio = 1 時，高度為 54
-	if (iHeight<32) iHeight = 32;	//小於32的話，header上的button會跑到外面去
-	*/
-	iHeight = 40;
-	/*以下資料改為寫在 style.css 中
-	$("#" + pageid + " div[data-role='header'] div[data-role='navbar']").css('margin-top', iHeight);
-	$("#" + pageid + " .ui-header").css('background-size', 'auto ' + iHeight + 'px');
-	*/
-	$("#" + pageid + " .ui-header").height(iHeight + $("#" + pageid + " div[data-role='header'] div[data-role='navbar']").height());
-}
-
-/**********產生頁面下方的滑動選單，目前沒在用了**********/
-function generateFooterMenu2(pageid){
-	var s = "";
-	$("#" + pageid + " #CarouselMenu").each(function(){
-		if (pageid.indexOf('myBill')==0) s += "<div><a href='myBillInfo.html'><img src='images/tab-bill-dark.png' alt='帳單' /></a></div>";
-		else s += "<div><a href='myBillInfo.html'><img src='images/tab-bill-light.png' alt='帳單' /></a></div>";
-		s += "<div><a href='#myService'><img src='images/tab-service-light.png' alt='服務' /></a></div>";
-		s += "<div><img src='images/tab-personal-data-light.png' alt='個資' /></div>";
-		s += "<div><img src='images/tab-pay-light.png' alt='繳費' /></div>";
-		s += "<div><img src='images/tab-recommend-light.png' alt='推薦' /></div>";
-		s += "<div><img src='images/tab-query-light.png' alt='查詢' /></div>";
-		s += "<div><img src='images/tab-customer-service-light.png' alt='客服' /></div>";
-		s += "<div><img src='images/tab-settings-light.png' alt='設定' /></div>";
-		//$(window).width()/4
-		//alert(screen.width);
-		s = "<div id='scroller'>" + s + "</div>";
-		$('#' + pageid + ' #CarouselMenu').html(s);
-		
-		//$('#' + pageid + ' #CarouselMenu a.ui-link').css('height', 0);
-		$('#' + pageid + ' #CarouselMenu img').css('width', screen.width/4);
-		$('#' + pageid + ' #CarouselMenu img').css('height', screen.width*3/4/4);
-		$(this).css('width', screen.width);
-		$('#' + pageid + ' #CarouselMenu #scroller').css('height', screen.width*3/4/4);
-		$('#' + pageid + ' #CarouselMenu #scroller').css('width', screen.width*2.5);
-		alert($('#' + pageid + ' #CarouselMenu').outerHeight(true));
-
-		//alert('img height:'+$('#' + pageid + ' #CarouselMenu img').css('height'));
-
-		var myScroll;
-		myScroll = new iScroll('CarouselMenu', { vScroll: false, hScrollbar: false, vScrollbar: false });
-		//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-
-		$('#' + pageid).on({ 'swipeleft' : function(e){ e.preventDefault(); } });
-		$('#' + pageid).on({ 'swiperight' : function(e){ e.preventDefault(); } });
-		//$('#' + pageid + ' #CarouselMenu').on({ 'swipeleft' : function(e){ alert('left');$('#' + pageid + ' #CarouselMenu').trigger("prevPage"); } });
-		//$('#' + pageid + ' #CarouselMenu').on({ 'swiperight' : function(e){ alert('right');$('#' + pageid + ' #CarouselMenu').trigger("nextPage"); } });
-	
-		//$('#' + pageid + ' .ui-content').css('margin-bottom', $('#' + pageid + " div[data-role='footer']").height() - 50);
-		//alert($('#' + pageid + ' .ui-content').css('margin-bottom'));
-		 
-		//$('#wrapper').css('height', $(window).height() - $('#' + pageid + " div[data-role='footer']").height() - $('#' + pageid + " div[data-role='header']").height());
-		//alert($('#' + pageid + " .content:visible").height());
-		//alert($('#' + pageid + " div[data-role='footer']").height());
-	});
-}
-
-
 /**********產生頁面下方的滑動選單**********/
 function generateFooterMenu(){
 	var pageid = $.mobile.activePage.attr('id');
 	var s = "";
 	var i = 0;
-	var j = 0;	//起始的位置
 	var aPic = new Array();
 	var aLink = new Array();
 	var bLogin = isLogin();	//判斷用戶是否已登入
 	var sAction = (bLogin?"":" onclick=\"MsgBox('此功能需先登入才能使用!');return false;\" ");
-	
-	if (!bLogin) {aPic[i] = "tab-bill.png";} else { if (pageid.startsWith('myBill'))			{aPic[i] = "tab-bill-dark.png";				j=0;} else aPic[i] = "tab-bill-light.png";} i++;
-	if (!bLogin) {aPic[i] = "tab-service.png";} else { if (pageid.startsWith('myService'))		{aPic[i] = "tab-service-dark.png";			j=1;} else aPic[i] = "tab-service-light.png";} i++;
-	if (!bLogin) {aPic[i] = "tab-personal-data.png";} else { if (pageid.startsWith('myData'))	{aPic[i] = "tab-personal-data-dark.png";	j=2;} else aPic[i] = "tab-personal-data-light.png";} i++;
-	if (!bLogin) {aPic[i] = "tab-pay.png";} else { if (pageid.startsWith('myPay'))				{aPic[i] = "tab-pay-dark.png";				j=3;} else aPic[i] = "tab-pay-light.png";} i++;
-	if (pageid.startsWith('myRecommand'))	{aPic[i] = "tab-recommend-dark.png";		j=4;} else aPic[i] = "tab-recommend-light.png"; i++;
-	if (pageid.startsWith('myQuery'))		{aPic[i] = "tab-query-dark.png";			j=5;} else aPic[i] = "tab-query-light.png"; i++;
-	if (pageid.startsWith('myCustomer'))	{aPic[i] = "tab-customer-service-dark.png";	j=6;} else aPic[i] = "tab-customer-service-light.png"; i++;
-	if (pageid.startsWith('myWifi'))		{aPic[i] = "tab-wifi-dark.png";				j=7;} else aPic[i] = "tab-wifi-light.png"; i++;
-	if (pageid.startsWith('mySettings'))	{aPic[i] = "tab-settings-dark.png";			j=8;} else aPic[i] = "tab-settings-light.png"; i++;
+
 	i = 0;
-	aLink[i] = (bLogin?"myBill.html":"#")		+ "' " + sAction + "class='CarouselMustLogin"; i++;		//帳單
-	aLink[i] = (bLogin?"myService.html":"#")	+ "' " + sAction + "class='CarouselMustLogin"; i++;		//服務
-	aLink[i] = (bLogin?"myData.html":"#")		+ "' " + sAction + "class='CarouselMustLogin"; i++;		//個資
-	aLink[i] = (bLogin?"myPay.html":"#")		+ "' " + sAction + "class='CarouselMustLogin"; i++;		//繳費
-	aLink[i] = "myRecommand.html"; i++;	//推薦
-	aLink[i] = "myQuery.html"; i++;		//查詢
-	aLink[i] = "myCustomer.html'"; i++;	//客服
-	aLink[i] = "myWifi.html'"; i++;		//WiFi熱點
-	aLink[i] = "mySettings.html'"; i++;	//設定
-	//alert('screen.width='+screen.width);
-	//alert('window.devicePixelRatio=' + window.devicePixelRatio);
-	//var devicePixelRatio = window.devicePixelRatio;
-	/*
-	if (isRunInApp()){
-		//var devicePlatform = device.platform;
-		var devicePlatform = getPlatformName();
-		//alert('devicePlatform='+devicePlatform);
-		if (devicePlatform=='iOS') devicePixelRatio = 1;	//iOS不用理window.devicePixelRatio的值，只有Android才要理他
-	}
-	*/
-	//alert(devicePixelRatio);
-	//alert(screen.width);
-	//alert($(window).width());
-	$("#" + pageid + " #CarouselMenu").each(function(){
-		for (i=0;i<9;i++){
-			s += "<a href='" + aLink[i] + "' rel='external'><div style='background-image:url(images/" + aPic[i] + ");'><span>&nbsp;</span></div></a>";
-		}
-		$('#' + pageid + ' #CarouselMenu').html("<div id='CarouselMenuItems'>" + s + "</div><div style='float:none;clear:both;'></div>");
-		/*
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems div').css('width', screen.width/4/devicePixelRatio);
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems img').css('width', screen.width/4/devicePixelRatio);
-		*/
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems div').css('width', $(window).width()/4);
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems img').css('width', $(window).width()/4);
+	aPic[i] = (i+1) + "1"; i++;	//首頁
+	if (!bLogin) {aPic[i] = (i+1) + "3";} else { if (pageid.startsWith('myService'))		{aPic[i] = (i+1) + "2";	} else aPic[i] = (i+1) + "1";} i++;	//我的服務
+	if (!bLogin) {aPic[i] = (i+1) + "3";} else { if (pageid.startsWith('myPay'))			{aPic[i] = (i+1) + "2";	} else aPic[i] = (i+1) + "1";} i++;	//線上繳費
+	if (!bLogin) {aPic[i] = (i+1) + "3";} else { if (pageid.startsWith('myBill'))			{aPic[i] = (i+1) + "2";	} else aPic[i] = (i+1) + "1";} i++;	//我的帳單
+	if (pageid.startsWith('myQuery'))	{aPic[i] = (i+1) + "2";	} else aPic[i] = (i+1) + "1";	i++;	//查詢門市
+
+	i = 0;
+	aLink[i] = "index.html' class='FooterNavbarItem"; i++;	//首頁
+	aLink[i] = (bLogin?"myService.html":"#")	+ "' " + sAction + "class='CarouselMustLogin FooterNavbarItem"; i++;		//我的服務
+	aLink[i] = (bLogin?"myPay.html":"#")		+ "' " + sAction + "class='CarouselMustLogin FooterNavbarItem"; i++;		//線上繳費
+	aLink[i] = (bLogin?"myBill.html":"#")		+ "' " + sAction + "class='CarouselMustLogin FooterNavbarItem"; i++;		//我的帳單
+	aLink[i] = "myQuery.html' class='FooterNavbarItem"; i++;		//查詢門市
+
+	s = "<div data-role='navbar' id='FooterNavbar' data-iconpos='notext' data-grid='d'>";
+	s += "<ul>";
+	for (i=0;i<5;i++){
+		s += "<li><a id='FooterNavbar" + aPic[i] + "' href='" + aLink[i] + "' rel='external' data-icon='custom'></a></li>";
 		
-		/*
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems div').css('height', screen.width*3/4/4/devicePixelRatio);
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems img').css('height', screen.width*3/4/4/devicePixelRatio);
-		*/
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems div').css('height', $(window).width()*3/4/4);
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems img').css('height', $(window).width()*3/4/4);
-		$('#' + pageid + ' #CarouselMenu #CarouselMenuItems').carouFredSel({
-			items: {
-				visible: 4,
-				start: j
-			},
-			width: $(window).width(),
-			height: $(window).width()*3/4/4,
-			responsive: false,
-			auto: false,
-			padding: [0, 0, 0, 0],
-			scroll: {
-				items: 4,
-				duration: 500
-			},
-			swipe: {
-				onMouse: true,
-				onTouch: true
-			}
-		});
-		$('#' + pageid).on({ 'swipeleft' : function(e){ e.preventDefault(); } });
-		$('#' + pageid).on({ 'swiperight' : function(e){ e.preventDefault(); } });
-		//$('#' + pageid + ' #CarouselMenu').on({ 'swipeleft' : function(e){ alert('left');$('#' + pageid + ' #CarouselMenu').trigger("prevPage"); } });
-		//$('#' + pageid + ' #CarouselMenu').on({ 'swiperight' : function(e){ alert('right');$('#' + pageid + ' #CarouselMenu').trigger("nextPage"); } });
-	
-		//$('#' + pageid + ' .ui-content').css('margin-bottom', $('#' + pageid + " div[data-role='footer']").height() - 50);
-		//alert($('#' + pageid + ' .ui-content').css('margin-bottom'));
-		 
-		//$('#wrapper').css('height', $(window).height() - $('#' + pageid + " div[data-role='footer']").height() - $('#' + pageid + " div[data-role='header']").height());
-		//alert($('#' + pageid + " .content:visible").height());
-		//alert($('#' + pageid + " div[data-role='footer']").height());
-	});
+	}
+	s += "</ul>";
+	s += "</div>";
+	$('#' + pageid + ' #CarouselMenu').html(s);
+	$('#' + pageid + ' .FooterNavbarItem').height($(window).width()/5);	//設為正方形的圖
+	 
+	$('#' + pageid + ' #FooterNavbar').navbar({ defaults: true });
 }
 
 /**********產生頁面上方header中的回首頁按鈕**********/
 function generateHeaderGoHomeButton(pageid){
 	//var pageid = $.mobile.activePage.attr('id');
 	var s = "";
-	s += "<div data-role='controlgroup' data-type='horizontal' class='ui-btn-right'>";
-    s += "<a href='#' data-role='button' data-rel='back' data-icon='back' data-theme='g'>上頁</a>";
-    s += "<a href='index.html' data-role='button' data-icon='home' rel='external' data-theme='g'>首頁</a>";
+	s += "<div data-role='controlgroup' data-type='horizontal' class='ui-btn-left'>";
+    //s += "<a href='#' data-role='button' data-rel='back' data-icon='back' data-theme='g'>上頁</a>";
+    s += "<a href='#' data-role='button' data-rel='back' data-theme='a'>上頁</a>";	//iOS style的返回鍵
+    //s += "<a href='index.html' data-role='button' data-icon='home' rel='external' data-theme='g'>首頁</a>";
 	s += "</div>";
 	if (beEmpty(pageid)){	//沒傳入pageid，把multi page中的每個page都加上回首頁按鈕
 		$("div[data-role='header']").each(function(){

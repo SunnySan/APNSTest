@@ -6,7 +6,6 @@
 	<!--<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />--><!--JQuery Mobile theme-->
 	<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css" />
 	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
-	<link rel="stylesheet" href="css/jquery.marquee.css" /><!-- 文字跑馬燈，請參考 http://www.givainc.com/labs/marquee_jquery_plugin.cfm -->
 	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<link rel="stylesheet" href="css/style.css" />
 	
@@ -15,7 +14,6 @@
 	<script src="js/jquery.mobile-1.3.2.min.js"></script>
 	<script src="js/jquery.touchSwipe.min.js"></script>
 	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
-	<script src="js/jquery.marquee.min.js"></script><!-- 文字跑馬燈，請參考 http://www.givainc.com/labs/marquee_jquery_plugin.cfm -->
 	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<script type="text/javascript" src="js/util.js"></script>
 	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
@@ -36,7 +34,6 @@
 <div data-role="page" id="home-slide1">
 	<div data-role="content" style="border:0px !important;padding:0px !important;margin:0px !important;overflow:hidden !important;">
 		<div id="slide1" name="slide1" class="home-slide" style="background-image: url(images/home_slide1.jpg);">
-			<div style="float:right;width:50%;height:100%;" onclick="swipeToLeft();"></div>
 		</div>
 	</div><!-- /content -->
 </div><!-- (第一次使用APP時出現的第一張圖) -->
@@ -45,8 +42,6 @@
 <div data-role="page" id="home-slide2">
 	<div data-role="content" style="border:0px !important;padding:0px !important;margin:0px !important;overflow:hidden !important;">
 		<div id="slide2" name="slide2" class="home-slide" style="background-image: url(images/home_slide2.jpg);">
-			<div style="float:left;width:50%;height:100%;" onclick="swipeToRight();"></div>
-			<div style="float:right;width:50%;height:100%;" onclick="swipeToLeft();"></div>
 		</div>
 	</div><!-- /content -->
 </div><!-- (第一次使用APP時出現的第二張圖) -->
@@ -55,87 +50,56 @@
 <div data-role="page" id="home-slide3">
 	<div data-role="content" style="border:0px !important;padding:0px !important;margin:0px !important;overflow:hidden !important;">
 		<div id="slide3" name="slide3" class="home-slide" style="background-image: url(images/home_slide3.jpg);">
-			<div style="float:left;width:50%;height:100%;" onclick="swipeToRight();"></div>
-			<div style="float:right;width:50%;height:100%;" onclick="swipeToLeft();"></div>
 		</div>
 	</div><!-- /content -->
 </div><!-- (第一次使用APP時出現的第三張圖) -->
 
-<!-- ****************************** 設定登入方式 ***********************************-->
-<div data-role="page" id="AutoLogin" data-position="fixed">
-	<div data-role="header" class="vibo-header-home">
-		<div class="header-padding"></div>
-	</div><!-- /header -->
-	
-	<div data-role="content">
-		<form>
-			<fieldset data-role="controlgroup">
-				<legend>選擇登入方式</legend>
-				<input type="radio" name="rdo1" id="rdo1a" value="A">
-				<label for="rdo1a">自動登入<br>首次登入時輸入門號/密碼，之後即由系統自動登入</label>
-				<input type="radio" name="rdo1" id="rdo1b" value="M">
-				<label for="rdo1b">手動登入<br>登入時需輸入門號/密碼</label>
-				<input type="radio" name="rdo1" id="rdo1c" value="N">
-				<label for="rdo1c">我目前不是台灣之星月租型用戶</label>
-			</fieldset>
-		</form>
-		<input type="button" value="確定" onclick="SetAutoLogin();">
-	</div><!-- /content -->
-	
-	<div data-role="footer" data-tap-toggle="false" data-position="fixed">
-		<div class="footer-copyright">
-			威寶電信版權所有 Copyright© 2013 All Rights Reserved.
-		</div>
-	</div><!-- /footer -->
-</div><!-- 設定登入方式 -->
 
 <!-- ****************************** 首頁 ***********************************-->
 <div data-role="page" id="home">
-	<div data-role="header" data-position="fixed" class="vibo-header-home" style="top:0px!important;position:fixed;">
+	<div data-role="header" data-position="fixed" class="vibo-header" style="top:0px!important;position:fixed;">
 		<div class="header-padding"></div>
 		<a id="homeLogin" href="#userLogin" class="ui-btn-right" data-icon="star" data-theme="g">登入</a>
 	</div><!-- /header -->
 	
-	<div data-role="content" style="border:0px !important;padding:0px !important;margin:0px !important;overflow:hidden !important;background-color:#FFFFFF!important;background-image:none!important;">
-		<div class="ui-grid-a">
-			<div id="marqueeimg" name="marqueeimg" class="ui-block-a" style="width:50px;"><img src="images/news.png" style="width:100%;height:100%;"></div>
-			<div id="marqueediv" name="marqueediv" class="ui-block-b style="width:100%!important;border:0!important;">
-				<ul id="marquee" class="marquee" onclick="location.href='myRecommand.html';" style="width:100%;border-top-width:2px;border-right-width:0px;border-bottom-width:5px;border-left-width:0px;border-top-color:#C6C3C3;border-bottom-color:#C6C3C3;background-color:#FFFFFF;">
-					<li>歡迎使用台灣之星行動客服APP.</li>
-					<li>請點選這裡觀看優惠訊息.</li>
-				</ul>
-			</div>
+	<div data-role="content" style="border:0px !important;padding:0px !important;margin:0px !important;overflow:hidden !important;">
+		<div id="main-bg-container">
+			<img id="main-bg" src="images/main-bg.png" alt="" width="100%" border="0" usemap="#Map">
+			<span id="home-text1" class="home-text">我的帳單</span>
+			<span id="home-text2" class="home-text">我的服務</span>
+			<span id="home-text3" class="home-text">資料修改</span>
+			<span id="home-text4" class="home-text">線上繳費</span>
+			<span id="home-text5" class="home-text">門市/查詢</span>
+			<span id="home-text6" class="home-text">客戶服務</span>
+			<span id="home-text7" class="home-text">威寶粉絲團</span>
+			<span id="home-text8" class="home-text">Wi-Fi熱點</span>
 		</div>
-
-		<div id="grid-container" name="grid-container" class="ui-grid-b">
-			<div class="ui-block-a grid-top grid-left">		<a id="agrid1" name="agrid1" href="#" rel="external" onclick="gridClick(1);"><image id="grid1" name="grid1" src="images/grid-1-1.png" /></a></div>
-			<div class="ui-block-b grid-top grid-center">	<a id="agrid2" name="agrid2" href="#" rel="external" onclick="gridClick(2);"><image id="grid2" name="grid2" src="images/grid-2-1.png" /></a></div>
-			<div class="ui-block-c grid-top grid-right">	<a id="agrid3" name="agrid3" href="#" rel="external" onclick="gridClick(3);"><image id="grid3" name="grid3" src="images/grid-3-1.png" /></a></div>
-			<div class="ui-block-a grid-middle grid-left">	<a id="agrid4" name="agrid4" href="#" rel="external" onclick="gridClick(4);"><image id="grid4" name="grid4" src="images/grid-4-1.png" /></a></div>
-			<div class="ui-block-b grid-middle grid-center"><a href="myWifi.html" rel="external" onclick="gridClick(5);"><image id="grid5" name="grid5" src="images/grid-5-1.png" /></a></div>
-			<div class="ui-block-c grid-middle grid-right">	<a href="myQuery.html" rel="external" onclick="gridClick(6);"><image id="grid6" name="grid6" src="images/grid-6-1.png" /></a></div>
-			<div class="ui-block-a grid-bottom grid-left">	<a href="myQuery.html" rel="external" onclick="gridClick(7);"><image id="grid7" name="grid7" src="images/grid-7-1.png" /></a></div>
-			<div class="ui-block-b grid-bottom grid-center"><a href="mySettings.html" rel="external" onclick="gridClick(8);"><image id="grid8" name="grid8" src="images/grid-8-1.png" /></a></div>
-			<div class="ui-block-c grid-bottom grid-right">	<a href="myCustomer.html" rel="external" onclick="gridClick(9);"><image id="grid9" name="grid9" src="images/grid-9-1.png" /></a></div>
-		</div>
-
-		<div id='CarouselPromotion' style="width:100%;" class="HomeCarouselMenu"><!--首頁促銷訊息-->
+		<!--<img src="images/main-menu-ad.jpg" alt="" width="100%" height="72" border="0">-->
+		<div id='CarouselPromotion' style="width:100%;" class="CarouselMenu"><!--首頁促銷訊息-->
 			<img src='images/defaultHomeBanner.jpg' />
 		</div><!--首頁促銷訊息-->
+		<map name="Map">
+			<area shape="rect" id="rect1" coords="0,0,479,268" href="#" rel="external">
+			<area shape="rect" id="rect2" coords="480,0,959,268" href="#" rel="external">
+			<area shape="rect" id="rect3" coords="0,269,479,537" href="#" rel="external">
+			<area shape="rect" id="rect4" coords="480,269,959,537" href="#" rel="external">
+			<area shape="rect" id="rect5" coords="0,538,479,806" href="myQuery.html" rel="external">
+			<area shape="rect" id="rect6" coords="480,538,959,806" href="myCustomer.html" rel="external">
+			<area shape="rect" id="rect7" coords="0,538,479,806" href="https://www.facebook.com/vibotelecom?fref=ts" rel="external" target="_blank" class="external" onclick="GATrackEvent('首頁點選威寶粉絲團', '成功', '');">
+			<area shape="rect" id="rect8" coords="480,538,959,806" href="myWifi.html" rel="external">
+		</map>
 	</div><!-- /content -->
-	<!--
+	
 	<div data-role="footer" data-tap-toggle="false" data-position="fixed" style="border:0px !important;padding:0px !important;margin:0px !important;bottom:0px !important;position:fixed;">
 		<div class="footer-copyright">
 			威寶電信版權所有 Copyright© 2013 All Rights Reserved.
 		</div>
-	</div>
-	-->
-	<!-- /footer -->
+	</div><!-- /footer -->
 </div><!-- 首頁 -->
 
 <!-- ****************************** 用戶登入 ***********************************-->
 <div data-role="page" id="userLogin" data-position="fixed">
-	<div data-role="header" class="vibo-header-home">
+	<div data-role="header" class="vibo-header">
 		<div class="header-padding"></div>
 		<a href="#home" class="ui-btn-right" data-icon="home" data-theme="g">首頁</a>
 	</div><!-- /header -->
@@ -147,32 +111,9 @@
 			<input type="tel" name="txtLoginMSISDN" id="txtLoginMSISDN" minlength="10" maxlength="10" value="">
 			<label for="txtLoginPassword">密碼(同威寶官網用戶登入密碼)</label>
 			<input type="password" name="txtLoginPassword" id="txtLoginPassword" value="">
-				<table style="width:100%;">
-					<tr>
-						<td>記住門號</td>
-						<td style="float:right;">
-							<select name="flipRememberMe" id="flipRememberMe" data-role="slider" data-mini="true">
-								<option value="off">關閉</option>
-								<option value="on">開啟</option>
-							</select>
-						</td>
-					</tr>
-				</table>
-
-			<!--
-			<div data-role="fieldcontain">
-				<label for="flipRememberMe">記住門號</label>
-				<select name="flipRememberMe" id="flipRememberMe" data-role="slider" data-mini="true">
-					<option value="off">關閉</option>
-					<option value="on">開啟</option>
-				</select>
-			</div>
-			-->
-			<!--
 			<label>
 				<input type="checkbox" id="chkRememberMe" name="chkRememberMe">記住門號
 			</label>
-			-->
 			<div data-role="controlgroup" data-type="horizontal">
 			    <a href="#" data-role="button" onclick="doUserLogin();return false;">登入</a>
 			    <a href="#" data-role="button" onclick="doCancelLogin();return false;">取消</a>
@@ -194,9 +135,12 @@
 
 <!-- ****************************** 申請密碼/忘記密碼 ***********************************-->
 <div data-role="page" id="userLoginForgetPassword" data-position="fixed">
-	<div data-role="header" class="vibo-header-home">
+	<div data-role="header" class="vibo-header">
 		<div class="header-padding"></div>
-		    <a href='#' data-role='button' data-rel='back' data-icon='back' data-theme="g" class="ui-btn-right">上頁</a>
+		<div data-role='controlgroup' data-type='horizontal' class='ui-btn-right'>
+		    <a href='#' data-role='button' data-rel='back' data-icon='back' data-theme="g">上頁</a>
+		    <a href='#home' data-role='button' data-icon='home' data-theme="g">首頁</a>
+		</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
@@ -220,7 +164,7 @@
 
 <!-- ****************************** 變更密碼 ***********************************-->
 <div data-role="page" id="userLoginChangePassword" data-position="fixed">
-	<div data-role="header" class="vibo-header-home">
+	<div data-role="header" class="vibo-header">
 		<div class="header-padding"></div>
 		<div data-role='controlgroup' data-type='horizontal' class='ui-btn-right'>
 		    <a href='#' data-role='button' data-rel='back' data-icon='back' data-theme="g">上頁</a>
@@ -252,7 +196,7 @@
 
 <!-- ****************************** 用戶登出 ***********************************-->
 <div data-role="page" id="userLogout" data-position="fixed">
-	<div data-role="header" class="vibo-header-home">
+	<div data-role="header" class="vibo-header">
 		<div class="header-padding"></div>
 		<a href="#home" class="ui-btn-right" data-icon="home" data-theme="g">首頁</a>
 	</div><!-- /header -->
@@ -276,7 +220,7 @@
 
 <!-- ****************************** 登入說明 ***********************************-->
 <div data-role="page" id="userLoginGuide" data-position="fixed">
-	<div data-role="header" class="vibo-header-home">
+	<div data-role="header" class="vibo-header">
 		<div class="header-padding"></div>
 		<div data-role='controlgroup' data-type='horizontal' class='ui-btn-right'>
 		    <a href='#' data-role='button' data-rel='back' data-icon='back' data-theme="g">上頁</a>
@@ -312,14 +256,10 @@
 <script type="text/javascript">
 	
 	$('#home-slide1').one('pageshow',function(event){
-		if (notEmpty(getLocalValue('home-slide'))){	//已顯示過 slide，看要不要直接進入首頁
-			if (beEmpty(getLocalValue('AutoLogin'))){
-				$.mobile.changePage('#AutoLogin',{transition: 'pop'});
-			}else{
-				$.mobile.changePage('#home',{transition: 'pop'});
-			}
+		if (notEmpty(getLocalValue('home-slide'))){	//已顯示過 slide，直接進入首頁
+			$.mobile.changePage('#home',{transition: 'pop'});
 			return;
-		}	//if (notEmpty(getLocalValue('home-slide'))){	//已顯示過 slide，看要不要直接進入首頁
+		}	//if (notEmpty(getLocalValue('home-slide'))){	//已顯示過 slide，直接進入首頁
 		$('.home-slide').width($(window).width());
 		$('.home-slide').height($(window).height());
 		$('.home-slide').swipe( { swipeLeft:swipeToLeft, swipeRight:swipeToRight, allowPageScroll:"horizontal"} );	//首頁(第一次使用APP時出現的圖滑動效果)
@@ -337,8 +277,7 @@
 		}
 		if (pid=="home-slide3"){
 			setLocalValue('home-slide', 'Y');	//以後就不顯示slide頁面了
-			$.mobile.changePage('#AutoLogin',{transition: 'pop'});
-			//$.mobile.changePage('#home',{transition: 'slide', reverse: false});
+			$.mobile.changePage('#home',{transition: 'slide', reverse: false});
 			return;
 		}
 	}	//function swipeToLeft(){	//首頁(第一次使用APP時出現的圖從右往左滑)
@@ -356,48 +295,54 @@
 	}	//function swipeToRight(){	//首頁(第一次使用APP時出現的圖從左往右滑)
 	
 	$('#home').one('pageshow',function(event){
-		//$('#home #marquee').marquee({pauseSpeed: 1000});
-
 		var MainHeight = $(window).height()-$("#home div[data-role='header']").outerHeight(true)-$("#home div[data-role='footer']").outerHeight(true);	//全螢幕扣掉 header & footer 的高度
-		var CarouselPromotionHeight = $(window).width()*75/480;	//首頁促銷訊息跑馬燈的高度，以螢幕寬度的30/72計算，若螢幕寬度為480，則跑馬燈高度為75
-		var IconHeight = (MainHeight-CarouselPromotionHeight - $('#home #marquee').outerHeight(true))/4;	//剩餘畫面1/3高度做為每個 map icon的高
-		var Margin		= $(window).width()/15;
+		var CarouselPromotionHeight = $(window).width()*30/72;	//首頁促銷訊息跑馬燈的高度，以螢幕寬度的30/72計算，若螢幕寬度為480，則跑馬燈高度為200
+		var IconHeight = (MainHeight-CarouselPromotionHeight)/4;	//剩餘畫面1/3高度做為每個 map icon的高
 
 		CarouselPromotionHeight	= Math.ceil(CarouselPromotionHeight);	//無條件進位，取大於這個數的最小整數
 		IconHeight				= Math.ceil(IconHeight);				//無條件進位，取大於這個數的最小整數
 
-		$('#home #CarouselPromotion').height(CarouselPromotionHeight);
-		$('#home #grid-container').height(IconHeight*4);
-		$('#home .grid-top').css('margin-top', Margin);
-		$('#home .grid-top').css('margin-bottom', Margin);
-		$('#home .grid-center').css('margin-left', Margin);
-		$('#home .grid-center').css('margin-right', Margin);
-		$('#home .grid-left').css('margin-left', Margin);
-		$('#home .grid-right').css('margin-right', Margin);
-		$('#home .grid-bottom').css('margin-top', Margin);
-		$('#home .grid-bottom').css('margin-bottom', Margin);
-		$('#home #grid-container div').width(($(window).width() - Margin*4)/3);
-		$('#home #grid-container div').height((MainHeight - CarouselPromotionHeight - $('#home #marquee').outerHeight(true) - Margin*4)/3);
-		$('#home #grid-container div img').width('100%');
-		$('#home #grid-container div img').height('100%');
+		$('#CarouselPromotion').height(CarouselPromotionHeight);
+		$('#main-bg').height(IconHeight*4);
+		$('#main-bg-container').height(IconHeight*4);
+		//alert($('#main-bg-container').height());
 		$("#home div[data-role='content']").height(MainHeight);
+		//alert($("#home div[data-role='content']").height());
 		
-		$('#home #marqueeimg').height($('#home #marqueediv').outerHeight(true));
-		$('#home #marqueediv').width($(window).width()-50);	//跑馬燈的寬度，螢幕寬度減掉左方圖片寬度
+		var x = ($(window).width())/2;	//各選單Map區塊的X軸寬度
+		var y = IconHeight;	//各選單Map區塊的Y軸高度
 
-		//取得PushMessage(訊息提醒)
-		getPushMessage();
-		//取得首頁促銷訊息
-		var sData = "";
-		sData = "type=HomeBanner";
-		getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", GetPromotionMessageList_Success, false);
+		$("#home #rect1").attr('coords', x*0 + ',' + y*0 + ',' + x*1 + ',' + y*1 );
+		$("#home #rect2").attr('coords', x*1 + ',' + y*0 + ',' + x*2 + ',' + y*1 );
+		$("#home #rect3").attr('coords', x*0 + ',' + y*1 + ',' + x*1 + ',' + y*2 );
+		$("#home #rect4").attr('coords', x*1 + ',' + y*1 + ',' + x*2 + ',' + y*2 );
+		$("#home #rect5").attr('coords', x*0 + ',' + y*2 + ',' + x*1 + ',' + y*3 );
+		$("#home #rect6").attr('coords', x*1 + ',' + y*2 + ',' + x*2 + ',' + y*3 );
+		$("#home #rect7").attr('coords', x*0 + ',' + y*3 + ',' + x*1 + ',' + y*4 );
+		$("#home #rect8").attr('coords', x*1 + ',' + y*3 + ',' + x*2 + ',' + y*4 );
+		
+		var x1 = y/5;	//各選單文字的X軸基準點
+		var y1 = $("#home div[data-role='header']").outerHeight(true) + y/5;	//各選單文字的Y軸基準點
+
+		$("#home #home-text1").css('left', x*0 + x1 + 'px');
+		$("#home #home-text1").css('top', y*0 + y1 + 'px');
+		$("#home #home-text2").css('left', x*1 + x1 + 'px');
+		$("#home #home-text2").css('top', y*0 + y1 + 'px');
+		$("#home #home-text3").css('left', x*0 + x1 + 'px');
+		$("#home #home-text3").css('top', y*1 + y1 + 'px');
+		$("#home #home-text4").css('left', x*1 + x1 + 'px');
+		$("#home #home-text4").css('top', y*1 + y1 + 'px');
+		$("#home #home-text5").css('left', x*0 + x1 + 'px');
+		$("#home #home-text5").css('top', y*2 + y1 + 'px');
+		$("#home #home-text6").css('left', x*1 + x1 + 'px');
+		$("#home #home-text6").css('top', y*2 + y1 + 'px');
+		$("#home #home-text7").css('left', x*0 + x1 + 'px');
+		$("#home #home-text7").css('top', y*3 + y1 + 'px');
+		$("#home #home-text8").css('left', x*1 + x1 + 'px');
+		$("#home #home-text8").css('top', y*3 + y1 + 'px');
+		//showPage('#userLogin');
 	});
 
-	function gridClick(i){
-		if (!isLogin() && i<5) return false;	//若未登入且點選需登入的項目，則不做事
-		$('#grid' + i).attr('src', 'images/grid-' + i + '-2.png');
-	}
-	
 	$('#userLogin').one('pageshow',function(event){
 		GATrackPageView('用戶登入');
 	});
@@ -412,50 +357,28 @@
 
 	$('#home').on('pageshow',function(event){
 		checkLoginStatus();
+		//取得PushMessage(訊息提醒)
+		getPushMessage();
+		//取得首頁促銷訊息
+		var sData = "";
+		sData = "type=HomeBanner";
+		getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", GetPromotionMessageList_Success, false);
 		$("#home div[data-role='footer']").show();
 	});
 	
 
 	$('#userLogin').on('pageshow',function(event){
 		var localmsisdn = getLocalValue('msisdn');
-		var localpassword = getLocalValue('password');
-		var localAutoLogin = getLocalValue('AutoLogin');
 		if (beEmpty(localmsisdn)) localmsisdn = '';
-		if (beEmpty(localpassword)) localpassword = '';
-		if (notEmpty(localAutoLogin) && localAutoLogin=="Y"){
-			$('#frmUserLogin #txtLoginMSISDN').val(localmsisdn);
-			$('#frmUserLogin #txtLoginPassword').val(localpassword);	//只記門號不記密碼
-			$('#frmUserLogin #flipRememberMe').val('on').slider('refresh');
-		}else{
-			$('#frmUserLogin #txtLoginMSISDN').val('');
-			$('#frmUserLogin #txtLoginPassword').val('');	//只記門號不記密碼
-			$('#frmUserLogin #flipRememberMe').val('off').slider('refresh');
-		}
-		//$('#frmUserLogin #txtLoginPassword').val('');	//只記門號不記密碼
+		$('#frmUserLogin #txtLoginMSISDN').val(localmsisdn);
+		//$('#frmUserLogin #txtLoginPassword').val(getLocalValue('password'));	//只記門號不記密碼
+		$('#frmUserLogin #txtLoginPassword').val('');	//只記門號不記密碼
 	});
 
 </script>
 
 <script type="text/javascript">
 	//var gMSISDN		= "";
-
-	function SetAutoLogin(){	//設定自動登入方式
-		var s = $("#AutoLogin input[name='rdo1']:radio:checked").val();
-		if (beEmpty(s)){
-			MsgBox("請選擇登入方式");
-			return;
-		}
-		var a = "";
-		if (s=="A") a = "Y";	//自動登入
-		if (s=="M") a = "N";	//手動登入
-		if (s=="N") a = "";		//我目前不是台灣之星月租型用戶
-		setLocalValue('AutoLogin', a);
-		if (beEmpty(a)){
-			showPage('#home');
-		}else{
-			showPage('#userLogin');
-		}
-	}	//function SetAutoLogin(){	//設定自動登入方式
 
 	//檢查登入狀態
 	function checkLoginStatus(){
@@ -464,23 +387,18 @@
 			$('#home #homeLogin .ui-btn-text').text('登入');
 			$('#home #homeLogin').attr('href', '#userLogin');
 			$('#home #main-bg').attr('src', 'images/main-bg-disable.png');	//換為四個項目是灰色的底圖
-			for (i=1;i<5;i++){
-				$('#home #grid' + i).attr('src', 'images/grid-' + i + '-3.png');
-				$('#home #agrid' + i).attr('href', '#');	//取消四個項目的連結
-			}
-			//for (i=1;i<5;i++) $('#home #home-text' + i).css('color', '#777777');	//把四個項目的文字變淡
+			for (i=1;i<5;i++) $('#home #rect' + i).attr('href', '#');	//取消四個項目的連結
+			for (i=1;i<5;i++) $('#home #home-text' + i).css('color', '#777777');	//把四個項目的文字變淡
 		}else{
 			userAuthentication();	//檢查登入資訊是否正確
 			$('#home #homeLogin .ui-btn-text').text('登出');
 			$('#home #homeLogin').attr('href', '#userLogout');
-			for (i=1;i<5;i++){
-				$('#home #grid' + i).attr('src', 'images/grid-' + i + '-1.png');
-			}
-			$('#home #agrid1').attr('href', 'myBill.html');
-			$('#home #agrid2').attr('href', 'myPay.html');
-			$('#home #agrid3').attr('href', 'myPlan.html');
-			$('#home #agrid4').attr('href', 'myService.html');
-			//for (i=1;i<5;i++) $('#home #home-text' + i).css('color', '#222222');
+			$('#home #main-bg').attr('src', 'images/main-bg.png');	//換為正常底圖
+			$('#home #rect1').attr('href', 'myBill.html');
+			$('#home #rect2').attr('href', 'myService.html');
+			$('#home #rect3').attr('href', 'myData.html');
+			$('#home #rect4').attr('href', 'myPay.html');
+			for (i=1;i<5;i++) $('#home #home-text' + i).css('color', '#222222');
 		}
 	}	//function checkLoginStatus(){
 	
@@ -527,15 +445,12 @@
 
 		doPushMessageRegister(msisdn, contractid);	//檢查是否有註冊GCM/APNS Push Message，若未註冊則進行註冊
 		
-		//if ($('#frmUserLogin #chkRememberMe').is(':checked')){	//記住門號
-		if ($('#frmUserLogin #flipRememberMe').val()=="on"){	//記住門號
+		if ($('#frmUserLogin #chkRememberMe').is(':checked')){	//記住門號
 			setLocalValue('msisdn', msisdn);
-			setLocalValue('password', password);	//只記門號不記密碼
-			setLocalValue('AutoLogin', 'Y');
+			//setLocalValue('password', password);	//只記門號不記密碼
 		}else{
 			setLocalValue('msisdn', '');
 			setLocalValue('password', '');
-			setLocalValue('AutoLogin', 'N');
 		}
 		GATrackEvent('用戶登入成功', msisdn,  contractid);
 		//MsgBox('您已成功登入!', function(){showPage('#home');});
@@ -590,15 +505,15 @@
 	}	//function doCancelLogin(){
 
 	function getPushMessage(){	//準備取得PushMessage(訊息提醒)
-		//var txtCurrDate = getCurrentDate();	//今天日期，格式為：2013/10/3
-		//var txtLastPushMessageDate = getLocalValue('PushMessage');	//上次擷取訊息的時間
+		var txtCurrDate = getCurrentDate();	//今天日期，格式為：2013/10/3
+		var txtLastPushMessageDate = getLocalValue('PushMessage');	//上次擷取訊息的時間
 
-		//if (!isLogin()) return;	//未登入的使用者不需推播
+		if (!isLogin()) return;	//未登入的使用者不需推播
 		
-		//if (txtLastPushMessageDate!=txtCurrDate){	//從上次擷取訊息至今已超過一天，重新抓資料
+		if (txtLastPushMessageDate!=txtCurrDate){	//從上次擷取訊息至今已超過一天，重新抓資料
 			var sData = "type=PushMessage";
 			getDataFromServer("ajaxGetPromotionMessageList.jsp", sData, "json", GetPushMessage_Success, false);
-		//}
+		}
 	}	//function getPushMessage(){	//取得PushMessage(訊息提醒)
 
 	function GetPushMessage_Success(data){	//取得PushMessage(訊息提醒)
@@ -606,7 +521,6 @@
 		var ResultText = data.ResultText;
 		if (ResultCode!='00000'){	//作業失敗
 			//$('#CarouselPromotion').html('');	//不用把html清除，顯示預設圖檔
-			$('#home #marquee').marquee({yScroll: "bottom", pauseSpeed: 2000});	//顯示預設跑馬燈
 			return;
 		}	//if (ResultCode=='00000'){	//作業成功
 		//有資料，開始產生頁面內容
@@ -614,18 +528,57 @@
 		var j = 0;
 
 		$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
-			s += "<li>" + item.Subject + "</li>";
+			if (j==0){
+				s = item.Subject + "<br>";
+				if (notEmpty(item.LinkURL)){
+					//s += "<a class='popButton' href='" + item.LinkURL + "' class='external' target='_blank' data-rel='dialog' data-role='button'>詳細</a>";
+					/*
+					if (isRunInApp()){
+						s += "<a href='" + item.LinkURL + "' class='external' target='_system' data-rel='dialog' data-role='button' style='margin-left:15px;margin-right:15px;' onclick='$.mobile.sdCurrentDialog.close();'>詳細</a>";
+						
+					}else{
+						s += "<a href='" + item.LinkURL + "' class='external' target='_blank' data-rel='dialog' data-role='button' style='margin-left:15px;margin-right:15px;' onclick='$.mobile.sdCurrentDialog.close();'>詳細</a>";
+					}
+					*/
+					s += "<a href='" + item.LinkURL + "' class='external' target='_blank' data-rel='dialog' data-role='button' data-icon='forward' data-iconpos='left'>詳細</a>";
+				}else{
+					if (item.ShowNewEvent=='Y'){	//最新活動
+						s += "<a href='myRecommand.html?p=RecommandNewEvent&mid=" + item.MessageId + "' rel='external' data-role='button' data-icon='forward' data-iconpos='left'>詳細</a>";
+					}else if (item.ShowProgram=='Y'){	//優惠方案
+						s += "<a href='myRecommand.html?p=RecommandProgram&mid=" + item.MessageId + "' rel='external' data-role='button' data-icon='forward' data-iconpos='left'>詳細</a>";
+					}
+				}
+				if (notEmpty(s)){
+					GATrackEvent('顯示首頁訊息提醒', item.MessageId, item.Subject);
+				}
+			}
 			j++;
 		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
-		if (j<2){
-			$('#home #marquee').append(s);
-		}else{
-			$('#home #marquee').html(s);
-		}
-
 		if (notEmpty(s)){
-			$('#home #marquee').marquee({yScroll: "bottom", pauseSpeed: 2000});
-			//setLocalValue('PushMessage', getCurrentDate());	//將今天日期紀錄起來
+			//$('#inlinecontenttext').html(s);
+			//$('#inlinecontent').simpledialog2();
+			$('#main-bg').removeAttr("usemap");
+			$('<div>').simpledialog2({
+				mode: 'button',
+				headerText: '最新活動',
+				headerClose: false,
+				themeDialog: 'f',
+				buttonPrompt: s,
+				buttons : {
+					'關閉': {
+						click: function () { 
+							$('#main-bg').attr("usemap", "#Map");
+							//$.mobile.sdCurrentDialog.close();
+							$(document).trigger('simpledialog', {'method':'close'});
+						},
+						icon: 'delete'
+					}
+				},
+				callbackClose: function(){
+					$('#main-bg').attr("usemap", "#Map");
+				}
+			});
+			setLocalValue('PushMessage', getCurrentDate());	//將今天日期紀錄起來
 		}
 	}	//function GetPushMessage_Success(data){	//取得PushMessage(訊息提醒)
 
@@ -651,7 +604,7 @@
 		});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
 
 		if (notEmpty(s)){
-			var CarouselPromotionHeight = $(window).width()*75/480;	//首頁促銷訊息跑馬燈的高度，以螢幕寬度的75/480計算，若螢幕寬度為480，則跑馬燈高度為75
+			var CarouselPromotionHeight = $(window).width()*30/72;	//首頁促銷訊息跑馬燈的高度，以螢幕寬度的30/72計算，若螢幕寬度為480，則跑馬燈高度為200
 			var CarouselPromotionWidth = $(window).width();	//首頁促銷訊息跑馬燈的寬度
 			$('#home #CarouselPromotion').html("<div id='CarouselPromotionItems'>" + s + "</div><div style='float:none;clear:both;'></div>");
 			$('#home #CarouselPromotion #CarouselPromotionItems').css('width', CarouselPromotionWidth);
@@ -852,7 +805,6 @@
 				return;
 			}	//if (ResultCode=='00000'){	//作業成功
 			setLocalValue('PushMessageRegister', 'Y');
-			setLocalValue('PushMessageDeviceId', result);
 			window.plugins.toast.showShortCenter('訊息通知註冊成功');
 			showPage('#home');
 		});
@@ -914,7 +866,6 @@
 							showPage('#home');
 						}	//if (ResultCode=='00000'){	//作業成功
 						setLocalValue('PushMessageRegister', 'Y');
-						setLocalValue('PushMessageDeviceId', e.regid);
 					});
 				}
 				unBlockUI();

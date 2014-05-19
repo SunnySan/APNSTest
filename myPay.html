@@ -8,17 +8,23 @@
 	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
 	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<link rel="stylesheet" href="css/style.css" />
-	
+
+	<link rel="stylesheet" type="text/css" href="css/mobipick.css" /><!--選取信用卡有效期限用的日期選擇器，請參考 http://www.jqueryrain.com/?_F8wfBS3 -->
+
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
 	<script src="js/jquery.mobile-1.3.2.min.js"></script>
-	<script src="js/jquery.touchSwipe.min.js"></script>
-	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<!--<script src="js/jquery.touchSwipe.min.js"></script>-->
+	<!--<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>-->
 	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<script type="text/javascript" src="js/util.js"></script>
 	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
 	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
 	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+
+	<script type="text/javascript" src="js/xdate.js"></script><!--選取信用卡有效期限用的日期選擇器，請參考 http://www.jqueryrain.com/?_F8wfBS3 -->
+	<script type="text/javascript" src="js/xdate.i18n.js"></script><!--選取信用卡有效期限用的日期選擇器，請參考 http://www.jqueryrain.com/?_F8wfBS3 -->
+	<script type="text/javascript" src="js/mobipick.js"></script><!--選取信用卡有效期限用的日期選擇器，請參考 http://www.jqueryrain.com/?_F8wfBS3 -->
 	
 	<script src="cordova.js"></script><!--給PhoneGap用的-->
 	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
@@ -29,124 +35,347 @@
 
 <body>
 
-<!-- ****************************** 信用卡1 ***********************************-->
-<div data-role="page" id="myPayCreditCard1">
+<!-- ****************************** 選單頁 ***********************************-->
+<div data-role="page" id="myPayMenu">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayCreditCard1">信用卡</a></li>
-				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
-				<li><a href="#myPayRecord">繳款記錄</a></li>
-			</ul>
-		</div><!-- /navbar -->
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">線上繳費</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
-		<h3>信用卡繳款</h3>
-		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
-			<h3>服務說明</h3>
-			<p>
-				<ol type="decimal" style="padding-left:15px;">
-					<li>
-						本人即申請人，已知悉並同意威寶電信依『個人資料保護法第8條』所為之告知事項。依「個人資料保護法」第八條規定之告知內容：
-						<ol type="decimal" style="padding-left:15px;">
-							<li>
-								非公務機關名稱：威寶電信股份有限公司。
-							</li>
-							<li>
-								蒐集之目的：客戶管理、統計調查與分析、資訊與資料庫管理、經營電信業務與電信加值網路業務、徵信、行銷(不包括直銷至個人)、行銷(包括直銷至個人)、其他合於營業登記項目或章程所定業務之需要、其他諮詢與顧問服務及依主管機關公告之特定目的。
-							</li>
-							<li>
-								個人資料之類別：辨識個人資料、辨識財務者、政府資料中之辨識者、個人描述、財務交易及其他依主管機關公告之個人資料類別。
-							</li>
-							<li>
-								個人資料利用之期間、地區、對象及方式：
-								<br>（1）期間：依法令、各契約規定之期間。
-								<br>（2）地區：中華民國境內、境外（主管機關禁止者不在此限）。
-								<br>（3）對象：威寶電信、與威寶電信有合作或業務往來之威寶電信關係企業及合作廠商。
-								<br>（4）方式：符合法令規定範圍之利用。
-							</li>
-							<li>
-								使用者在符合電信相關法規之情形下，就其個人資料得依「個人資料保護法」規定行使下列權利，行使方式依威寶電信作業規範：
-								<br>（1）查詢或請求閱覽。
-								<br>（2）請求製給複製本。
-								<br>（3）請求補充或更正。
-								<br>（4）請求停止蒐集、處理或利用。
-								<br>（5）請求刪除。
-							</li>
-							<li>
-								使用者得自由選擇提供資料（但依法令規定者不在此限），若不提供將影響電信服務之完整性。
-							</li>
-						</ol>
-					</li>
-					<li>
-						網路繳款僅提供威寶電信月租型用戶本人之信用卡繳費，並使用其名下信用卡(VISA、MASTER、JCB、聯合信用卡)透過網路刷卡繳付帳單費用。
-					</li>
-					<li>
-						本服務將進入SSL安全鑰匙加密機制，您可以安心使用威寶電信網路刷卡繳款服務。
-					</li>
-					<li>
-						繳費並銷帳成功後您可於「<a href="#myPayRecord">繳款記錄查詢</a>」查詢到您的繳款記錄。
-					</li>
-			</ol>
-			</p>
-		</div><!-- /collapsible -->
-		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
-			<h3>注意事項</h3>
-			<p>
-				<ol type="decimal" style="padding-left:15px;">
-					<li>
-						如用戶使用非本人之信用卡繳費，並經持卡人或原發卡銀行舉發，應由用戶本人負擔全部責任；如致本公司退費予持卡人或原發卡銀行時，逕依帳務催款程序向用戶催討，並願負擔該筆款項。
-					</li>
-					<li>
-						用戶本人如以信用卡繳款但經授權失敗時，請向原發卡銀行查詢扣款失敗之原因。
-					</li>
-					<li>
-						刷卡一經銀行同意授權，視同該筆消費已成立， 無法任意取消或變更。
-					</li>
-					<li>
-						若您因帳款逾期未繳而無法正常通話，請先登入網上繳款服務後，選擇「無用戶密碼繳款」完成繳費。
-					</li>
-				</ol>
-			</p>
-		</div><!-- /collapsible -->
-		<br>
-		<label><input type="checkbox" id="chk1" name="chk1">本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。</label>
-		<button onclick="gotomyPayCreditCard2();">我要繳費</button>
+		<ul data-role="listview" data-inset="false" data-theme="h" data-icon="false" class="MenuListview">
+			<li><a href="#myPayBankAccount2"><img src="images/text_icon_01.png">銀行帳戶繳款</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myPayCreditCard2"><img src="images/text_icon_01.png">信用卡繳款</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myPayRecord"><img src="images/text_icon_02.png">繳款紀錄查詢</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myPayATMAccountQuery"><img src="images/text_icon_03.png">ATM繳款帳號查詢</a></li>
+			<li data-role="list-divider"></li>
+		</ul>
 	</div><!-- /content -->
 	
 	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
 		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
 		</div>
 	</div><!-- /footer -->
-</div><!-- 信用卡1 -->
+</div><!-- 選單頁 -->
 
 <!-- ****************************** 銀行帳戶 ***********************************-->
-<div data-role="page" id="myPayBankAccount1">
+<div data-role="page" id="myPayBankAccount2">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayCreditCard1">信用卡</a></li>
-				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
-				<li><a href="#myPayRecord">繳款記錄</a></li>
-			</ul>
-		</div><!-- /navbar -->
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">銀行帳戶繳款</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
-		<h3>銀行帳戶繳款</h3>
+		<div id="myPayCreditCard2Status"></div>
+		<div id="myPayCreditCard2CardData">
+			<label>門號使用人相關資訊</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>姓名</td>
+						<td id='username'></td>
+					</tr>
+					<tr>
+						<td>門號</td>
+						<td id='msisdn'></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<label>繳款資料</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>出帳日</td>
+						<td id='bills_date'></td>
+					</tr>
+					<tr>
+						<td>上期應繳金額</td>
+						<td id='prior_pay'></td>
+					</tr>
+					<tr>
+						<td>上期繳款金額</td>
+						<td id='prior_payed'></td>
+					</tr>
+					<tr>
+						<td>本期新增金額</td>
+						<td id='currt_append'></td>
+					</tr>
+					<tr>
+						<td>本期應繳金額</td>
+						<td id='currt_pay' style='color:#FF0000;'></td>
+					</tr>
+					<tr>
+						<td>繳款截止日</td>
+						<td id='pay_end_time' style='color:#FF0000;'></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<div>銀行帳戶繳款資料</div>
+			<div style="color:#FF0000;">本服務僅限用戶本人名下之銀行帳號繳費</div>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>付款金額</td>
+						<td><span id='tdNeedPay' style="color:#FF0000;"></span></td>
+					</tr>
+				</tbody>
+			</table>
+			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2" style="display:none;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width:3em;">銀行</td>
+						<td>
+							<select name="selBank" id="selBank">
+								<option value=''>請選擇</option>
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>帳號</td>
+						<td><input type="tel" id="BankAccount" data-mini="true" value=""></td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="#myPayBankAccount1" data-role="button">服務說明</a>
+			<label><input type="checkbox" id="chk1" name="chk1">本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。</label>
+			<input type="hidden" id="txtNeedPay" name="txtNeedPay" value="0">
+			<button onclick="doPayBankAccount();">確認付款</button>
+		</div><!--<div id="myPayCreditCard2CardData">-->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 銀行帳戶 -->
+
+<!-- ****************************** 信用卡 ***********************************-->
+<div data-role="page" id="myPayCreditCard2">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">信用卡繳款</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id="myPayCreditCard2Status"></div>
+		<div id="myPayCreditCard2CardData">
+			<label>門號使用人相關資訊</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>姓名</td>
+						<td id='username'></td>
+					</tr>
+					<tr>
+						<td>門號</td>
+						<td id='msisdn'></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<label>繳款資料</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>出帳日</td>
+						<td id='bills_date'></td>
+					</tr>
+					<tr>
+						<td>上期應繳金額</td>
+						<td id='prior_pay'></td>
+					</tr>
+					<tr>
+						<td>上期繳款金額</td>
+						<td id='prior_payed'></td>
+					</tr>
+					<tr>
+						<td>本期新增金額</td>
+						<td id='currt_append'></td>
+					</tr>
+					<tr>
+						<td>本期應繳金額</td>
+						<td id='currt_pay' style='color:#FF0000;'></td>
+					</tr>
+					<tr>
+						<td>繳款截止日</td>
+						<td id='pay_end_time' style='color:#FF0000;'></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<label>繳款信用卡資料</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4">付款金額</td>
+					</tr>
+					<tr>
+						<td colspan="4"><span id='tdNeedPay' style="color:#FF0000;"></span></td>
+					</tr>
+					<tr>
+						<td colspan="4">卡號</td>
+					</tr>
+					<tr>
+						<td><input type="tel" id="CardNo1" data-mini="true" size="4" minlength="4" maxlength="4" value="" onkeyup="CardNoChange(1);"></td>
+						<td><input type="tel" id="CardNo2" data-mini="true" size="4" minlength="4" maxlength="4" value="" onkeyup="CardNoChange(2);"></td>
+						<td><input type="tel" id="CardNo3" data-mini="true" size="4" minlength="4" maxlength="4" value="" onkeyup="CardNoChange(3);"></td>
+						<td><input type="tel" id="CardNo4" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
+					</tr>
+				</tbody>
+			</table>
+			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4">有效期限</td>
+					</tr>
+					<tr>
+						<td colspan="4"><input type="text" id="ExpiryDate" name="ExpiryDate" /></td>
+						<input type="hidden" id="ExpireMonth" value="">
+						<input type="hidden" id="ExpireYear" value="">
+						<!--
+						<td><input type="tel" id="ExpireMonth" data-mini="true" size="2" minlength="2" maxlength="2" value=""></td>
+						<td>月/</td>
+						<td><input type="tel" id="ExpireYear" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
+						<td>年(四碼西元年)</td>
+						-->
+					</tr>
+				</tbody>
+			</table>
+			<label><input type="checkbox" id="chk2" name="chk2">儲存信用卡資料</label>
+			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+					<tr class="ui-bar-d">
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="tel" id="CardBack" data-mini="true" size="3" minlength="3" maxlength="3" value=""></td>
+						<td colspan="3">卡片背面末三碼</td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="#myPayCreditCard1" data-role="button">服務說明</a>
+			<label><input type="checkbox" id="chk1" name="chk1">本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。</label>
+			<input type="hidden" id="txtNeedPay" name="txtNeedPay" value="0">
+			<button onclick="doPayCreditCard();">付款</button>
+		</div><!--<div id="myPayCreditCard2CardData">-->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 信用卡 -->
+
+<!-- ****************************** 繳款記錄 ***********************************-->
+<div data-role="page" id="myPayRecord">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">線上繳款</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3>提供一個月內繳款記錄查詢</h3>
+		<p>線上繳款記錄：</p>
+		<div id="OnlinePayInfo">
+			<table data-role='table' id='tblOnlinePayInfo' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>
+				<tbody>
+					<tr><td>查詢中，請稍候...</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<p>歷史繳款記錄：</p>
+		<div id="HistoryPayInfo">
+			<table data-role='table' id='tblHistoryPayInfo' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>
+				<tbody>
+					<tr><td>查詢中，請稍候...</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<p>注意事項：網頁入帳資訊之更新，約需3個工作日左右。</p>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 繳款記錄 -->
+
+<!-- ****************************** ATM繳款帳號查詢 ***********************************-->
+<div data-role="page" id="myPayATMAccountQuery">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">ATM繳費帳號查詢</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3>銀行代號：<span id="BankId">822</span></h3>
+		<h3>用戶帳號：<span id="BankAccount"></span></h3>
+		您可利用金融卡在全省具有轉帳功能之自動櫃員機，依照指示依序輸入
+		<img src="images/atm_pic.jpg" style="margin-top:10px;" />
+		<p>注意事項：</p>
+		<ol type="decimal" style="padding-left:15px;">
+			<li>每筆跨行轉帳手續費需由客戶自行負擔。</li>
+			<li>轉帳完成，請務必保留您的轉帳收據以供備查。</li>
+		</ol>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- ATM繳款帳號查詢 -->
+
+<!-- ****************************** 銀行帳戶服務說明 ***********************************-->
+<div data-role="page" id="myPayBankAccount1">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">銀行帳戶繳款</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
 		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
 			<h3>服務說明</h3>
 			<p>
@@ -229,7 +458,6 @@
 			</p>
 		</div><!-- /collapsible -->
 		<br>
-		<label><input type="checkbox" id="chk1" name="chk1">本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。</label>
 		<button onclick="gotomyPayBankAccount2();">我要繳款</button>
 	</div><!-- /content -->
 	
@@ -237,348 +465,91 @@
 		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
 		</div>
 	</div><!-- /footer -->
-</div><!-- 銀行帳戶 -->
+</div><!-- 銀行帳戶服務說明 -->
 
-<!-- ****************************** 繳款記錄 ***********************************-->
-<div data-role="page" id="myPayRecord">
+<!-- ****************************** 信用卡服務說明 ***********************************-->
+<div data-role="page" id="myPayCreditCard1">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayCreditCard1">信用卡</a></li>
-				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
-				<li><a href="#myPayRecord">繳款記錄</a></li>
-			</ul>
-		</div><!-- /navbar -->
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">信用卡繳款</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
-		<h3>提供一個月內繳款記錄查詢</h3>
-		<p>線上繳款記錄：</p>
-		<div id="OnlinePayInfo">
-			<table data-role='table' id='tblOnlinePayInfo' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>
-				<tbody>
-					<tr><td>查詢中，請稍候...</td></tr>
-				</tbody>
-			</table>
-		</div>
-		<p>歷史繳款記錄：</p>
-		<div id="HistoryPayInfo">
-			<table data-role='table' id='tblHistoryPayInfo' data-mode='columntoggle' border=1 class='ui-body-d ui-shadow table-stripe ui-responsive'>
-				<tbody>
-					<tr><td>查詢中，請稍候...</td></tr>
-				</tbody>
-			</table>
-		</div>
-		<p>注意事項：網頁入帳資訊之更新，約需3個工作日左右。</p>
+		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
+			<h3>服務說明</h3>
+			<p>
+				<ol type="decimal" style="padding-left:15px;">
+					<li>
+						本人即申請人，已知悉並同意威寶電信依『個人資料保護法第8條』所為之告知事項。依「個人資料保護法」第八條規定之告知內容：
+						<ol type="decimal" style="padding-left:15px;">
+							<li>
+								非公務機關名稱：威寶電信股份有限公司。
+							</li>
+							<li>
+								蒐集之目的：客戶管理、統計調查與分析、資訊與資料庫管理、經營電信業務與電信加值網路業務、徵信、行銷(不包括直銷至個人)、行銷(包括直銷至個人)、其他合於營業登記項目或章程所定業務之需要、其他諮詢與顧問服務及依主管機關公告之特定目的。
+							</li>
+							<li>
+								個人資料之類別：辨識個人資料、辨識財務者、政府資料中之辨識者、個人描述、財務交易及其他依主管機關公告之個人資料類別。
+							</li>
+							<li>
+								個人資料利用之期間、地區、對象及方式：
+								<br>（1）期間：依法令、各契約規定之期間。
+								<br>（2）地區：中華民國境內、境外（主管機關禁止者不在此限）。
+								<br>（3）對象：威寶電信、與威寶電信有合作或業務往來之威寶電信關係企業及合作廠商。
+								<br>（4）方式：符合法令規定範圍之利用。
+							</li>
+							<li>
+								使用者在符合電信相關法規之情形下，就其個人資料得依「個人資料保護法」規定行使下列權利，行使方式依威寶電信作業規範：
+								<br>（1）查詢或請求閱覽。
+								<br>（2）請求製給複製本。
+								<br>（3）請求補充或更正。
+								<br>（4）請求停止蒐集、處理或利用。
+								<br>（5）請求刪除。
+							</li>
+							<li>
+								使用者得自由選擇提供資料（但依法令規定者不在此限），若不提供將影響電信服務之完整性。
+							</li>
+						</ol>
+					</li>
+					<li>
+						網路繳款僅提供威寶電信月租型用戶本人之信用卡繳費，並使用其名下信用卡(VISA、MASTER、JCB、聯合信用卡)透過網路刷卡繳付帳單費用。
+					</li>
+					<li>
+						本服務將進入SSL安全鑰匙加密機制，您可以安心使用威寶電信網路刷卡繳款服務。
+					</li>
+					<li>
+						繳費並銷帳成功後您可於「<a href="#myPayRecord">繳款記錄查詢</a>」查詢到您的繳款記錄。
+					</li>
+			</ol>
+			</p>
+		</div><!-- /collapsible -->
+		<div data-role="collapsible" data-theme="f" data-content-theme="f" data-inset="false" style="margin-left:15px;margin-right:15px;">
+			<h3>注意事項</h3>
+			<p>
+				<ol type="decimal" style="padding-left:15px;">
+					<li>
+						如用戶使用非本人之信用卡繳費，並經持卡人或原發卡銀行舉發，應由用戶本人負擔全部責任；如致本公司退費予持卡人或原發卡銀行時，逕依帳務催款程序向用戶催討，並願負擔該筆款項。
+					</li>
+					<li>
+						用戶本人如以信用卡繳款但經授權失敗時，請向原發卡銀行查詢扣款失敗之原因。
+					</li>
+					<li>
+						刷卡一經銀行同意授權，視同該筆消費已成立， 無法任意取消或變更。
+					</li>
+					<li>
+						若您因帳款逾期未繳而無法正常通話，請先登入網上繳款服務後，選擇「無用戶密碼繳款」完成繳費。
+					</li>
+				</ol>
+			</p>
+		</div><!-- /collapsible -->
+		<br>
+		<button onclick="gotomyPayCreditCard2();">我要繳費</button>
 	</div><!-- /content -->
 	
 	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
 		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
 		</div>
 	</div><!-- /footer -->
-</div><!-- 繳款記錄 -->
-
-<!-- ****************************** ATM繳款帳號查詢 ***********************************-->
-<div data-role="page" id="myPayATMAccountQuery">
-	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayCreditCard1">信用卡</a></li>
-				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
-				<li><a href="#myPayRecord">繳款記錄</a></li>
-			</ul>
-		</div><!-- /navbar -->
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
-			</ul>
-		</div><!-- /navbar -->
-	</div><!-- /header -->
-	
-	<div data-role="content">
-		<h3>銀行代號：<span id="BankId">822</span></h3>
-		<h3>用戶帳號：<span id="BankAccount"></span></h3>
-		您可利用金融卡在全省具有轉帳功能之自動櫃員機，依照指示依序輸入
-		<img src="images/atm_pic.jpg" style="margin-top:10px;" />
-		<p>注意事項：</p>
-		<ol type="decimal" style="padding-left:15px;">
-			<li>每筆跨行轉帳手續費需由客戶自行負擔。</li>
-			<li>轉帳完成，請務必保留您的轉帳收據以供備查。</li>
-		</ol>
-	</div><!-- /content -->
-	
-	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
-		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
-		</div>
-	</div><!-- /footer -->
-</div><!-- ATM繳款帳號查詢 -->
-
-<!-- ****************************** 信用卡2 ***********************************-->
-<div data-role="page" id="myPayCreditCard2">
-	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayCreditCard1">信用卡</a></li>
-				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
-				<li><a href="#myPayRecord">繳款記錄</a></li>
-			</ul>
-		</div><!-- /navbar -->
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
-			</ul>
-		</div><!-- /navbar -->
-	</div><!-- /header -->
-	
-	<div data-role="content">
-		<div id="myPayCreditCard2Status"></div>
-		<div id="myPayCreditCard2CardData">
-			<label>門號使用人相關資訊</label>
-			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>姓名</td>
-						<td id='username'></td>
-					</tr>
-					<tr>
-						<td>門號</td>
-						<td id='msisdn'></td>
-					</tr>
-				</tbody>
-			</table>
-			<br>
-			<label>繳款資料</label>
-			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>出帳日</td>
-						<td id='bills_date'></td>
-					</tr>
-					<tr>
-						<td>上期應繳金額</td>
-						<td id='prior_pay'></td>
-					</tr>
-					<tr>
-						<td>上期繳款金額</td>
-						<td id='prior_payed'></td>
-					</tr>
-					<tr>
-						<td>本期新增金額</td>
-						<td id='currt_append'></td>
-					</tr>
-					<tr>
-						<td>本期應繳金額</td>
-						<td id='currt_pay' style='color:#FF0000;'></td>
-					</tr>
-					<tr>
-						<td>繳款截止日</td>
-						<td id='pay_end_time' style='color:#FF0000;'></td>
-					</tr>
-				</tbody>
-			</table>
-			<br>
-			<label>繳款信用卡資料</label>
-			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="4">付款金額</td>
-					</tr>
-					<tr>
-						<td colspan="4"><span id='tdNeedPay' style="color:#FF0000;"></span></td>
-					</tr>
-					<tr>
-						<td colspan="4">卡號</td>
-					</tr>
-					<tr>
-						<td><input type="tel" id="CardNo1" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
-						<td><input type="tel" id="CardNo2" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
-						<td><input type="tel" id="CardNo3" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
-						<td><input type="tel" id="CardNo4" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
-					</tr>
-					<tr>
-						<td colspan="4">三碼檢查碼</td>
-					</tr>
-					<tr>
-						<td><input type="tel" id="CardBack" data-mini="true" size="3" minlength="3" maxlength="3" value=""></td>
-						<td colspan="3">卡片背面末三碼</td>
-					</tr>
-				</tbody>
-			</table>
-			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="4">有效期限</td>
-					</tr>
-					<tr>
-						<td><input type="tel" id="ExpireMonth" data-mini="true" size="2" minlength="2" maxlength="2" value=""></td>
-						<td>月/</td>
-						<td><input type="tel" id="ExpireYear" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
-						<td>年(四碼西元年)</td>
-					</tr>
-				</tbody>
-			</table>
-			<input type="hidden" id="txtNeedPay" name="txtNeedPay" value="0">
-			<button onclick="doPayCreditCard();">付款</button>
-		</div><!--<div id="myPayCreditCard2CardData">-->
-	</div><!-- /content -->
-	
-	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
-		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
-		</div>
-	</div><!-- /footer -->
-</div><!-- 信用卡2 -->
-
-<!-- ****************************** 銀行帳戶2 ***********************************-->
-<div data-role="page" id="myPayBankAccount2">
-	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayCreditCard1">信用卡</a></li>
-				<li><a href="#myPayBankAccount1">銀行帳戶</a></li>
-				<li><a href="#myPayRecord">繳款記錄</a></li>
-			</ul>
-		</div><!-- /navbar -->
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myPayATMAccountQuery">ATM繳款帳號查詢</a></li>
-			</ul>
-		</div><!-- /navbar -->
-	</div><!-- /header -->
-	
-	<div data-role="content">
-		<div id="myPayCreditCard2Status"></div>
-		<div id="myPayCreditCard2CardData">
-			<label>門號使用人相關資訊</label>
-			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>姓名</td>
-						<td id='username'></td>
-					</tr>
-					<tr>
-						<td>門號</td>
-						<td id='msisdn'></td>
-					</tr>
-				</tbody>
-			</table>
-			<br>
-			<label>繳款資料</label>
-			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=1 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>出帳日</td>
-						<td id='bills_date'></td>
-					</tr>
-					<tr>
-						<td>上期應繳金額</td>
-						<td id='prior_pay'></td>
-					</tr>
-					<tr>
-						<td>上期繳款金額</td>
-						<td id='prior_payed'></td>
-					</tr>
-					<tr>
-						<td>本期新增金額</td>
-						<td id='currt_append'></td>
-					</tr>
-					<tr>
-						<td>本期應繳金額</td>
-						<td id='currt_pay' style='color:#FF0000;'></td>
-					</tr>
-					<tr>
-						<td>繳款截止日</td>
-						<td id='pay_end_time' style='color:#FF0000;'></td>
-					</tr>
-				</tbody>
-			</table>
-			<br>
-			<label>銀行帳戶繳款資料</label>
-			<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>付款金額</td>
-						<td><span id='tdNeedPay' style="color:#FF0000;"></span></td>
-					</tr>
-				</tbody>
-			</table>
-			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="2" style="display:none;">&nbsp;</td>
-					</tr>
-					<tr>
-						<td style="width:3em;">銀行</td>
-						<td>
-							<select name="selBank" id="selBank">
-								<option value=''>請選擇</option>
-							</select>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<table data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
-				<thead>
-					<tr class="ui-bar-d">
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>帳號</td>
-						<td><input type="tel" id="BankAccount" data-mini="true" value=""></td>
-					</tr>
-				</tbody>
-			</table>
-			<input type="hidden" id="txtNeedPay" name="txtNeedPay" value="0">
-			<button onclick="doPayBankAccount();">確認付款</button>
-		</div><!--<div id="myPayCreditCard2CardData">-->
-	</div><!-- /content -->
-	
-	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
-		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
-		</div>
-	</div><!-- /footer -->
-</div><!-- 銀行帳戶2 -->
+</div><!-- 信用卡服務說明 -->
 
 </body>
 </html>
@@ -594,26 +565,27 @@
 	}
 
 	function gotomyPayCreditCard2(){ //檢查是否可以進行myPayCreditCard2
-		if (!$("#myPayCreditCard1 input[name='chk1']").is(":checked")){
-			MsgBox('請勾選【本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。】');
-			return;
-		}
 		showPage('#myPayCreditCard2');
 	}	//function gotomyPayCreditCard2(){ //檢查是否可以進行myPayCreditCard2
 
 	function gotomyPayBankAccount2(){ //檢查是否可以進行myPayBankAccount2
-		if (!$("#myPayBankAccount1 input[name='chk1']").is(":checked")){
-			MsgBox('請勾選【本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。】');
-			return;
-		}
 		showPage('#myPayBankAccount2');
 	}	//function gotomyPayBankAccount2(){ //檢查是否可以進行myPayBankAccount2
 
-	$('#myPayCreditCard2').on('pageshow', function () {	//信用卡2，取得帳單資料
+	$('#myPayCreditCard2').one('pageshow', function () {	//信用卡繳款，信用卡有效期限用的日期選擇器
+		$('#myPayCreditCard2 #ExpiryDate').mobipick({
+    		accuracy: "month", //default is "day"，我們只要月及年
+    		locale: "tw", //default is "en", english
+    		dateFormatMonth: "MM-yyyy"
+		});
+	});	//$('#myPayCreditCard2').one('pageshow', function () {	//信用卡繳款，信用卡有效期限用的日期選擇器
+
+	$('#myPayCreditCard2').on('pageshow', function () {	//信用卡繳款，取得帳單資料
 		hightlightNavbarItem(0);	//將navbar中的信用卡設為高亮
 		userAuthentication();		//檢查登入資訊
 		getBillData("myPayCreditCard2");				//取得帳單資訊
-	});	//$('#myPayCreditCard2').on('pageshow', function () {	//信用卡2，取得近六期帳單資料
+		setCardNo();	//若有儲存信用卡資料，則將儲存的資料讀出來顯示
+	});	//$('#myPayCreditCard2').on('pageshow', function () {	//信用卡繳款，取得近六期帳單資料
 
 	$('#myPayBankAccount2').one('pageshow', function () {	//銀行帳戶2，取得銀行清單
 		getBankList("myPayBankAccount2");
@@ -647,8 +619,8 @@
 				var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
 
 				if (MainMsisdnFlg=='N'){
-					MsgBox('請以主門號登入服務！');
-					$('#myPayATMAccountQuery #BankAccount').html('請以主門號登入服務！');
+					MsgBox('此門號目前已申請合併帳單，請以主門號登入服務！');
+					$('#myPayATMAccountQuery #BankAccount').html('此門號目前已申請合併帳單，請以主門號登入服務！');
 					return;
 				}
 		
@@ -684,8 +656,8 @@
 				var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
 
 				if (MainMsisdnFlg=='N'){
-					MsgBox('請以主門號登入服務！');
-					$('#' + pageid + ' #myPayCreditCard2Status').html('請以主門號登入服務！');
+					MsgBox('此門號目前已申請合併帳單，請以主門號登入服務！');
+					$('#' + pageid + ' #myPayCreditCard2Status').html('此門號目前已申請合併帳單，請以主門號登入服務！');
 					$('#' + pageid + ' #myPayCreditCard2Status').show();
 					$('#' + pageid + ' #myPayCreditCard2CardData').hide();
 					return;
@@ -761,6 +733,8 @@
 						$('#' + pageid + ' #prior_payed').text($(this).children("prior_payed").text());
 						$('#' + pageid + ' #currt_append').text($(this).children("currt_append").text());
 						$('#' + pageid + ' #currt_pay').text(need_pay);
+
+						if (pageid=='myPayCreditCard2') $('#myPayCreditCard2 #CardNo1').focus();
 					}
 				});	//$(xml).find("bill").each( function() {
 				GATrackEvent('準備進行信用卡繳款', msisdn+':'+contractid, '');
@@ -803,11 +777,46 @@
 		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
 	}	//function getBankList(){	//取得銀行清單
 	
+	function setCardNo(){	//若有儲存信用卡資料，則將儲存的資料讀出來顯示
+		var CardNo1 = getLocalValue('CardNo1');
+		var CardNo2 = getLocalValue('CardNo2');
+		var CardNo3 = getLocalValue('CardNo3');
+		var CardNo4 = getLocalValue('CardNo4');
+		var ExpireMonth = getLocalValue('CardExpireMonth');
+		var ExpireYear = getLocalValue('CardExpireYear');
+		
+		if (notEmpty(CardNo1) && CardNo1.length==4 && notEmpty(CardNo2) && CardNo2.length==4 && notEmpty(CardNo3) && CardNo3.length==4 && notEmpty(CardNo4) && CardNo4.length==4){
+			$('#myPayCreditCard2 #CardNo1').val(CardNo1);
+			$('#myPayCreditCard2 #CardNo2').val(CardNo2);
+			$('#myPayCreditCard2 #CardNo3').val(CardNo3);
+			$('#myPayCreditCard2 #CardNo4').val(CardNo4);
+		}
+		if (notEmpty(ExpireMonth) && ExpireMonth.length==2 && notEmpty(ExpireYear) && ExpireYear.length==4){
+			$('#myPayCreditCard2 #ExpiryDate').val(ExpireMonth + '-' + ExpireYear);
+		}
+	}	//function setCardNo(){	//若有儲存信用卡資料，則將儲存的資料讀出來顯示
+
+	function CardNoChange(i){	//輸入信用卡號時，自動跳格
+		var s = $('#myPayCreditCard2 #CardNo' + i).val();
+		if (notEmpty(s) && s.length==4) $('#myPayCreditCard2 #CardNo' + (i+1)).focus();
+	}	//function CardNoChange(i){	//輸入信用卡號時，自動跳格
+	
 	function doPayCreditCard(){	//進行刷卡繳費
 		if (beEmpty(msisdn) || beEmpty(contractid) || beEmpty(customerid)){	//確認目前有登入
 			alertNoLogin();
 			return;
 		}
+
+		if (!$("#myPayCreditCard2 input[name='chk1']").is(":checked")){
+			MsgBox('請勾選【本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。】');
+			return;
+		}
+
+		if (notEmpty($('#myPayCreditCard2 #ExpiryDate').val()) && $('#myPayCreditCard2 #ExpiryDate').val().length==7){
+			$('#myPayCreditCard2 #ExpireMonth').val($('#myPayCreditCard2 #ExpiryDate').val().substring(0, 2));
+			$('#myPayCreditCard2 #ExpireYear').val($('#myPayCreditCard2 #ExpiryDate').val().substring(3, 7));
+		}
+
 		var MSISDN = msisdn;
 		var CardNo1		= $('#myPayCreditCard2 #CardNo1').val();
 		var CardNo2		= $('#myPayCreditCard2 #CardNo2').val();
@@ -823,10 +832,23 @@
 		if (beEmpty(CardNo3) || isNaN(CardNo3) || CardNo3.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
 		if (beEmpty(CardNo4) || isNaN(CardNo4) || CardNo4.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
 		if (beEmpty(CardBack) || isNaN(CardBack) || CardBack.length!=3){MsgBox('請輸入卡片背面末三碼數字'); return;}
+		/*
 		if (beEmpty(ExpireMonth) || isNaN(ExpireMonth) || ExpireMonth.length!=2){MsgBox('請輸入有效期限月份共兩碼'); return;}
 		if (beEmpty(ExpireYear) || isNaN(ExpireYear) || ExpireYear.length!=4){MsgBox('請輸入有效期限西元年共四碼'); return;}
+		*/
+		if (beEmpty(ExpireMonth) || isNaN(ExpireMonth) || ExpireMonth.length!=2){MsgBox('請輸入有效期限月年共六碼'); return;}
+		if (beEmpty(ExpireYear) || isNaN(ExpireYear) || ExpireYear.length!=4){MsgBox('請輸入有效期限月年共六碼'); return;}
 		if (beEmpty(NeedPay) || isNaN(NeedPay)){MsgBox('無法取得繳費金額'); return;}
 		if (!(CardNo1.startsWith("3") || CardNo1.startsWith("4") || CardNo1.startsWith("5"))){MsgBox('請使用VISA、JCB或Master卡'); return;}
+
+		if ($("#myPayCreditCard2 input[name='chk2']").is(":checked")){	//儲存信用卡資料
+			setLocalValue('CardNo1', CardNo1);
+			setLocalValue('CardNo2', CardNo2);
+			setLocalValue('CardNo3', CardNo3);
+			setLocalValue('CardNo4', CardNo4);
+			setLocalValue('CardExpireMonth', ExpireMonth);
+			setLocalValue('CardExpireYear', ExpireYear);
+		}	//if (!$("#myPayCreditCard2 input[name='chk2']").is(":checked")){	//儲存信用卡資料
 
 		var sData = "";
 		sData = "Function=DoPaymentByCTCBService&Request=";
@@ -875,6 +897,12 @@
 			alertNoLogin();
 			return;
 		}
+
+		if (!$("#myPayBankAccount2 input[name='chk1']").is(":checked")){
+			MsgBox('確認銀行帳戶繳款?請勾選【本人已詳閱及瞭解上開服務說明及注意事項並同意遵守。】');
+			return;
+		}
+
 		var MSISDN = msisdn;
 		var BankID		= $('#myPayBankAccount2 #selBank').val();
 		var BankAccount	= $('#myPayBankAccount2 #BankAccount').val();
@@ -944,11 +972,11 @@
 				var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
 
 				if (MainMsisdnFlg=='N'){
-					MsgBox('請以主門號登入服務！');
-					$('#myPayRecord #tblOnlinePayInfo tbody').html('<tr><td>' + '請以主門號登入服務！' + '</td></tr>');
-					$('#myPayRecord #tblHistoryPayInfo tbody').html('<tr><td>' + '請以主門號登入服務！' + '</td></tr>');
-					//$('#myPayRecord #OnlinePayInfo').html('請以主門號登入服務！');
-					//$('#myPayRecord #HistoryPayInfo').html('請以主門號登入服務！');
+					MsgBox('此門號目前已申請合併帳單，請以主門號登入服務！');
+					$('#myPayRecord #tblOnlinePayInfo tbody').html('<tr><td>' + '此門號目前已申請合併帳單，請以主門號登入服務！' + '</td></tr>');
+					$('#myPayRecord #tblHistoryPayInfo tbody').html('<tr><td>' + '此門號目前已申請合併帳單，請以主門號登入服務！' + '</td></tr>');
+					//$('#myPayRecord #OnlinePayInfo').html('此門號目前已申請合併帳單，請以主門號登入服務！');
+					//$('#myPayRecord #HistoryPayInfo').html('此門號目前已申請合併帳單，請以主門號登入服務！');
 					return;
 				}
 

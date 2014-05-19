@@ -12,8 +12,8 @@
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
 	<script src="js/jquery.mobile-1.3.2.min.js"></script>
-	<script src="js/jquery.touchSwipe.min.js"></script>
-	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<!--<script src="js/jquery.touchSwipe.min.js"></script>-->
+	<!--<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>-->
 	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<script type="text/javascript" src="js/util.js"></script>
 	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
@@ -30,17 +30,33 @@
 
 <body>
 
+<!-- ****************************** 選單頁 ***********************************-->
+<div data-role="page" id="myWifiMenu">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">Wi-Fi熱點</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<ul data-role="listview" data-inset="false" data-theme="h" data-icon="false" class="MenuListview">
+			<li><a href="#myWifiLoginWifi"><img src="images/text_icon_01.png">登入Wi-Fi熱點</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myWifiQueryWifiHotSpot"><img src="images/text_icon_01.png">Wi-Fi熱點查詢</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myWifiLoginDesc"><img src="images/text_icon_02.png">Wi-Fi熱點使用說明</a></li>
+			<li data-role="list-divider"></li>
+		</ul>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 選單頁 -->
+
 <!-- ****************************** 登入Wi-Fi ***********************************-->
 <div data-role="page" id="myWifiLoginWifi">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myWifiLoginWifi">登入Wi-Fi</a></li>
-				<li><a href="#myWifiQueryWifiHotSpot">查Wi-Fi熱點</a></li>
-				<li><a href="#myWifiLoginDesc">說明</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">登入Wi-Fi熱點</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
@@ -65,14 +81,7 @@
 <!-- ****************************** 查Wi-Fi熱點 ***********************************-->
 <div data-role="page" id="myWifiQueryWifiHotSpot">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myWifiLoginWifi">登入Wi-Fi</a></li>
-				<li><a href="#myWifiQueryWifiHotSpot">查Wi-Fi熱點</a></li>
-				<li><a href="#myWifiLoginDesc">說明</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">Wi-Fi熱點查詢</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
@@ -90,14 +99,7 @@
 <!-- ****************************** 說明 ***********************************-->
 <div data-role="page" id="myWifiLoginDesc">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myWifiLoginWifi">登入Wi-Fi</a></li>
-				<li><a href="#myWifiQueryWifiHotSpot">查Wi-Fi熱點</a></li>
-				<li><a href="#myWifiLoginDesc">說明</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">Wi-Fi熱點使用說明</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">

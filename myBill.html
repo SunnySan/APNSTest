@@ -12,8 +12,8 @@
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
 	<script src="js/jquery.mobile-1.3.2.min.js"></script>
-	<script src="js/jquery.touchSwipe.min.js"></script>
-	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<!--<script src="js/jquery.touchSwipe.min.js"></script>-->
+	<!--<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>-->
 	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<script type="text/javascript" src="js/util.js"></script>
 	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
@@ -29,17 +29,35 @@
 
 <body>
 
-<!-- ****************************** 我的帳單 ***********************************-->
+<!-- ****************************** 選單頁 ***********************************-->
+<div data-role="page" id="myBillMenu">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">我的帳單</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<ul data-role="listview" data-inset="false" data-theme="h" data-icon="false" class="MenuListview">
+			<li><a href="#myBillInfo"><img src="images/text_icon_01.png">帳單查詢</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myBillPrevious"><img src="images/text_icon_01.png">前期帳單查詢</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myBillApplyEBill"><img src="images/text_icon_02.png">申請電子/簡訊帳單</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myBillData"><img src="images/text_icon_03.png">個人資料修改</a></li>
+			<li data-role="list-divider"></li>
+		</ul>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 選單頁 -->
+
+<!-- ****************************** 帳單查詢 ***********************************-->
 <div data-role="page" id="myBillInfo">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myBillInfo">帳單資訊</a></li>
-				<li><a href="#myBillPlan">我的資費</a></li>
-				<li><a href="#myBillApplyEBill">申請電子帳單</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">帳單查詢</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
@@ -80,6 +98,24 @@
 		</table>
 		<p>
 		<a id='doPay' href="myPay.html" rel='external' data-role="button" class="ui-btn-right" data-mini="true">立即繳款</a>
+		<p>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 帳單查詢 -->
+
+<!-- ****************************** 前期帳單查詢 ***********************************-->
+<div data-role="page" id="myBillPrevious">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">帳單查詢</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<p>
+		門號：<span id="myBillInfo-MSISDN"></span>
 		<p>
 		<div data-role="collapsible-set" data-content-theme="d" data-iconpos="right" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u">
 		    <div>
@@ -267,19 +303,12 @@
 		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
 		</div>
 	</div><!-- /footer -->
-</div><!-- 我的帳單 -->
+</div><!-- 前期帳單查詢 -->
 
 <!-- ****************************** 我的資費 ***********************************-->
 <div data-role="page" id="myBillPlan">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myBillInfo">帳單資訊</a></li>
-				<li><a href="#myBillPlan">我的資費</a></li>
-				<li><a href="#myBillApplyEBill">申請電子帳單</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">申請電子/簡訊帳單</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
@@ -321,24 +350,30 @@
 	</div><!-- /footer-->
 </div><!-- 我的資費 -->
 
-<!-- ******************************申請電子帳單 ***********************************-->
+<!-- ******************************申請電子/簡訊帳單 ***********************************-->
 <div data-role="page" id="myBillApplyEBill" >
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myBillInfo">帳單資訊</a></li>
-				<li><a href="#myBillPlan">我的資費</a></li>
-				<li><a href="#myBillApplyEBill">申請電子帳單</a></li>
-			</ul>
-		</div><!--/navbar-->
+		<div class="header-padding">申請電子/簡訊帳單</div>
 	</div><!-- /header-->
 	
 	<div data-role="content">
-		<h3>電子帳單寄送服務申請</h3>
+		<!--<h3 id='myBillApplyEBillHeader' name='myBillApplyEBillHeader'>電子/簡訊帳單寄送服務申請</h3>-->
+		門號：<span id="myBillApplyEBill-MSISDN"></span>
 		<label id='myBillApplyEBillTitle' for="myBillApplyEBillEmail">資料更新中，請稍候...</label>
+		<div id='myBillApplyEBillSelectDiv' style="display:none;">
+			<!--
+		    <a href="#" data-role="button" onclick="showMyBillStatus(2);return false;">申請電子帳單</a>
+		    <a href="#" data-role="button" onclick="showMyBillStatus(3);return false;">申請簡訊帳單</a>
+		    -->
+			<form>
+				<label><input type="radio" name="myBillApplyEBillRdo" id="myBillApplyEBillRdoa" checked="checked" value="2">申請電子帳單</label>
+				<label><input type="radio" name="myBillApplyEBillRdo" id="myBillApplyEBillRdob" value="3">申請簡訊帳單</label>
+			    <a href="#" data-role="button" onclick="myBillApplyEBillRdoCheck();return false;">確認</a>
+			</form>
+		    <div><span style="font-weight:bold;">貼心提醒</span><br>電子/簡訊帳單服務，不能同時申請。 
+			</div>
+		</div>
 		<div id='myBillApplyEBillEmailDiv' style="display:none;">
-			門號：<span id="myBillApplyEBill-MSISDN"></span>
 			<br>Email：<input type="text" name="myBillApplyEBillEmail" id="myBillApplyEBillEmail" value="">
 			<ul data-role="listview" data-inset="true">
 				<li data-icon="info"><a href="#myBillApplyEBillAgreement">威寶電信電子帳單服務協定</a></li>
@@ -346,28 +381,30 @@
 			<label>
 				<input type="checkbox" id="chk1" name="chk1">本人已清楚了解上述服務條款內容
 			</label>
-		    <a href="#" data-role="button" onclick="doApplyEBill();return false;">申請電子帳單</a>
+		    <a href="#" data-role="button" onclick="doApplyEBillEmail();return false;">申請電子帳單</a>
 		</div>
-		<a href="#" id="btnRefreshEBill" data-role="button" style="display:none;" onclick="doRefreshEBill();return false;">重新查詢電子帳單申請狀態</a>
+		<div id='myBillApplyEBillSMSDiv' style="display:none;">
+			<ul data-role="listview" data-inset="true">
+				<li data-icon="info"><a href="#myBillApplyEBillSMSAgreement">威寶電信簡訊帳單服務協定</a></li>
+			</ul>
+			<label>
+				<input type="checkbox" id="chk2" name="chk2">本人已清楚了解上述服務條款內容
+			</label>
+		    <a href="#" data-role="button" onclick="doApplyEBillSMS();return false;">申請簡訊帳單</a>
+		</div>
+		<a href="#" id="btnRefreshEBill" data-role="button" style="display:none;" onclick="doRefreshEBill();return false;">重新查詢電子/簡訊帳單申請狀態</a>
 	</div><!-- /content-->
 	
 	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
 		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
 		</div>
 	</div><!-- /footer-->
-</div><!-- 申請電子帳單 -->
+</div><!-- 申請電子/簡訊帳單 -->
 
 <!-- ******************************電子帳單服務協定 ***********************************-->
 <div data-role="page" id="myBillApplyEBillAgreement" >
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li><a href="#myBillInfo">帳單資訊</a></li>
-				<li><a href="#myBillPlan">我的資費</a></li>
-				<li><a href="#myBillApplyEBill">申請電子帳單</a></li>
-			</ul>
-		</div><!--/navbar-->
+		<div class="header-padding">申請電子/簡訊帳單</div>
 	</div><!-- /header-->
 	
 	<div data-role="content">
@@ -413,7 +450,7 @@
 		</ol>
 		<br>五、服務協定之修改
 		       <br>本公司得隨時修改本服務協定條款，如有修改將公佈於本公司網站。修改事項於公佈時即時生效，不另行個別通知用戶。
-		<a href="#myBillApplyEBill" data-role="button">回上頁</a>
+		<a href="#" data-role="button" data-rel="back">回上頁</a>
 	</div><!-- /content-->
 	
 	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
@@ -421,6 +458,218 @@
 		</div>
 	</div><!-- /footer-->
 </div><!-- 電子帳單服務協定-->
+
+<!-- ******************************簡訊帳單服務協定 ***********************************-->
+<div data-role="page" id="myBillApplyEBillSMSAgreement" >
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">申請電子/簡訊帳單</div>
+	</div><!-- /header-->
+	
+	<div data-role="content">
+		<h3>威寶電信簡訊帳單服務協定</h3>
+		<br>一、申請對象
+		<br>威寶電信月租型用戶皆可申請【簡訊帳單服務】。
+		<br>
+		<br>二、服務說明
+		<ol type="decimal">
+		<li>威寶電信（以下簡稱「本公司」）【簡訊帳單服務】（以下簡稱「本服務」）係提供用戶在每期帳單出帳後的第7天工作天左右以簡訊通知您當期帳單應繳金額、繳款截止日等相關訊息。
+		</li>
+		<li>成功申請後，本公司將自生效首期以簡訊方式發送【簡訊帳單】，並同時寄發實體帳單予用戶。自次期帳單週期始，取消郵寄實體帳單，而僅以簡訊方式發送【簡訊帳單】。
+		</li>
+		<li>若您為合併帳單，則【簡訊帳單】中所顯示之金額為所有門號之應繳金額。
+		</li>
+		<li>【簡訊帳單】僅提供帳單應繳金額、繳款截止日等帳單相關資訊，不包含通話明細，若您需要通話明細或您已辦理隨帳單夾寄通話明細，建議您申辦【電子帳單】。
+		</li>
+		<li>本服務目前僅開放月租型用戶之申請。
+		</li>
+		</ol>
+		<br>三、繳款方式
+		<ol type="decimal">
+		<li>申請本服務後可辦理轉帳代繳或利用線上、電話語音等繳款方式。已辦理轉帳代繳之用戶仍會以原轉帳方式扣款，請勿重複繳款。
+		</li>
+		</ol>
+		<br>四、特別約定
+		<ol type="decimal">
+		<li>帳單合併出帳之用戶，請透過主門號申請本服務，且合併出帳之其他門號亦視為申請，本公司將一併提供【簡訊帳單】服務。
+		</li>
+		</ol>
+		<br>四、服務終止或暫停：
+		       <br>如有下列情形，本公司得終止或暫停本服務之一部或全部，且對用戶不負任何責任：
+		<ol type="decimal">
+		<li>對本服務相關軟硬體設備進行搬遷、更換、保養或維修時。
+		</li>
+		<li>因天災、不可抗力或其他非可歸責於本公司之事由所致之暫停或中斷。
+		</li>
+		<li>如用戶有卡片遺失停話、自行申請停話、門號退租、一退一租、銷號、過戶、更名、切結非本人申請、拆併帳或其他門號契約終止或異常等情形時，本公司得逕行終止本服務並恢復郵寄實體帳單。
+		</li>
+		</ol>
+		<br>※ 本公司得隨時修改本同意條款，如有修改將公佈於本公司網站。修改事項於公佈時即生效，不另行個別通知用戶。
+		<br>為避免不可抗拒之因素(如：手機遺失、手機關機...等)，導致您無法收到【簡訊帳單】，建議您也可以定期瀏覽威寶電信網站，取得您最近一期的帳單資訊。
+		<a href="#" data-role="button" data-rel="back">回上頁</a>
+	</div><!-- /content-->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer-->
+</div><!-- 簡訊帳單服務協定-->
+
+<!-- ****************************** 個人資料修改 ***********************************-->
+<div data-role="page" id="myBillData">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">修改帳單地址</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<label>您的門號：<span class='myMSISDN'></span></label>
+		<h3>請點選您欲變更項目</h3>
+		<label>
+			<input type="checkbox" id="chkmyBillAddressDiv" name="chkmyBillAddressDiv" onclick="setBillDataCheckbox('myBillAddressDiv');">帳單地址
+		</label>
+			<div id="myBillAddressDiv" style="display:none;">
+				<h3 id="myBillAddressStatus"></h3>
+				<div id="myBillAddressData">
+					<label>縣市區域<span id='myBillAddressDataCity'></span></label>
+					<input type='hidden' id='txtDataAddressZipCode' value=''>
+					<input type='hidden' id='txtDataAddressCity' value=''>
+					<input type='hidden' id='txtDataAddressTown' value=''>
+					<!--城市及地區選擇-->
+					<div id="collapsible-set-city" data-role="collapsible-set" data-theme="c" data-content-theme="d">
+						資料更新中，請稍候...
+						<!--
+						<div data-role="collapsible">
+							<h2>Filtered list</h2>
+							<ul data-role="listview">
+								<li><a href="index.html">Adam Kinkaid</a></li>
+								<li><a href="index.html">Alex Wickerham</a></li>
+							</ul>
+						</div>
+						-->
+					</div>
+					<label for="txtDataAddressStreet">街道地址</label>
+					<input type="text" name="txtDataAddressStreet" id="txtDataAddressStreet" value="">
+				</div>
+			</div>
+		<label>
+			<input type="checkbox" id="chkmyBillPhoneDiv" name="chkmyBillPhoneDiv" onclick="setBillDataCheckbox('myBillPhoneDiv');">聯絡電話
+		</label>
+			<div id="myBillPhoneDiv" style="display:none;">
+				<h3 id="myBillPhoneStatus"></h3>
+				<div id="myBillPhoneData">
+					<table>
+						<tr>
+							<td width="15%">住家</td>
+							<td width="15%"><input type="tel" id="myBillPhoneHomePrefix" name="myBillPhoneHomePrefix" minlength="2" maxlength="4" class="beNumber" data-mini="true"></td>
+							<td colspan="3"><input type="tel" id="myBillPhoneHomeNumber" name="myBillPhoneHomeNumber" maxlength="10" class="beNumber" data-mini="true"></td>
+						</tr>
+						<tr>
+							<td width="15%">公司</td>
+							<td width="15%"><input type="tel" id="myBillPhoneWorkPrefix" name="myBillPhoneWorkPrefix" minlength="2" maxlength="4" class="beNumber" data-mini="true"></td>
+							<td width="40%"><input type="tel" id="myBillPhoneWorkNumber" name="myBillPhoneWorkNumber" maxlength="10" class="beNumber" data-mini="true"></td>
+							<td width="15%">分機</td>
+							<td width="15%"><input type="tel" id="myBillPhoneWorkExt" name="myBillPhoneWorkExt" maxlength="10" class="beNumber" data-mini="true"></td>
+						</tr>
+						<tr>
+							<td width="15%">手機</td>
+							<td colspan="4"><input type="tel" id="myBillPhoneOther" name="myBillPhoneOther" maxlength="10" class="beNumber" data-mini="true"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		<label>
+			<input type="checkbox" id="chkmyBillEmailDiv" name="chkmyBillEmailDiv" onclick="setBillDataCheckbox('myBillEmailDiv');">電子郵件帳號
+		</label>
+			<div id="myBillEmailDiv" style="display:none;">
+				<h3 id="myBillEmailStatus"></h3>
+				<div id="myBillEmailData">
+					<table>
+						<tr>
+							<td width="20%">變更為</td>
+							<td width="80%"><input type="text" id="myBillEmailValue" name="myBillEmailValue" minlength="10" maxlength="100" data-mini="true"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		<a href="#" data-role="button" onclick="doChangeDataAll();return false;">我要修改</a>
+		<ol type="decimal">
+			<li>提醒您！個人資料修改時，請您務必提供正確之個人聯絡資料，威寶電信將依此資料郵寄帳單、各項資料及與您聯絡。</li>
+            <li>若您已申請合併帳單，變更帳單地址服務需求，請您以主門號登入服務申請。</li>
+        </ol>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 個人資料修改 -->
+
+<!-- ****************************** 電話 ***********************************-->
+<div data-role="page" id="myBillPhone">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">修改電話</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 id="myBillPhoneStatus"></h3>
+		<div id="myBillPhoneData">
+			<h3>變更聯絡電話</h3>
+			<label>您的門號：<span class='myMSISDN'></span></label>
+			<table>
+				<tr>
+					<td width="15%">住家</td>
+					<td width="15%"><input type="tel" id="myBillPhoneHomePrefix" name="myBillPhoneHomePrefix" minlength="2" maxlength="4" class="beNumber" data-mini="true"></td>
+					<td colspan="3"><input type="tel" id="myBillPhoneHomeNumber" name="myBillPhoneHomeNumber" maxlength="10" class="beNumber" data-mini="true"></td>
+				</tr>
+				<tr>
+					<td width="15%">公司</td>
+					<td width="15%"><input type="tel" id="myBillPhoneWorkPrefix" name="myBillPhoneWorkPrefix" minlength="2" maxlength="4" class="beNumber" data-mini="true"></td>
+					<td width="40%"><input type="tel" id="myBillPhoneWorkNumber" name="myBillPhoneWorkNumber" maxlength="10" class="beNumber" data-mini="true"></td>
+					<td width="15%">分機</td>
+					<td width="15%"><input type="tel" id="myBillPhoneWorkExt" name="myBillPhoneWorkExt" maxlength="10" class="beNumber" data-mini="true"></td>
+				</tr>
+				<tr>
+					<td width="15%">手機</td>
+					<td colspan="4"><input type="tel" id="myBillPhoneOther" name="myBillPhoneOther" maxlength="10" class="beNumber" data-mini="true"></td>
+				</tr>
+			</table>
+			
+			<a href="#" data-role="button" onclick="doChangePhone();return false;">我要修改</a>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 電話 -->
+
+<!-- ****************************** Email ***********************************-->
+<div data-role="page" id="myBillEmail">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">修改EMail</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<h3 id="myBillEmailStatus"></h3>
+		<div id="myBillEmailData">
+			<h3>門號個人資料Email</h3>
+			<label>您的門號：<span class='myMSISDN'></span></label>
+			<table>
+				<tr>
+					<td width="20%">變更為</td>
+					<td width="80%"><input type="text" id="myBillEmailValue" name="myBillEmailValue" minlength="10" maxlength="100" data-mini="true"></td>
+				</tr>
+			</table>
+			
+			<a href="#" data-role="button" onclick="doChangeEmail();return false;">我要修改</a>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- Email -->
 
 
 </body>
@@ -430,23 +679,45 @@
 <script type="text/javascript">
 	var msisdn = getLocalValue('loginmsisdn');
 	var contractid = getLocalValue('logincontractid');
+	var customerid = getLocalValue('logincustomerid');
 
-	if (beEmpty(msisdn)|| beEmpty(contractid)){
+	var isMainMsisdn = false;
+
+	if (beEmpty(msisdn) || beEmpty(contractid) || beEmpty(customerid)){
 		alertNoLogin();
 	}
 
-	$('#myBillInfo').one('pageshow',function () {	//帳單資訊，取得近六期帳單資料
+	$('.myMSISDN').html(msisdn);
+
+	$('#myBillMenu').one('pageshow',function () {	//帳單資訊，取得近六期帳單資料
 		userAuthentication();	//檢查登入資訊
-		
+	});	//$('#myBillInfo').one('pageshow', function () {	//帳單資訊，取得近六期帳單資料
+
+	$('#myBillInfo').one('pageshow',function () {	//帳單資訊
+		GATrackEvent('查詢本期帳單資料', getLocalValue('logincontractid'), '');
 		if (notEmpty(msisdn) && notEmpty(contractid)){
 			$('#myBillInfo #myBillInfo-MSISDN').text(msisdn);
+			$('#myBillPrevious #myBillInfo-MSISDN').text(msisdn);
 			var sData="";
 			sData ="Function=GetBillInfo&Request=";
 			sData +="<MSISDN>" + msisdn+ "</MSISDN>";
 			sData +="<ContractId>" + contractid + "</ContractId>";
 			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", GetBillInfo_Success);
 		}
-	});	//$('#myBillInfo').one('pageshow', function () {	//帳單資訊，取得近六期帳單資料
+	});	//$('#myBillInfo').one('pageshow', function () {	//帳單資訊
+
+	$('#myBillPrevious').one('pageshow',function () {	//取得近六期帳單資料
+		GATrackEvent('查詢前五期帳單資料', getLocalValue('logincontractid'), '');
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			$('#myBillInfo #myBillInfo-MSISDN').text(msisdn);
+			$('#myBillPrevious #myBillInfo-MSISDN').text(msisdn);
+			var sData="";
+			sData ="Function=GetBillInfo&Request=";
+			sData +="<MSISDN>" + msisdn+ "</MSISDN>";
+			sData +="<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", GetBillInfo_Success);
+		}
+	});	//$('#myBillPrevious').one('pageshow', function () {	//取得近六期帳單資料
 
 	$('#myBillPlan').one('pageshow',function () {	//我的資費，取得資費
 		if (notEmpty(msisdn) && notEmpty(contractid)){
@@ -460,14 +731,670 @@
 		}
 	});	//$('#myBillPlan').one('pageshow', function () {	//我的資費，取得資費
 	
-	$('#myBillApplyEBill').one('pageshow', function () {	//申請電子帳單，查詢電子帳單申請狀態
+	$('#myBillApplyEBill').one('pageshow', function () {	//申請電子/簡訊帳單，查詢電子帳單申請狀態
 		if (notEmpty(msisdn) && notEmpty(contractid)){
 			doRefreshEBill();
 		}else{
 			//$('#myBillApplyEBill #myBillApplyEBillTitle').html('請先至首頁登入再使用此功能!');
 			alertNoLogin();
 		}
-	});	//$('#myBillApplyEBill').one('pageshow', function (){	//申請電子帳單，查詢電子帳單申請狀態
+	});	//$('#myBillApplyEBill').one('pageshow', function (){	//申請電子/簡訊帳單，查詢電子帳單申請狀態
+	$('#myBillApplyEBill').on('pageshow', function () {	//為避免輸入文字時，螢幕下方的虛擬keyboard會將footer往上推，先將email輸入欄位focus，將footer隱藏
+		$('#myBillApplyEBill #myBillApplyEBillEmail').focus();
+	});	//$('#myBillApplyEBill').on('pageshow', function () {	//為避免輸入文字時，螢幕下方的虛擬keyboard會將footer往上推，先將email輸入欄位focus，將footer隱藏
+
+
+/***************以下是修改帳單地址、電話、EMail**********************/
+
+	$('#myBillData').one('pageshow', function () {	//檢查登入資訊
+		userAuthentication();
+		if (notEmpty(msisdn) && notEmpty(contractid)){
+			var sData = "";
+			sData = "Function=GetCustomerProfile&Request=";
+			sData += "<MSISDN>" + msisdn + "</MSISDN>";
+			sData += "<ContractId>" + contractid + "</ContractId>";
+			getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//取得用戶名稱
+				var ResultCode = $(xml).find("ResultCode").text();
+				var ResultText = $(xml).find("ResultText").text();
+				if (ResultCode!='00000'){	//作業失敗
+					GATrackEvent('變更帳單地址', '取得基本資料失敗，無法取得客戶基本資料', msisdn + ':' + contractid);
+					MsgBox('無法取得您的門號資料');
+					$('#myBillData #myBillAddressStatus').html('無法取得您的門號資料');
+					$('#myBillData #myBillAddressStatus').show();
+					$('#myBillData #myBillAddressData').hide();
+					return;
+				}	//if (ResultCode!='00000'){	//作業失敗
+				
+				var MainMsisdnFlg = $(xml).find("MainMsisdnFlg").text();
+
+				if (MainMsisdnFlg=='N'){
+					MsgBox('此為副門號無法變更帳單地址！');
+					$('#myBillData #myBillAddressStatus').html('此為副門號無法變更帳單地址！');
+					$('#myBillData #myBillAddressStatus').show();
+					$('#myBillData #myBillAddressData').hide();
+					return;
+				}else{
+					isMainMsisdn = true;
+					//updateProcessStatus(5);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+				}
+			});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+		}	//if (notEmpty(msisdn) && notEmpty(contractid)){
+	});	//$('#myBillData').one('pageshow', function () {	//檢查登入資訊
+
+	$('#myBillData').on('pageshow', function () {
+		if (beEmpty(msisdn)){
+			alertNoLogin();
+			return;
+		}
+		if (isMainMsisdn==true){
+			updateProcessStatus(5);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+			updateProcessStatus(6);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+			updateProcessStatus(7);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+		}
+	});	//$('#myBillData').on('pageshow', function () {
+
+	$('#myBillPhone').on('pageshow', function () {
+		if (beEmpty(msisdn)){
+			alertNoLogin();
+			return;
+		}
+		updateProcessStatus(6);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+	});	//$('#myBillPhone').on('pageshow', function () {
+
+	$('#myBillEmail').on('pageshow', function () {
+		if (beEmpty(msisdn)){
+			alertNoLogin();
+			return;
+		}
+		updateProcessStatus(7);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+	});	//$('#myBillEmail').on('pageshow', function () {
+
+	$('#myBillData').one('pageshow', function () {
+		//找出全省的縣市及區域
+		$.getJSON( getServerBaseURL()+'ajaxBSCAPIBridge.jsp?Function=GetZipCode&Request=<FunctionType>1</FunctionType>&ResponseType=json', function(data) { 
+			if (!data.GetZipCodeRes || data.GetZipCodeRes.ResultCode!='00000' || !data.GetZipCodeRes.Status || data.GetZipCodeRes.Status!='0'){
+				$('#myBillData #collapsible-set-city').html('無法取得縣市清單資料');
+				return;
+			}
+			var temp	= "";	//city
+			//var temp1	= "";	//town
+			var towns = null;	//存放所有縣市及區域列表
+			var s		= "";
+			
+			towns = data.GetZipCodeRes;
+			$.each( data.GetZipCodeRes.cities, function(i, item) {
+				if (item.city!=temp){	//新city，從 towns 找此縣市的區域
+					if (beEmpty(s)){
+						s += "<div data-role='collapsible'>";
+						s += "	<h2>" + item.city +  "</h2>";
+						s += "	<ul data-role='listview' class='citylistview'>";
+						s += getTownList(towns, item.city);
+						//s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+					}else{
+						s += "	</ul>";
+						s += "</div>";
+						s += "<div data-role='collapsible'>";
+						s += "	<h2>" + item.city +  "</h2>";
+						s += "	<ul data-role='listview' class='citylistview'>";
+						s += getTownList(towns, item.city);
+						//s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+					}
+					temp = item.city;
+				//}else{	//相同city，不同town
+				//		s += "		<li><a href='#' onclick=\"doSelectArea('" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+				}
+			});
+			if (notEmpty(s)){
+				s += "	</ul>";
+				s += "</div>";
+			}
+			//console.log(s);
+			s = "<div id='myBillAddressDataCityList' data-role='collapsible'><h2>請選擇</h2>" + s + "</div>";
+			$('#myBillData #collapsible-set-city').html(s);
+			$('#myBillData #collapsible-set-city').trigger('create');
+		});
+	});	//$('#myBillData').one('pageshow', function () {
+
+
+
+	var sNewAddressSerNo	= "";	//修改帳單地址的 COD Service Change處理單號
+	var sNewPhoneSerNo		= "";	//修改電話的 COD Service Change處理單號
+	var sNewEmailSerNo		= "";	//修改Email的 COD Service Change處理單號
+	
+	function updateProcessStatus(CODType){	//查詢COD的作業進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+		var currSerNo	= "";
+		var currPage	= "";
+		var currStatus	= "";
+		var currData	= "";
+		var currProcess	= "";
+
+		if (CODType==5){currProcess='帳單地址'; currSerNo=sNewAddressSerNo; currPage='myBillData'; currStatus='myBillAddressStatus'; currData='myBillAddressData';}
+		if (CODType==6){currProcess='電話'; currSerNo=sNewPhoneSerNo; currPage='myBillData'; currStatus='myBillPhoneStatus'; currData='myBillPhoneData';}
+		if (CODType==7){currProcess='Email'; currSerNo=sNewEmailSerNo; currPage='myBillData'; currStatus='myBillEmailStatus'; currData='myBillEmailData';}
+
+		var sData = "";
+		sData = "Function=GetCODServiceChangeQuery&Request=";
+		if (beEmpty(currSerNo)){
+			sData += "<MSISDN>" + msisdn + "</MSISDN>";	////可能在企網WEB有修改過，故以門號查詢
+			sData += "<CODType>" + CODType + "</CODType>";	//1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+		}else{
+			sData += "<SvChangeSerialNo>" + currSerNo + "</SvChangeSerialNo>";	//以 COD 單號查詢
+		}
+
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('無法取得您的修改狀態資料：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			var QueryStatus	= $(xml).find("QueryStatus").text();
+			var StatusMsg	= $(xml).find("StatusMsg").text();
+			//alert(QueryStatus);
+			//alert(StatusMsg);
+			//alert($(xml).find("SvChangeSerialNo").text());
+			
+
+			var msg = "";
+			var tmp	= "";
+			if (QueryStatus=='O' || QueryStatus=='P' || QueryStatus=='SENT'){
+				msg = '系統目前正在處理您的' + currProcess + '變更作業!';
+				MsgBox(msg);
+				$('#' + currPage + ' #' + currStatus).html(msg);
+				$('#' + currPage + ' #' + currStatus).show();
+				$('#' + currPage + ' #' + currData).hide();
+				/********************將checkbox取消選取及disable***********************/
+				if (CODType==5){
+					$("#myBillData input[name='chkmyBillAddressDiv']").attr('checked', false);
+					$("#myBillData input[name='chkmyBillAddressDiv']").checkboxradio('disable');
+					$("#myBillData input[name='chkmyBillAddressDiv']").checkboxradio("refresh");
+					$("#myBillData #myBillAddressDiv").show();
+				}
+				if (CODType==6){
+					$("#myBillData input[name='chkmyBillPhoneDiv']").attr('checked', false);
+					$("#myBillData input[name='chkmyBillPhoneDiv']").checkboxradio('disable');
+					$("#myBillData input[name='chkmyBillPhoneDiv']").checkboxradio("refresh");
+					$("#myBillData #myBillPhoneDiv").show();
+				}
+				if (CODType==7){
+					$("#myBillData input[name='chkmyBillEmailDiv']").attr('checked', false);
+					$("#myBillData input[name='chkmyBillEmailDiv']").checkboxradio('disable');
+					$("#myBillData input[name='chkmyBillEmailDiv']").checkboxradio("refresh");
+					$("#myBillData #myBillEmailDiv").show();
+				}
+			}else if (QueryStatus=='C'){
+				var serNo = $(xml).find("SvChangeSerialNo").text();
+				if (CODType==5){
+					tmp = getLocalValue('lastChangedAddress');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedAddress', serNo);
+						msg = '您的帳單地址變更作業已經處理完成!';
+						MsgBox(msg);
+					}
+					sNewAddressSerNo = "";
+				}
+				if (CODType==6){
+					tmp = getLocalValue('lastChangedPhone');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedPhone', serNo);
+						msg = '您的電話變更作業已經處理完成!';
+						MsgBox(msg);
+					}
+					sNewPhoneSerNo = "";
+				}
+				if (CODType==7){
+					tmp = getLocalValue('lastChangedEmail');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedEmail', serNo);
+						msg = '您的Email變更作業已經處理完成!';
+						MsgBox(msg);
+					}
+					sNewEmailSerNo = "";
+				}
+				$('#' + currPage + ' #' + currStatus).html('');
+				$('#' + currPage + ' #' + currStatus).hide();
+				$('#' + currPage + ' #' + currData).show();
+			}else if (QueryStatus=='R' || QueryStatus=='F'){
+				msg = '您的' + currProcess + '變更作業執行失敗!';
+				MsgBox(msg);
+				$('#' + currPage + ' #' + currStatus).html('');
+				$('#' + currPage + ' #' + currStatus).hide();
+				$('#' + currPage + ' #' + currData).show();
+				/*
+				$('#' + currPage + ' #' + currStatus).html(msg);
+				$('#' + currPage + ' #' + currStatus).show();
+				$('#' + currPage + ' #' + currData).hide();
+				*/
+			}else if (QueryStatus=='1'){
+				msg = '查詢您的' + currProcess + '變更作業時發生錯誤!';
+				MsgBox(msg);
+				$('#' + currPage + ' #' + currStatus).html('');
+				$('#' + currPage + ' #' + currStatus).hide();
+				$('#' + currPage + ' #' + currData).show();
+				/*
+				$('#' + currPage + ' #' + currStatus).html(msg);
+				$('#' + currPage + ' #' + currStatus).show();
+				$('#' + currPage + ' #' + currData).hide();
+				*/
+			}else{	//之前沒有作業 request
+				if (CODType==5) sNewAddressSerNo = "";
+				if (CODType==6) sNewPhoneSerNo = "";
+				if (CODType==7) sNewEmailSerNo = "";
+				$('#' + currPage + ' #' + currStatus).hide();
+				$('#' + currPage + ' #' + currData).show();
+			}	//if (QueryStatus=='O' || QueryStatus=='P' || QueryStatus=='SENT'){
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function updateProcessStatus(CODType){	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+	
+	function setBillDataCheckbox(s){	//用戶點選【個人資料修改】頁面中的帳單地址、聯絡電話、電子郵件帳號，顯示/隱藏各區域
+		if ($("#myBillData input[name='chk" + s + "']").is(":checked")){
+			$("#myBillData #" + s).show();
+		}else{
+			$("#myBillData #" + s).hide();
+		}
+	}	//function setBillDataCheckbox(s){	//用戶點選【個人資料修改】頁面中的帳單地址、聯絡電話、電子郵件帳號，顯示/隱藏各區域
+
+	function getTownList(data, city){	//找某縣市的區域
+		var s = "";
+		$.each( data.towns, function(i, item) {
+			if (item.city==city){	//新city，從 towns 找此縣市的區域
+				s += "		<li><a href='#' onclick=\"doSelectArea('" + item.city + "', '" + item.town + "', '" + item.zipcode + "');return false;\">" + item.town + "</a></li>";
+			}
+		});
+		return s;
+	}
+
+	function doSelectArea(city, town, zip){	//顯示已選的區域
+		$('#myBillData #txtDataAddressZipCode').val(zip);	//填入hidden欄位
+		$('#myBillData #txtDataAddressCity').val(city);
+		$('#myBillData #txtDataAddressTown').val(town);
+		$('#myBillData #myBillAddressDataCity').html('：' + zip + '&nbsp;' + city + '，' + town);	//畫面顯示
+		$('#myBillData #myBillAddressDataCityList').trigger('collapse');	//將縣市區域選單縮起來
+		return;
+	}
+
+	function doChangeDataAll(){	//執行修改帳單地址、聯絡電話、電子郵件帳號
+		if (beEmpty(msisdn)){
+			//MsgBox('無法取得您的登入資料，請至首頁重新登入!');
+			alertNoLogin();
+			return false;
+		}
+
+		var s		= "";
+		var sData1	= "";
+		var sData2	= "";
+		var sData3	= "";
+
+		if (!$("#myBillData input[name='chkmyBillAddressDiv']").is(":checked") && !$("#myBillData input[name='chkmyBillPhoneDiv']").is(":checked") && !$("#myBillData input[name='chkmyBillEmailDiv']").is(":checked")){
+			MsgBox('請選擇您要修改的項目!');
+			return false;
+		}
+
+		if ($("#myBillData input[name='chkmyBillAddressDiv']").is(":checked")){	//帳單地址
+			var zip		= $('#myBillData #txtDataAddressZipCode').val();
+			var city	= $('#myBillData #txtDataAddressCity').val();
+			var town	= $('#myBillData #txtDataAddressTown').val();
+			var street	= $('#myBillData #txtDataAddressStreet').val();
+			
+			if (beEmpty(zip) || beEmpty(city) || beEmpty(town)){
+				MsgBox('請選擇縣市區域!');
+				return false;
+			}
+			if (beEmpty(street) || street.length<5){
+				MsgBox('請輸入您的街道地址!');
+				return false;
+			}
+
+			sData1	= "";
+			sData1	= "<City>" + city + "</City>";
+			sData1	+= "<State>" + town + "</State>";
+			sData1	+= "<Street>" + street + "</Street>";
+			sData1	+= "<ZIP>" + zip + "</ZIP>";
+			s = msisdn + "的帳單地址為【" + zip + city + town + street  + "】？";
+			$('<div>').simpledialog2({
+				mode: 'button',
+				headerText: '個人資料變更確認',
+				headerClose: false,
+				themeDialog: 'f',
+				buttonPrompt: '請問您是否確定要變更' + s,
+				buttons : {
+					'確定變更': {
+						click: function () { 
+							doChangeData(5, sData1);	//送至 server 執行
+						}
+					},
+					'再想一想': {
+						click: function () { 
+						},
+	        			icon: "delete"
+					}
+				}
+			})
+		}	//if ($("#myBillData input[name='chkmyBillAddressDiv']").is(":checked")){	//帳單地址
+		
+		if ($("#myBillData input[name='chkmyBillPhoneDiv']").is(":checked")){	//聯絡電話
+			var HomePhonePrefix		= $('#myBillData #myBillPhoneHomePrefix').val();
+			var HomePhoneNumber		= $('#myBillData #myBillPhoneHomeNumber').val();
+			var WorkPhonePrefix		= $('#myBillData #myBillPhoneWorkPrefix').val();
+			var WorkPhoneNumber		= $('#myBillData #myBillPhoneWorkNumber').val();
+			var WorkPhoneExt		= $('#myBillData #myBillPhoneWorkExt').val();
+			var OtherPhone			= $('#myBillData #myBillPhoneOther').val();
+			
+			$('#myBillData .beNumber').each( function() {
+				if (isNaN($(this).val())){
+					MsgBox('所有欄位均為數字，請勿輸入其他文字');
+					return;
+				}
+			});
+			/*
+			if (beEmpty(HomePhonePrefix) && notEmpty(HomePhoneNumber)){
+				MsgBox('請輸入住家電話的區碼');
+				return;
+			}
+			if (beEmpty(WorkPhonePrefix) && notEmpty(WorkPhoneNumber)){
+				MsgBox('請輸入公司電話的區碼');
+				return;
+			}
+			*/
+			if (beEmpty(HomePhoneNumber) && beEmpty(WorkPhoneNumber)){
+				MsgBox('請至少輸入住家電話或公司電話其中一個');
+				return;
+			}
+			
+			HomePhoneNumber = HomePhonePrefix + HomePhoneNumber;
+			WorkPhoneNumber = WorkPhonePrefix + WorkPhoneNumber;
+
+			sData2	= "";	
+			if (notEmpty(HomePhoneNumber)){
+				sData2 += "<HomePhone>" + HomePhoneNumber + "</HomePhone>";
+				s += (beEmpty(s)?HomePhoneNumber:', ' + HomePhoneNumber);
+			}
+			if (notEmpty(WorkPhoneNumber)){
+				sData2 += "<WorkPhone>" + WorkPhoneNumber + "</WorkPhone>";
+				s += (beEmpty(s)?WorkPhoneNumber:', ' + WorkPhoneNumber);
+			}
+			if (notEmpty(WorkPhoneExt) && notEmpty(WorkPhoneNumber)){
+				sData2 += "<WorkPhoneExt>" + WorkPhoneExt + "</WorkPhoneExt>";
+				s += (beEmpty(s)?WorkPhoneExt:'#' + WorkPhoneExt);
+			}
+			if (notEmpty(OtherPhone)){
+				sData2 += "<OtherPhone>" + OtherPhone + "</OtherPhone>";
+				s += (beEmpty(s)?OtherPhone:', ' + OtherPhone);
+			}
+			s = msisdn + "的聯絡電話為【" + s  + "】？";
+			$('<div>').simpledialog2({
+				mode: 'button',
+				headerText: '個人資料變更確認',
+				headerClose: false,
+				themeDialog: 'f',
+				buttonPrompt: '請問您是否確定要變更' + s,
+				buttons : {
+					'確定變更': {
+						click: function () { 
+							doChangeData(6, sData2);	//送至 server 執行
+						}
+					},
+					'再想一想': {
+						click: function () { 
+						},
+	        			icon: "delete"
+					}
+				}
+			})
+		}	//if ($("#myBillData input[name='chkmyBillPhoneDiv']").is(":checked")){	//聯絡電話
+
+		if ($("#myBillData input[name='chkmyBillEmailDiv']").is(":checked")){	//電子郵件帳號
+			var Email = $('#myBillData #myBillEmailValue').val();
+			
+			if (beEmpty(Email)){
+				MsgBox('請輸入您的Email');
+				return;
+			}
+			if (!isEmail(Email)){
+				MsgBox('請輸入有效的電子郵件帳號');
+				return;
+			}
+	
+			sData3	= "";			
+			sData3 += "<Email>" + Email + "</Email>";
+			
+			s = msisdn + "的Email為【" + Email  + "】？";
+			$('<div>').simpledialog2({
+				mode: 'button',
+				headerText: '個人資料變更確認',
+				headerClose: false,
+				themeDialog: 'f',
+				buttonPrompt: '請問您是否確定要變更' + s,
+				buttons : {
+					'確定變更': {
+						click: function () { 
+							doChangeData(7, sData3);	//送至 server 執行
+						}
+					},
+					'再想一想': {
+						click: function () { 
+						},
+	        			icon: "delete"
+					}
+				}
+			})
+		}	//if ($("#myBillData input[name='chkmyBillEmailDiv']").is(":checked")){	//電子郵件帳號
+	}	//function doChangeDataAll(){	//執行修改帳單地址、聯絡電話、電子郵件帳號
+
+	function doChangeAddress(){	//執行修改帳單地址
+		var zip		= $('#myBillData #txtDataAddressZipCode').val();
+		var city	= $('#myBillData #txtDataAddressCity').val();
+		var town	= $('#myBillData #txtDataAddressTown').val();
+		var street	= $('#myBillData #txtDataAddressStreet').val();
+		
+		if (beEmpty(msisdn)){
+			//MsgBox('無法取得您的登入資料，請至首頁重新登入!');
+			alertNoLogin();
+			return false;
+		}
+		if (beEmpty(zip) || beEmpty(city) || beEmpty(town)){
+			MsgBox('請選擇縣市區域!');
+			return false;
+		}
+		if (beEmpty(street) || street.length<5){
+			MsgBox('請輸入您的街道地址!');
+			return false;
+		}
+		var s		= "";
+		var sData	= "";
+		sData = "<City>" + city + "</City>";
+		sData += "<State>" + town + "</State>";
+		sData += "<Street>" + street + "</Street>";
+		sData += "<ZIP>" + zip + "</ZIP>";
+		s = msisdn + "的帳單地址為【" + zip + city + town + street  + "】？";
+		$('<div>').simpledialog2({
+			mode: 'button',
+			headerText: '個人資料變更確認',
+			headerClose: false,
+			themeDialog: 'f',
+			buttonPrompt: '請問您是否確定要變更' + s,
+			buttons : {
+				'確定變更': {
+					click: function () { 
+						doChangeData(5, sData);	//送至 server 執行
+					}
+				},
+				'再想一想': {
+					click: function () { 
+					},
+        			icon: "delete"
+				}
+			}
+		})
+	}	//function doChangeAddress(){	//執行修改帳單地址
+
+	function doChangePhone(){	//執行修改電話
+		var HomePhonePrefix		= $('#myBillPhone #myBillPhoneHomePrefix').val();
+		var HomePhoneNumber		= $('#myBillPhone #myBillPhoneHomeNumber').val();
+		var WorkPhonePrefix		= $('#myBillPhone #myBillPhoneWorkPrefix').val();
+		var WorkPhoneNumber		= $('#myBillPhone #myBillPhoneWorkNumber').val();
+		var WorkPhoneExt		= $('#myBillPhone #myBillPhoneWorkExt').val();
+		var OtherPhone			= $('#myBillPhone #myBillPhoneOther').val();
+		
+		$('#myBillPhone .beNumber').each( function() {
+			if (isNaN($(this).val())){
+				MsgBox('所有欄位均為數字，請勿輸入其他文字');
+				return;
+			}
+		});
+		/*
+		if (beEmpty(HomePhonePrefix) && notEmpty(HomePhoneNumber)){
+			MsgBox('請輸入住家電話的區碼');
+			return;
+		}
+		if (beEmpty(WorkPhonePrefix) && notEmpty(WorkPhoneNumber)){
+			MsgBox('請輸入公司電話的區碼');
+			return;
+		}
+		*/
+		if (beEmpty(HomePhoneNumber) && beEmpty(WorkPhoneNumber)){
+			MsgBox('請至少輸入住家電話或公司電話其中一個');
+			return;
+		}
+		
+		HomePhoneNumber = HomePhonePrefix + HomePhoneNumber;
+		WorkPhoneNumber = WorkPhonePrefix + WorkPhoneNumber;
+
+		var s		= "";
+		var sData	= "";
+		if (notEmpty(HomePhoneNumber)){
+			sData += "<HomePhone>" + HomePhoneNumber + "</HomePhone>";
+			s += (beEmpty(s)?HomePhoneNumber:', ' + HomePhoneNumber);
+		}
+		if (notEmpty(WorkPhoneNumber)){
+			sData += "<WorkPhone>" + WorkPhoneNumber + "</WorkPhone>";
+			s += (beEmpty(s)?WorkPhoneNumber:', ' + WorkPhoneNumber);
+		}
+		if (notEmpty(WorkPhoneExt) && notEmpty(WorkPhoneNumber)){
+			sData += "<WorkPhoneExt>" + WorkPhoneExt + "</WorkPhoneExt>";
+			s += (beEmpty(s)?WorkPhoneExt:'#' + WorkPhoneExt);
+		}
+		if (notEmpty(OtherPhone)){
+			sData += "<OtherPhone>" + OtherPhone + "</OtherPhone>";
+			s += (beEmpty(s)?OtherPhone:', ' + OtherPhone);
+		}
+		s = msisdn + "的聯絡電話為【" + s  + "】？";
+		$('<div>').simpledialog2({
+			mode: 'button',
+			headerText: '個人資料變更確認',
+			headerClose: false,
+			themeDialog: 'f',
+			buttonPrompt: '請問您是否確定要變更' + s,
+			buttons : {
+				'確定變更': {
+					click: function () { 
+						doChangeData(6, sData);	//送至 server 執行
+					}
+				},
+				'再想一想': {
+					click: function () { 
+					},
+        			icon: "delete"
+				}
+			}
+		})
+	}	//function doChangePhone(){	//執行修改電話
+
+	function doChangeEmail(){	//執行修改Email
+		var Email = $('#myBillEmail #myBillEmailValue').val();
+		
+		if (beEmpty(Email)){
+			MsgBox('請輸入您的Email');
+			return;
+		}
+		if (!isEmail(Email)){
+			MsgBox('請輸入有效的電子郵件帳號');
+			return;
+		}
+
+		var s		= "";
+		var sData	= "";
+		
+		sData += "<Email>" + Email + "</Email>";
+		
+		s = msisdn + "的Email為【" + Email  + "】？";
+		$('<div>').simpledialog2({
+			mode: 'button',
+			headerText: '個人資料變更確認',
+			headerClose: false,
+			themeDialog: 'f',
+			buttonPrompt: '請問您是否確定要變更' + s,
+			buttons : {
+				'確定變更': {
+					click: function () { 
+						doChangeData(7, sData);	//送至 server 執行
+					}
+				},
+				'再想一想': {
+					click: function () { 
+					},
+        			icon: "delete"
+				}
+			}
+		})
+	}	//function doChangeEmail(){	//執行修改Email
+	
+	function doChangeData(CODType, sData){	//執行COD資料變更，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+		sData = "Function=DoCODServiceChange&Request=<MSISDN>" + msisdn + "</MSISDN><ContractId>" + contractid + "</ContractId><ChangeType>" + CODType + "</ChangeType>" + sData;
+		//console.log(sData);
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('作業失敗：' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			var ChangeStatus		= $(xml).find("ChangeStatus").text();
+			var StatusMsg			= $(xml).find("StatusMsg").text();
+			var SvChangeSerialNo	= $(xml).find("SvChangeSerialNo").text();
+			//alert(ChangeStatus);
+			//alert(SvChangeSerialNo);
+			var sProcess			= "";
+			if (CODType==5) sProcess = "變更帳單地址";
+			if (CODType==6) sProcess = "變更聯絡電話";
+			if (CODType==7) sProcess = "變更電子郵件帳號";
+
+			var msg = "";
+			if (ChangeStatus=='0'){
+				//將checkbox取消選取及disable
+				if (CODType==5){
+					sNewAddressSerNo = SvChangeSerialNo;
+					$("#myBillData input[name='chkmyBillAddressDiv']").attr('checked', false);
+					$("#myBillData input[name='chkmyBillAddressDiv']").checkboxradio('disable');
+					$("#myBillData input[name='chkmyBillAddressDiv']").checkboxradio("refresh");
+				}
+				if (CODType==6){
+					$("#myBillData input[name='chkmyBillPhoneDiv']").attr('checked', false);
+					$("#myBillData input[name='chkmyBillPhoneDiv']").checkboxradio('disable');
+					$("#myBillData input[name='chkmyBillPhoneDiv']").checkboxradio("refresh");
+				}
+				if (CODType==7){
+					$("#myBillData input[name='chkmyBillEmailDiv']").attr('checked', false);
+					$("#myBillData input[name='chkmyBillEmailDiv']").checkboxradio('disable');
+					$("#myBillData input[name='chkmyBillEmailDiv']").checkboxradio("refresh");
+				}
+				GATrackEvent(sProcess, '成功', msisdn + ':' + contractid);
+				msg = '【' + sProcess + '】資料修改申請已送出，系統將於1小時內為您處理完成。';
+			}else if (ChangeStatus=='1'){
+				if (CODType==5) sNewAddressSerNo = "";
+				GATrackEvent(sProcess, '失敗', msisdn + ':' + contractid);
+				msg = '作業失敗：' + StatusMsg;
+			}else{
+				if (CODType==5)	sNewAddressSerNo = "";
+				GATrackEvent(sProcess, '無法取得作業狀態', msisdn + ':' + contractid);
+				msg = '無法取得作業狀態';
+			}	//if (ChangeStatus=='O'){
+			MsgBox(msg);
+		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+	}	//function doChangeData(CODType, sData){	//執行COD資料變更，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+
+/***************以上是修改帳單地址、電話、EMail**********************/
+
 </script>
 
 <script type="text/javascript">
@@ -487,32 +1414,46 @@
 		}
 		
 		var i = 0;
-		var $btn_text	=null;
-		var $btn_child	=null;
+		var $btn_text	= null;
+		var $btn_child	= null;
+		var mypage		= $.mobile.activePage.attr("id");
+
 		$(xml).find("bill").each(function() {
 			i++;
-			if (i==1)$('#myBillInfo #myBillInfoNeedPay').val($(this).children("need_pay").text());	//本期應繳金額
-			$('#myBillInfo #pay_end_time' + i).text($(this).children("pay_end_time").text());
-			$('#myBillInfo #bills_date'+ i).text($(this).children("bills_date").text());
-			if (i>1){	//變更collapsible的 header 文字，改為上期帳單日
-				//cachethe`<span class="ui-btn-text">` elementanditschild
-				$btn_text = $('#myBillInfo #collapsible' + i).find('.ui-btn-text');
+			if (mypage=='myBillInfo' && i==1){
+				$('#myBillInfo #myBillInfoNeedPay').val($(this).children("need_pay").text());	//本期應繳金額
+				$('#myBillInfo #pay_end_time' + i).text($(this).children("pay_end_time").text());
+				$('#myBillInfo #bills_date'+ i).text($(this).children("bills_date").text());
+				$('#myBillInfo #prior_pay' + i).text($(this).children("prior_pay").text());
+				$('#myBillInfo #prior_payed' + i).text($(this).children("prior_payed").text());
+				$('#myBillInfo #currt_append' + i).text($(this).children("currt_append").text());
+				$('#myBillInfo #currt_pay' + i).text($(this).children("need_pay").text());
+			}else if (mypage=='myBillPrevious' && i>1){	//變更collapsible的 header 文字，改為上期帳單日
+				$('#myBillPrevious #pay_end_time' + i).text($(this).children("pay_end_time").text());
+				$('#myBillPrevious #bills_date'+ i).text($(this).children("bills_date").text());
+				//cache the `<span class="ui-btn-text">` element and its child
+				
+				//$('#myBillPrevious #bill_head' + i).text($(this).children("bills_date").text());
+				//上面那行是在myBillMenu的pageshow執行擷取資料功能
+				$btn_text = $('#myBillPrevious #collapsible' + i).find('.ui-btn-text');
 				$btn_child = $btn_text.find('.ui-collapsible-heading-status');
 				//overwrite the header text, then append its child to restore the previous structure
 				$btn_text.text($(this).children("bills_date").text()).append($btn_child);
+				
+				$('#myBillPrevious #prior_pay' + i).text($(this).children("prior_pay").text());
+				$('#myBillPrevious #prior_payed' + i).text($(this).children("prior_payed").text());
+				$('#myBillPrevious #currt_append' + i).text($(this).children("currt_append").text());
+				$('#myBillPrevious #currt_pay' + i).text($(this).children("need_pay").text());
 			}	//if(i>1){	//變更collapsible的 header 文字，改為上期帳單日
-			$('#myBillInfo #prior_pay' + i).text($(this).children("prior_pay").text());
-			$('#myBillInfo #prior_payed' + i).text($(this).children("prior_payed").text());
-			$('#myBillInfo #currt_append' + i).text($(this).children("currt_append").text());
-			$('#myBillInfo #currt_pay' + i).text($(this).children("need_pay").text());
 		});	//$(xml).find("bill").each( function() {
 		var need_pay=$('#myBillInfo #myBillInfoNeedPay').val();
-		if (notEmpty(need_pay) && parseInt(need_pay)>0){
-			$('#doPay').show();
-		}else{
-			$('#doPay').hide();
+		if (mypage=='myBillInfo'){
+			if (notEmpty(need_pay) && parseInt(need_pay)>0){
+				$('#myBillInfo #doPay').show();
+			}else{
+				$('#myBillInfo #doPay').hide();
+			}
 		}
-		GATrackEvent('查詢近六期帳單資料', getLocalValue('logincontractid'), '');
 	}	//functionGetBillInfo_Success(xml){	//取得近六期帳單資料
 
 	function GetProject_Success(xml){	//取得資費
@@ -661,6 +1602,7 @@
 			//MsgBox('請先至首頁登入再執行此功能!!');
 			alertNoLogin();
 		}
+		$('#myBillApplyEBill #myBillApplyEBill-MSISDN').html(msisdn);
 		$('#myBillApplyEBill #myBillApplyEBillTitle').text('資料更新中，請稍候...');
 		var sData = "";
 		sData = "Function=DoRTLService&Request=";
@@ -678,13 +1620,14 @@
 				var r = $(xml).find("POStatus").text();
 
 				if (r=='N')	{checkMajorAccount();return;}	//全都不是，先不顯示填寫Email畫面，先檢查是否主門號
-				if (r=='W')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('已寄發電子帳單確認函，請至電子郵件信箱完成確認。'); showMyBillStatus(1);}	//電子帳單待確認中，顯示訊息文字
-				if (r=='A')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('電子帳單寄送服務申請確認中，系統將在稍後寄送確認函至您填寫的Email，請在收到確認函後，依說明進行確認。'); showMyBillStatus(1);}	//電子帳單申請中，顯示訊息文字
-				if (r=='Y')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('目前為電子帳單會員<br>EMail信箱為【' + $(xml).find("POEmail").text() + '】'); showMyBillStatus(1);$('#myBillApplyEBill #btnRefreshEBill').hide();}	//電子帳單，顯示訊息文字及Email
-				if (r=='S')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('您的門號' + msisdn + '目前已為簡訊帳單會員。電子/簡訊帳單服務，不能同時申請，如欲進行變更申請，請先取消原有服務。'); showMyBillStatus(1);}	//簡訊帳單，顯示訊息文字
+				if (r=='W')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('已寄發電子帳單確認函，請至電子郵件信箱完成確認。'); showMyBillStatus(0);}	//電子帳單待確認中，顯示訊息文字
+				if (r=='A')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('電子帳單寄送服務申請確認中，系統將在稍後寄送確認函至您填寫的Email，請在收到確認函後，依說明進行確認。'); showMyBillStatus(0);}	//電子帳單申請中，顯示訊息文字
+				if (r=='Y')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('目前為電子帳單會員<br>EMail信箱為【' + $(xml).find("POEmail").text() + '】'); showMyBillStatus(0);$('#myBillApplyEBill #btnRefreshEBill').hide();}	//電子帳單，顯示訊息文字及Email
+				if (r=='S')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('目前為簡訊帳單會員。'); showMyBillStatus(0);}	//簡訊帳單，顯示訊息文字
+				//if (r=='S')	{$('#myBillApplyEBill #myBillApplyEBillTitle').html('您的門號' + msisdn + '目前已為簡訊帳單會員。電子/簡訊帳單服務，不能同時申請，如欲進行變更申請，請先取消原有服務。'); showMyBillStatus(0);}	//簡訊帳單，顯示訊息文字
 			}else{	//錯誤
 				$('#myBillApplyEBill #myBillApplyEBillTitle').html($(xml).find("StatusMsg").text());	//顯示錯誤訊息
-				showMyBillStatus(1);
+				showMyBillStatus(0);
 			}	//if ($(xml).find("Status").text()=='0'){	//正常
 			/*
 			alert($(xml).find("Status").text());
@@ -715,7 +1658,7 @@
 			var ResultCode = $(xml).find("ResultCode").text();
 			var ResultText = $(xml).find("ResultText").text();
 			if (ResultCode!='00000'){	//作業失敗
-				GATrackEvent('申請電子帳單', '查詢是否主門號失敗，無法查詢是否主門號', msisdn + ':' + contractid);
+				GATrackEvent('申請電子/簡訊帳單', '查詢是否主門號失敗，無法查詢是否主門號', msisdn + ':' + contractid);
 				MsgBox('無法取得您的門號資料');
 				return;
 			}	//if (ResultCode!='00000'){	//作業失敗
@@ -724,28 +1667,54 @@
 
 			if (MainMsisdnFlg=='N'){
 				$('#myBillApplyEBill #myBillApplyEBillTitle').html('請以主門號登入');	//顯示錯誤訊息
-				showMyBillStatus(1);
-			}else{
 				showMyBillStatus(0);
+			}else{
+				showMyBillStatus(1);
 			}
 			GATrackEvent('查詢電子帳單申請狀態', '成功', msisdn + ':' + contractid);
 		});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
 	}	//function checkMajorAccount(){	//檢查是否主門號
 
-	function showMyBillStatus(i){	//顯示myBillApplyEBill申請電子帳單頁面的內容，i=0顯示Email資料填寫畫面，i=1只顯示申請狀態及重新查詢畫面
-		if (i==0){
-			//$('#myBillApplyEBill #myBillApplyEBillTitle').text('請輸入您的電子帳單Email信箱');
-			$('#myBillApplyEBill #myBillApplyEBillTitle').text('');
-			$('#myBillApplyEBill #myBillApplyEBill-MSISDN').html(getLocalValue('loginmsisdn'));
-			$('#myBillApplyEBill #myBillApplyEBillEmailDiv').show();
-			$('#myBillApplyEBill #btnRefreshEBill').hide();
-		}else{
+	function myBillApplyEBillRdoCheck(){	//根據用戶選擇的功能，顯示電子帳單或簡訊帳單的申請畫面
+		var s = $("#myBillApplyEBill input[name='myBillApplyEBillRdo']:radio:checked").val();
+		if (s=="2")	showMyBillStatus(2);
+		if (s=="3")	showMyBillStatus(3);
+	}
+
+	function showMyBillStatus(i){	//顯示myBillApplyEBill申請電子/簡訊帳單頁面的內容，i=0只顯示申請狀態及重新查詢畫面，i=1顯示電子帳單、簡訊帳單選擇，i=2顯示Email資料填寫畫面，i=3顯示簡訊帳單確認畫面
+		if (i==0){	//只顯示申請狀態及重新查詢畫面
+			$('#myBillApplyEBill #myBillApplyEBillSelectDiv').hide();
 			$('#myBillApplyEBill #myBillApplyEBillEmailDiv').hide();
+			$('#myBillApplyEBill #myBillApplyEBillSMSDiv').hide();
 			$('#myBillApplyEBill #btnRefreshEBill').show();
 		}
-	}	//function showMyBillStatus(i){	//顯示myBillApplyEBill申請電子帳單頁面的內容，i=0顯示Email資料填寫畫面，i=1只顯示申請狀態及重新查詢畫面
+		if (i==1){	//顯示電子帳單、簡訊帳單選擇
+			$('#myBillApplyEBill #myBillApplyEBillTitle').text('');
+			$('#myBillApplyEBill #myBillApplyEBillSelectDiv').show();
+			$('#myBillApplyEBill #myBillApplyEBillEmailDiv').hide();
+			$('#myBillApplyEBill #myBillApplyEBillSMSDiv').hide();
+			$('#myBillApplyEBill #btnRefreshEBill').hide();
+		}
+		if (i==2){	//顯示Email資料填寫畫面
+			$('#myBillApplyEBill #myBillApplyEBillHeader').text('電子帳單寄送服務申請');
+			$('#myBillApplyEBill #myBillApplyEBillTitle').text('');
+			$('#myBillApplyEBill #myBillApplyEBillSelectDiv').hide();
+			$('#myBillApplyEBill #myBillApplyEBillEmailDiv').show();
+			$('#myBillApplyEBill #myBillApplyEBillSMSDiv').hide();
+			$('#myBillApplyEBill #btnRefreshEBill').hide();
+			$('#myBillApplyEBill #myBillApplyEBillEmail').focus();
+		}
+		if (i==3){	//顯示簡訊帳單確認畫面
+			$('#myBillApplyEBill #myBillApplyEBillHeader').text('簡訊帳單寄送服務申請');
+			$('#myBillApplyEBill #myBillApplyEBillTitle').text('');
+			$('#myBillApplyEBill #myBillApplyEBillSelectDiv').hide();
+			$('#myBillApplyEBill #myBillApplyEBillEmailDiv').hide();
+			$('#myBillApplyEBill #myBillApplyEBillSMSDiv').show();
+			$('#myBillApplyEBill #btnRefreshEBill').hide();
+		}
+	}	//function showMyBillStatus(i){	//顯示myBillApplyEBill申請電子/簡訊帳單頁面的內容，i=0顯示Email資料填寫畫面，i=1只顯示申請狀態及重新查詢畫面
 
-	function doApplyEBill(){	//申請電子帳單
+	function doApplyEBillEmail(){	//申請電子帳單
 		var msisdn = getLocalValue('loginmsisdn');
 		var contractid = getLocalValue('logincontractid');
 		if (beEmpty(msisdn) || beEmpty(contractid)){
@@ -781,13 +1750,52 @@
 				//sData = "電子帳單寄送服務已申請完成<br>" + email;
 				sData = "電子帳單寄送服務申請確認中，系統將在稍後寄送確認函至您填寫的Email，請在收到確認函後，依說明進行確認。";
 				$('#myBillApplyEBill #myBillApplyEBillTitle').html(sData);
-				showMyBillStatus(1);
+				showMyBillStatus(0);
 				GATrackEvent('申請電子帳單', '成功', msisdn + ':' + contractid);
 			}else{	//錯誤
 				MsgBox('電子帳單申請失敗：' + $(xml).find("StatusMsg").text());
 				GATrackEvent('申請電子帳單', '失敗', msisdn + ':' + contractid);
 			}	//if ($(xml).find("Status").text()=='0'){	//正常
 		});
-	}	//function doApplyEBill(){	//申請電子帳單
+	}	//function doApplyEBillEmail(){	//申請電子帳單
+
+	function doApplyEBillSMS(){	//申請簡訊帳單
+		var msisdn = getLocalValue('loginmsisdn');
+		var contractid = getLocalValue('logincontractid');
+		if (beEmpty(msisdn) || beEmpty(contractid)){
+			MsgBox('請先至首頁登入再執行此功能!!');
+			return;
+		}
+		if (!$("#myBillApplyEBill input[name='chk2']").is(":checked")){
+			MsgBox('請詳閱並勾選【本人已清楚了解上述服務條款內容】');
+			return;
+		}
+
+		var sData = "";
+		sData = "Function=DoRTLService&Request=";
+		sData += "<MSISDN>" + msisdn + "</MSISDN>";
+		sData += "<FunctionType>S2</FunctionType>";
+		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('簡訊帳單申請失敗' + ResultText);
+				return;
+			}	//if (ResultCode=='00000'){	//作業成功
+			
+			if ($(xml).find("Status").text()=='0'){	//成功
+				//sData = "電子帳單寄送服務申請完成，系統將在稍後寄送確認函至" + email + "，";
+				//sData += "<br><span style='color:#FF0000;'>請在收到確認函後，依說明進行確認。</span>"
+				//sData = "電子帳單寄送服務已申請完成<br>" + email;
+				sData = "簡訊帳單申請成功。";
+				$('#myBillApplyEBill #myBillApplyEBillTitle').html(sData);
+				showMyBillStatus(0);
+				GATrackEvent('申請簡訊帳單', '成功', msisdn + ':' + contractid);
+			}else{	//錯誤
+				MsgBox('簡訊帳單申請失敗：' + $(xml).find("StatusMsg").text());
+				GATrackEvent('申請簡訊帳單', '失敗', msisdn + ':' + contractid);
+			}	//if ($(xml).find("Status").text()=='0'){	//正常
+		});
+	}	//function doApplyEBillSMS(){	//申請簡訊帳單
 
 </script>

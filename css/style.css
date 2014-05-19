@@ -24,29 +24,50 @@ img {
 	text-shadow: none !important;
 }
 
-/***********頁面header的威寶logo***********/
-.ui-header {
-	padding: 0 !important;
-	border-width: 0 !important;
-	background-size: auto 40px !important;
-}
-
-.vibo-header {
+.home-slide {
 	width: 100%;
-	background-image: url(../images/header_logo.png);
-	background-color: #E70012;
+	background-color: #000000;
+	background-size:100% 100%;
 	background-repeat: no-repeat;
 	background-position: left top;
 	padding: 0;
 	height: auto;
 }
 
+/***********頁面header的威寶logo***********/
+.ui-header {
+	padding: 0 !important;
+	border-width: 0 !important;
+	-moz-background-size:100% 40px;
+	-webkit-background-size:100% 40px;
+	-o-background-size:100% 40px;
+	background-size:100% 40px;
+}
+
+.vibo-header-home, .vibo-header {
+	width: 100%;
+	-moz-background-size:100% 40px;
+	-webkit-background-size:100% 40px;
+	-o-background-size:100% 40px;
+	background-size:100% 40px;
+	background-color: #9E0CCC;
+	background-repeat: no-repeat;
+	background-position: left top;
+	padding: 0;
+	height: auto;
+}
+.vibo-header-home {
+	background-image: url(../images/tstarlogobar.png);
+}
+.vibo-header {
+	background-image: url(../images/EmptyLogoBar.png);
+}
 /***********放在header背景圖上的空白區域***********/
 .header-padding {
 	margin:0;
-	padding:0;
+	padding: 10px 0 0 100px;
 	width:100%;
-	height:40px;
+	height:30px;
 }
 
 /***********content***********/
@@ -101,27 +122,202 @@ h1, h2, h3 {
 	text-align: center;
 }
 
-/***********畫面下方的選單***********/
-.CarouselMenu {
+/***********首頁畫面下方的選單***********/
+.HomeCarouselMenu {
 	width:100%;
 	z-index: 99 !important;
 }
-.CarouselMenu a {
+.HomeCarouselMenu a {
 	margin: 0;
 	padding: 0;
 	display: block;
 	float: left;
 	text-decoration: none;
 }
-.CarouselMenu div {
+.HomeCarouselMenu div {
 	background-repeat: no-repeat;
 	background-size:100% 100%;
 }
-.CarouselMenu span {
+.HomeCarouselMenu span {
 	font-size: 1px;
 	color: #818285;
 }
 
+/***********將畫面上方的"回上頁"按鈕作成 iPhone 的樣式***********/
+/* === BACK BUTTON === */
+a[data-rel='back'], .ui-header a[data-rel='back'] {
+	background: transparent url(../images/backButtonSprite.png) 0 0 no-repeat !important;
+		-webkit-box-shadow: none !important; 
+		-moz-box-shadow: none !important; 
+		box-shadow: none !important;
+			-webkit-border-radius: 0 !important;
+			-moz-border-radius: 0 !important;
+			border-radius: 0 !important;
+	border: 0 none !important;
+	height: 30px;
+	top: 2px!important;
+}
+
+a[data-rel='back'] .ui-btn-inner {
+	background: transparent url(../images/backButtonSprite.png) right 0 no-repeat !important;
+	margin: 0 0 0 15px;
+	padding: 0 8px 0 0 !important;
+	border: 0px!important;
+	height: 30px;
+	line-height: 30px;
+		-webkit-box-shadow: none !important; 
+		-moz-box-shadow: none !important; 
+		box-shadow: none !important;
+}
+
+a[data-rel='back'] .ui-icon {
+	display: none;
+}
+
+/* === BLACK - BACK BUTTON === */
+.ui-bar-b a[data-rel='back'] {
+	background-position: 0 -30px !important;
+}
+.ui-bar-b a[data-rel='back'] .ui-btn-inner {
+	background-position: right -30px !important;
+}
+
+/* === RETINA DEVICE FIXES === */
+@media (-webkit-min-device-pixel-ratio : 1.5), (min-device-pixel-ratio : 1.5) {
+	a[data-rel='back'], .ui-header a[data-rel='back'], a[data-rel="back"] .ui-btn-inner {
+		background-image: url(../images/backButtonSprite@2x.png) !important;
+		background-size: 500px 60px !important;
+	}
+}
+
+/***********移除 contennt 區的邊線***********/
+.ui-content, .MenuListview .ui-li, .MenuListview .ui-li-divider {
+	border-left-width: 0px!important;
+	border-right-width: 0px!important;
+	border-top-width: 0px!important;
+	border-bottom-width: 0px!important;
+}
+
+/***********設定每個功能選單頁中各個listview項目***********/
+.MenuListview {
+	margin-top: 0px!important;
+}
+.MenuListview .ui-li, .MenuListview .ui-li .ui-btn-inner, .MenuListview .ui-li .ui-btn-inner .ui-btn-text {
+	height: 40px;
+}
+.MenuListview .ui-li {
+	overflow: hidden;
+}
+.MenuListview .ui-li .ui-btn-inner .ui-btn-text .ui-link-inherit {
+	height: 30px;
+	padding-left: 60px!important;
+	padding-top: 10px!important;
+	padding-bottom: 0px!important;
+	letter-spacing: 2px;
+}
+.MenuListview .ui-li .ui-btn-inner .ui-btn-text .ui-link-inherit .ui-li-thumb{
+	height: 40px;
+	width: 40px;
+	padding: 0 0 0 5px;
+}
+.MenuListview .ui-li-divider {
+	width: 100%;
+	-moz-background-size:100% 5px;
+	-webkit-background-size:100% 5px;
+	-o-background-size:100% 5px;
+	background-size:100% 5px;
+	background-image: url(../images/divider.png);
+	background-color: #FFFFFF;
+	background-repeat: no-repeat;
+	background-position: left top;
+	padding: 0;
+	height: 5px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+/***********各分頁畫面下方的選單***********/
+.FooterNavbarItem, .FooterNavbarItem .ui-btn-inner, .FooterNavbarItem .ui-icon {
+	width: 100%;
+	height: 100%;
+}
+
+.FooterNavbarItem .ui-btn-inner {
+	padding: 0px!important;
+}
+
+.FooterNavbarItem .ui-icon {
+	margin: 0px!important;
+	border-bottom-left-radius: 0px!important;
+	border-bottom-right-radius: 0px!important;
+	border-top-left-radius: 0px!important;
+	border-top-right-radius: 0px!important;
+}
+
+#FooterNavbar11 .ui-icon {
+	background: url(../images/nav1-1.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar12 .ui-icon {
+	background: url(../images/nav1-2.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar13 .ui-icon {
+	background: url(../images/nav1-3.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+
+#FooterNavbar21 .ui-icon {
+	background: url(../images/nav2-1.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar22 .ui-icon {
+	background: url(../images/nav2-2.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar23 .ui-icon {
+	background: url(../images/nav2-3.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+
+#FooterNavbar31 .ui-icon {
+	background: url(../images/nav3-1.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar32 .ui-icon {
+	background: url(../images/nav3-2.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar33 .ui-icon {
+	background: url(../images/nav3-3.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+
+#FooterNavbar41 .ui-icon {
+	background: url(../images/nav4-1.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar42 .ui-icon {
+	background: url(../images/nav4-2.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar43 .ui-icon {
+	background: url(../images/nav4-3.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+
+#FooterNavbar51 .ui-icon {
+	background: url(../images/nav5-1.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar52 .ui-icon {
+	background: url(../images/nav5-2.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
+#FooterNavbar53 .ui-icon {
+	background: url(../images/nav5-3.png) 100% 100% no-repeat;
+	background-size:100% 100%;
+}
 
 /******************畫面上方選單**************************/
 .navbar-content-area .ui-btn .ui-btn-inner {
@@ -215,9 +411,13 @@ h1, h2, h3 {
 
 /***********撥打客服電話的撥號 icon***********/
 .ui-icon-phonecall {
-	background-image: url("../images/phonecall.png");
-	background-size: contain;
-	width: 24px;
-	height: 24px;
-	margin-top: -12px !important;
+	max-height: 30px!important;
+	max-width: 30px!important;
+	top: 6px!important;
+	left: 6px!important;
+}
+
+.SmallInput .ui-input-text{
+	display:inline!important;
+	width:auto!important;
 }

@@ -12,8 +12,8 @@
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
 	<script src="js/jquery.mobile-1.3.2.min.js"></script>
-	<!--<script src="js/jquery.touchSwipe.min.js"></script>-->
-	<!--<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>-->
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
 	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<script type="text/javascript" src="js/util.js"></script>
 	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
@@ -29,27 +29,6 @@
 </head>
 
 <body>
-
-<!-- ****************************** 選單頁 ***********************************-->
-<div data-role="page" id="myCustomerMenu">
-	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding">我的客服</div>
-	</div><!-- /header -->
-	
-	<div data-role="content">
-		<ul data-role="listview" data-inset="false" data-theme="h" data-icon="false" class="MenuListview">
-			<li><a href="#myCustomerPhone"><img src="images/text_icon_01.png">客服電話</a></li>
-			<li data-role="list-divider"></li>
-			<li><a href="#myCustomerEmail"><img src="images/text_icon_01.png">客服信箱</a></li>
-			<li data-role="list-divider"></li>
-		</ul>
-	</div><!-- /content -->
-	
-	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
-		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
-		</div>
-	</div><!-- /footer -->
-</div><!-- 選單頁 -->
 
 <!-- ****************************** FAQ ***********************************-->
 <div data-role="page" id="myCustomerFAQ">
@@ -593,23 +572,31 @@
 <!-- ****************************** 客服信箱 ***********************************-->
 <div data-role="page" id="myCustomerEmail">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding">客服信箱</div>
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myCustomerFAQ">FAQ</a></li>
+				<li><a href="#myCustomerEmail">客服信箱</a></li>
+				<li><a href="#myCustomerPhone">客服電話</a></li>
+			</ul>
+		</div><!-- /navbar -->
 	</div><!-- /header -->
 	
 	<div data-role="content">
-		<h3>親愛的客戶 您好：如您對我們提供的產品、服務內容，有任何的疑問或建議，可於網站留下您寶貴的意見。我們將儘速為您處理，謝謝！！</h3>
 		<div id="divChoice" style="display:none;">
+			如您對我們提供的產品、服務內容，有任何的疑問或建議，可於網站留下您寶貴的意見。我們將儘速為您處理，謝謝！！
+			<br>
 			<button onclick="setOnnetType('Y');">我是威寶用戶</button>
 			<button onclick="setOnnetType('N');">我不是威寶用戶</button>
 		</div>
 		<div id="myForm" style="display:none;">
 			<input type="hidden" id="isOnnetUser" name="isOnnetUser" value="Y">
 			<table border="0">
-				<tr><td colspan="2" style="font-weight:bold;">煩請填寫下列個人資料( * 號為必填欄位)</td></tr>
+				<tr><td colspan="2" style="font-weight:bold;">煩請填寫下列個人資料( * 號為必填欄位)，我們將儘速為您處理，謝謝！！ </td></tr>
+				<tr><td colspan="2" style="font-weight:bold;">個人資料</td></tr>
 				<tr><td>*姓名</td><td><input type="text" data-clear-btn="false" data-mini="true" name="myName" id="myName" maxlength="10" value=""></td></tr>
-				<tr><td>*手機號碼</td><td><input type="tel" data-clear-btn="false" data-mini="true" name="MSISDN" id="MSISDN" maxlength="10" value=""></td></tr>
-				<tr><td>聯絡電話(日)</td><td><input type="tel" data-clear-btn="false" data-mini="true" name="ContactPhoneDay" id="ContactPhoneDay" maxlength="20" value=""></td></tr>
-				<tr><td>聯絡電話(夜)</td><td><input type="tel" data-clear-btn="false" data-mini="true" name="ContactPhoneNight" id="ContactPhoneNight" maxlength="20" value=""></td></tr>
+				<tr><td>*手機門號</td><td><input type="tel" data-clear-btn="false" data-mini="true" name="MSISDN" id="MSISDN" maxlength="10" value=""></td></tr>
+				<tr><td>市　　話</td><td><input type="tel" data-clear-btn="false" data-mini="true" name="ContactPhoneDay" id="ContactPhoneDay" maxlength="20" value=""></td></tr>
 				<tr><td>*電子郵件</td><td><input type="email" data-clear-btn="false" data-mini="true" name="Email" id="Email" maxlength="100" value=""></td></tr>
 				<tr><td>*回覆方式</td><td>
 					<select name="ContactMethod" id="ContactMethod" data-mini="true">
@@ -658,24 +645,23 @@
 <!-- ****************************** 客服電話 ***********************************-->
 <div data-role="page" id="myCustomerPhone">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding">客服電話</div>
+		<div class="header-padding"></div>
+		<div data-role="navbar">
+			<ul class="navbar-content-area">
+				<li><a href="#myCustomerFAQ">FAQ</a></li>
+				<li><a href="#myCustomerEmail">客服信箱</a></li>
+				<li><a href="#myCustomerPhone">客服電話</a></li>
+			</ul>
+		</div><!-- /navbar -->
 	</div><!-- /header -->
 	
 	<div data-role="content">
-		<ul data-role="listview" data-inset="true" data-icon="false" data-divider-theme="d" data-theme="d">
-			<li data-role="list-divider">手機直撥免費服務專線</li>
-			<li><a href="tel:123" rel="external" onclick="GATrackEvent('客服電話服務', '撥打123', '');"><img src="images/phonecall.png" class="ui-li-icon ui-icon-phonecall">123(MVPN客戶請撥99123)</a></li>
-			<li data-role="list-divider">365速撥語音服務</li>
-			<li><a href="tel:365" rel="external" onclick="GATrackEvent('客服電話服務', '撥打365', '');"><img src="images/phonecall.png" class="ui-li-icon ui-icon-phonecall">365(MVPN客戶請撥99365)</a></li>
-			<li data-role="list-divider">客服專線</li>
-			<li><a href="tel:0986999123" rel="external" onclick="GATrackEvent('客服電話服務', '撥打0986999123', '');"><img src="images/phonecall.png" class="ui-li-icon ui-icon-phonecall">0986-999-123</a></li>
-			<li data-role="list-divider">免費促銷專線</li>
-			<li><a href="tel:0800661234" rel="external" onclick="GATrackEvent('客服電話服務', '撥打0800661234', '');"><img src="images/phonecall.png" class="ui-li-icon ui-icon-phonecall">0800-66-1234</a></li>
-			<li data-role="list-divider">專人&nbsp;8:00~24:00&nbsp;掛失專線</li>
-			<li><a href="tel:0277311365" rel="external" onclick="GATrackEvent('客服電話服務', '撥打0277311365', '');"><img src="images/phonecall.png" class="ui-li-icon ui-icon-phonecall">02-7731-1365</a></li>
-			<li data-role="list-divider">海外服務電話</li>
-			<li><a href="tel:+886277311365" rel="external" onclick="GATrackEvent('客服電話服務', '撥打+886277311365', '');"><img src="images/phonecall.png" class="ui-li-icon ui-icon-phonecall">+886-27731-1365<br><span style="color:#FF0000;white-space:normal;">漫遊期間撥打需支付國際漫遊通信費用</span></a></li>
-		</ul>
+		<h3>客戶服務專線</h3>
+		<a href="tel:0986999123" data-role="button" rel="external" data-icon="phonecall" data-iconpos="right" onclick="GATrackEvent('客服電話服務', '撥打0986999123', '');">0986999123</a>
+		<label style="color:#FF0000;">*(MVPN客戶請撥<a href="tel:99123" rel="external" onclick="GATrackEvent('客服電話服務', '撥打99123', '');">99123</a>)</label>
+		<p>&nbsp;</p>
+		<h3>促銷專線</h3>
+		<a href="tel:0800661234" data-role="button" rel="external" data-icon="phonecall" data-iconpos="right" style="white-space:normal;" onclick="GATrackEvent('客服電話服務', '撥打0800661234', '');">0800661234<br>(專人08:00~24:00)</a>
 	</div><!-- /content -->
 	
 	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
@@ -859,8 +845,6 @@
 		var OpinionText = $('#myCustomerEmail #OpinionText').val();	//意見內容
 		var FeedbackBefore = $('#myCustomerEmail input[name="FeedbackBefore"]:radio:checked').val();	//是否曾反應過同樣的意見 (01，02，03，空白)
 		var ISVIBOUser = $('#myCustomerEmail #isOnnetUser').val();	//是否為威寶用戶 (Y / N)
-		var ContactPhoneDay = $('#myCustomerEmail #ContactPhoneDay').val();	//聯絡電話(日)
-		var ContactPhoneNight = $('#myCustomerEmail #ContactPhoneNight').val();	//聯絡電話(夜)
 
 		if (notEmpty(ISVIBOUser) && ISVIBOUser=="Y" && beEmpty(MSISDN)){ MsgBox('請輸入手機門號'); return; }
 		if (beEmpty(Alias)){ MsgBox('請輸入姓名'); return; }
@@ -887,8 +871,6 @@
 		sData += "<OpinionText>" + OpinionText + "</OpinionText>";
 		sData += "<ISVIBOUser>" + ISVIBOUser + "</ISVIBOUser>";
 		if (notEmpty(ISVIBOUser) && ISVIBOUser=="Y") sData += "<FeedbackBefore>" + FeedbackBefore + "</FeedbackBefore>";
-		sData += "<ContactPhoneDay>" + ContactPhoneDay + "</ContactPhoneDay>";
-		sData += "<ContactPhoneNight>" + ContactPhoneNight + "</ContactPhoneNight>";
 		//console.log(sData);
 		getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){	//從 GetCWSOptions 取得選項資料
 			if ($(xml).find("ResultCode").text()!='00000'){

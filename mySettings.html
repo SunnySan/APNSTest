@@ -12,8 +12,8 @@
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
 	<script src="js/jquery.mobile-1.3.2.min.js"></script>
-	<script src="js/jquery.touchSwipe.min.js"></script>
-	<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+	<!--<script src="js/jquery.touchSwipe.min.js"></script>-->
+	<!--<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>-->
 	<script src="js/jquery.mobile.simpledialog2.min.js"></script><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<script type="text/javascript" src="js/util.js"></script>
 	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
@@ -32,20 +32,96 @@
 
 <body>
 
-<!-- ****************************** 繳費提醒 ***********************************-->
-<div data-role="page" id="mySettingsBillReminder">
+<!-- ****************************** 設定/訊息主頁 ***********************************-->
+<div data-role="page" id="mySettingsMain">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li class="reminder"><a href="#mySettingsBillReminder">繳費提醒</a></li>
-				<li><a href="#mySettingsFollowViboFB">加入威寶電信粉絲團</a></li>
-				<li class="socialshare"><a href="#mySettingsShareMyVIBO">分享MyVIBO</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">設定/訊息</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
+		<form>
+			<fieldset data-role="controlgroup">
+				<input type="radio" name="rdo1" id="rdo1a" value="A" onclick="SetAutoLogin('Y');">
+				<label for="rdo1a">自動登入</label>
+				<input type="radio" name="rdo1" id="rdo1b" value="M" onclick="SetAutoLogin('N');">
+				<label for="rdo1b">手動登入</label>
+			</fieldset>
+		</form>
+
+		<ul data-role="listview" data-inset="false" data-theme="h" data-icon="false" class="MenuListview">
+			<li><a href="#mySettingsPersonalSettings"><img src="images/text_icon_01.png">個人設定</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myBillPrevious"><img src="images/text_icon_01.png">個人訊息</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="#myBillApplyEBill"><img src="images/text_icon_02.png">操作說明</a></li>
+			<li data-role="list-divider"></li>
+			<li><a href="https://www.facebook.com/vibotelecom?fref=ts" class="external" target="_blank" onclick="GATrackEvent('加入威寶電信粉絲團', 'Click', '');"><img src="images/text_icon_03.png">FB台灣之星粉絲團</a></li>
+			<li data-role="list-divider"></li>
+			<li class="socialshare"><a href="#" onclick="doShareMyVIBO();return false;"><img src="images/text_icon_03.png">分享App給好友</a></li>
+			<li data-role="list-divider" class="socialshare"></li>
+		</ul>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 設定/訊息主頁 -->
+
+<!-- ****************************** 個人設定 ***********************************-->
+<div data-role="page" id="mySettingsPersonalSettings">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">個人設定</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<ul data-role="listview" data-inset="true" data-theme="d" data-divider-theme="d">
+			<li data-role="list-divider" class="forAPP">推播通知設定</li>
+			<li style="padding:0px;" class="forAPP">
+				<table style="width:100%;">
+					<tr>
+						<td>訊息通知</td>
+						<td style="float:right;" id="PushNotificationSwitch" name="PushNotificationSwitch">
+							<select name="flipPushNotification" id="flipPushNotification" data-role="slider" data-mini="true" data-track-theme="d" data-theme="d" onchange="setPushNotification();">
+								<option value="off">關閉</option>
+								<option value="on">開啟</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="reminder">
+						<td>繳費通知</td>
+						<td style="float:right;">
+							<select name="flipBillReminder" id="flipBillReminder" data-role="slider" data-mini="true" data-track-theme="d" data-theme="d" onchange="doBillReminder();">
+								<option value="off">關閉</option>
+								<option value="on">開啟</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="reminder">
+						<td colspan="2">
+							<!--<table style="width:50%;"><tr><td class="SmallInput">-->
+							<div id="divBillReminderStatus" name="divBillReminderStatus" style="float:right;display:none;">
+								系統設定中，請稍候...
+							</div>
+							<div id="divBillReminderDay" name="divBillReminderDay" class="SmallInput" style="float:right;">
+								每月<input type="tel" id="txtBillReminderDay" name="txtBillReminderDay" placeholder="1~28" size="5" maxlength="2" style="width:6em;text-align:right;" data-theme="d" onchange="CheckBillReminder();">日
+							</div>
+							<!--</td></tr></table>-->
+							<!--
+							<div data-role="fieldcontain">
+								<label for="txtBillReminderDay">每月</label>
+								<input type="tel" id="txtBillReminderDay" name="txtBillReminderDay" placeholder="1~28" size="5" maxlength="2">
+								<label for="txtBillReminderDay">日</label>
+							</div>
+							-->
+						</td>
+					</tr>
+				</table>
+			</li>
+			<li data-role="list-divider">個人資料</li>
+			<li><a href="#">信用卡資料</a></li>
+			<li><a href="#mySettingsPassword">修改密碼</a></li>
+		</ul>
 		<h3>電話帳單繳費提醒</h3>
 		<fieldset id="fsFeedbackBefore" data-role="controlgroup">
 			<label><input type="radio" name="rad0" id="rad0a" value="0" checked>取消提醒</label>
@@ -73,53 +149,33 @@
 		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
 		</div>
 	</div><!-- /footer -->
-</div><!-- 繳費提醒 -->
+</div><!-- 個人設定 -->
 
-<!-- ****************************** 加入威寶電信粉絲團 ***********************************-->
-<div data-role="page" id="mySettingsFollowViboFB">
+<!-- ****************************** 變更密碼 ***********************************-->
+<div data-role="page" id="mySettingsPassword">
 	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li class="reminder"><a href="#mySettingsBillReminder">繳費提醒</a></li>
-				<li><a href="#mySettingsFollowViboFB">加入威寶電信粉絲團</a></li>
-				<li class="socialshare"><a href="#mySettingsShareMyVIBO">分享MyVIBO</a></li>
-			</ul>
-		</div><!-- /navbar -->
+		<div class="header-padding">變更密碼</div>
 	</div><!-- /header -->
 	
 	<div data-role="content">
-		<a href="http://www.facebook.com/vibotelecom" class="external" target="_blank" data-role="button" onclick="GATrackEvent('加入威寶電信粉絲團', 'Click', '');">加入威寶電信粉絲團</a>
+		<form id="frmChangePassword">
+			<label for="txtChangePasswordMSISDN">威寶電信門號</label>
+			<input type="tel" name="txtChangePasswordMSISDN" id="txtChangePasswordMSISDN" minlength="10" maxlength="10" data-mini="true" value="">
+			<label for="txtChangePasswordOldPassword">舊密碼</label>
+			<input type="password" name="txtChangePasswordOldPassword" id="txtChangePasswordOldPassword" data-mini="true" value="">
+			<label for="txtChangePasswordNewPassword1">新密碼(4~6位數字)</label>
+			<input type="password" name="txtChangePasswordNewPassword1" id="txtChangePasswordNewPassword1" data-mini="true" minlength="4" maxlength="6" value="">
+			<label for="txtChangePasswordNewPassword2">請再輸入一次新密碼</label>
+			<input type="password" name="txtChangePasswordNewPassword2" id="txtChangePasswordNewPassword2" data-mini="true" minlength="4" maxlength="6" value="">
+		    <a href="#" data-role="button" onclick="doChangePassword();return false;">確認</a>
+		</form>
 	</div><!-- /content -->
 	
 	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
 		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
 		</div>
 	</div><!-- /footer -->
-</div><!-- 加入威寶電信粉絲團 -->
-
-<!-- ****************************** 分享 MyVIBO ***********************************-->
-<div data-role="page" id="mySettingsShareMyVIBO">
-	<div data-role="header" data-position="fixed" class="vibo-header">
-		<div class="header-padding"></div>
-		<div data-role="navbar">
-			<ul class="navbar-content-area">
-				<li class="reminder"><a href="#mySettingsBillReminder">繳費提醒</a></li>
-				<li><a href="#mySettingsFollowViboFB">加入威寶電信粉絲團</a></li>
-				<li class="socialshare"><a href="#mySettingsShareMyVIBO">分享MyVIBO</a></li>
-			</ul>
-		</div><!-- /navbar -->
-	</div><!-- /header -->
-	
-	<div data-role="content">
-		<button onclick="doShareMyVIBO();">分享MyVIBO</button>
-	</div><!-- /content -->
-	
-	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
-		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
-		</div>
-	</div><!-- /footer -->
-</div><!-- 分享 MyVIBO -->
+</div><!-- Email -->
 
 </body>
 </html>
@@ -135,21 +191,52 @@
 		}
 	});
 
-	$('#mySettingsBillReminder').one('pageshow', function () {	//若為不支援的設備，則隱藏繳費提醒
-		if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
-			$('.reminder').hide();
-			showPage('#mySettingsFollowViboFB');
-		}	//if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
+	$('#mySettingsMain').one('pageshow', function () {	//若為不支援的設備，則隱藏某些項目
+		var localAutoLogin = getLocalValue('AutoLogin');
+		if (notEmpty(localAutoLogin) && localAutoLogin=="Y"){
+			$('#mySettingsMain input[name=rdo1]')[0].checked = true;
+		}else{
+			$('#mySettingsMain input[name=rdo1]')[1].checked = true;
+		}
+		$("#mySettingsMain input[name='rdo1']:radio").checkboxradio("refresh");
 		if (!isRunInApp()){	//只有APP才能"分享MyVIBO"
 			$('.socialshare').hide();
 		}	//if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
-	});	//$('#myRecommandNewEvent').one('pageshow', function () {	//取得最新活動訊息清單
+	});	//$('#mySettingsMain').one('pageshow', function () {	//若為不支援的設備，則隱藏某些項目
 
-	$('#mySettingsFollowViboFB').one('pageshow', function () {	//若為不支援的設備，則隱藏繳費提醒
+	$('#mySettingsPersonalSettings').one('pageshow', function () {	//若為不支援的設備，則隱藏繳費提醒
+		//繳費通知目前只支援 iOS
 		if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
 			$('.reminder').hide();
 		}	//if (!isRunInApp() || getPlatformName()!="iOS"){	//目前只支援 iOS
-	});	//$('#mySettingsFollowViboFB').one('pageshow', function () {	//取得最新活動訊息清單
+		if (!isRunInApp()){	//不是APP，不顯示推播通知設定
+			$('.forAPP').hide();
+		}	//if (!isRunInApp()){	//不是APP，不顯示推播通知設定
+		
+		//設定GCM及APNS的通知功能
+		var localAutoPushNotification = getLocalValue('AutoPushNotification');
+		if (notEmpty(localAutoPushNotification) && localAutoPushNotification=="Y"){
+			$('#mySettingsPersonalSettings #flipPushNotification').val('on').slider('refresh');
+		}else{
+			$('#mySettingsPersonalSettings #flipPushNotification').val('off').slider('refresh');
+		}
+		var hasRegistered = getLocalValue("PushMessageRegister");
+		if (beEmpty(hasRegistered) || hasRegistered!='Y'){	//未註冊GCM或APNS
+			$('#mySettingsPersonalSettings #PushNotificationSwitch').html('需登入後才可使用');
+		}
+
+		//設定繳費通知目前的內容
+		var r = getLocalValue('BillReminder');
+		if (notEmpty(r)){
+			$('#mySettingsPersonalSettings #flipBillReminder').val('on').slider('refresh');
+			$('#mySettingsPersonalSettings #txtBillReminderDay').val(r);
+		}else{
+			$('#mySettingsPersonalSettings #flipBillReminder').val('off').slider('refresh');
+			$('#mySettingsPersonalSettings #txtBillReminderDay').val('');
+		}
+
+	});	//$('#mySettingsPersonalSettings').one('pageshow', function () {	//若為不支援的設備，則隱藏繳費提醒
+
 
 	$('#mySettingsBillReminder').on('pageshow', function () {	//設定帳單提醒項目
 		var r = getLocalValue('BillReminder');
@@ -170,8 +257,79 @@
 		$("#mySettingsBillReminder input[type='checkbox']").checkboxradio("refresh");	//要 refresh 才能生效
 		*/
 	});	//$('#mySettingsBillReminder').on('pageshow', function () {	//設定帳單提醒項目
-		
+
+	function SetAutoLogin(s){	//設定自動登入方式
+		if (beEmpty(s)){
+			MsgBox("請選擇登入方式");
+			return;
+		}
+		setLocalValue('AutoLogin', s);
+	}	//function SetAutoLogin(){	//設定自動登入方式
+
+	function setPushNotification(){	//設定是否要自動接收訊息通知
+		if (!isRunInApp()){
+			MsgBox("此功能只限於APP中執行");
+			return;
+		}
+		var s = $('#mySettingsPersonalSettings #flipPushNotification').val();
+		if (s=='on'){
+			s = 'R';	//恢復發送
+		}else{
+			s = 'S';	//暫停發送
+		}
+		var d = getLocalValue('PushMessageDeviceId');
+		if (beEmpty(d)){
+			MsgBox("無法取得您的裝置ID，無法進行設定!");
+			return;
+		}
+		var o = '';
+		if (getPlatformName()=='Android')	o = 'A';
+		if (getPlatformName()=='iOS')		o = 'I';
+		if (beEmpty(o)){
+			MsgBox("此功能只支援Android及iOS裝置，不支援" + getPlatformName());
+			return;
+		}
+
+		var sData = "";
+		sData = "ServiceId=myvibo";
+		sData += "&DeviceId=" + d;
+		sData += "&DeviceType=" + o;
+		sData += "&ActionType=" + s;
+		sData += "&ResponseType=" + "xml";
+
+		getDataFromServer("ajaxPushMessageSuspendDevice.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				MsgBox('設定作業執行失敗：' + ResultText);
+				return;
+			}else{
+				MsgBox('設定作業執行成功：' + ResultText);
+			}	//if (ResultCode=='00000'){	//作業成功
+		});
+	}	//function setPushNotification(){	//設定是否要自動接收訊息通知
+
+	function CheckBillReminder(){	//設定繳費通知日期時，如未勾選訊息通知，提醒 <請開啟訊息通知>
+		var day = $('#mySettingsPersonalSettings #txtBillReminderDay').val();
+		if (notEmpty(day)){
+			if ($('#mySettingsPersonalSettings #flipBillReminder').val()=='off'){
+				MsgBox("請開啟繳費通知後才會生效!");
+			}
+		}
+	}	//function CheckBillReminder(){	//設定繳費通知日期時，如未勾選訊息通知，提醒 <請開啟訊息通知>
+
 	function doBillReminder(){	//設定帳單提醒
+		var day = $('#mySettingsPersonalSettings #txtBillReminderDay').val();
+		if ($('#mySettingsPersonalSettings #flipBillReminder').val()=='on'){
+			if (beEmpty(day) || isNaN(day)){
+				MsgBox("請輸入繳費通知日期!");
+				$('#mySettingsPersonalSettings #flipBillReminder').val('off').slider('refresh');
+				return;
+			}
+		}else{
+			$('#mySettingsPersonalSettings #txtBillReminderDay').val('');
+		}
+
 		/*
 		var r1old = (getLocalValue('BillReminder1')=='Y'?true:false);
 		var r2old = (getLocalValue('BillReminder2')=='Y'?true:false);
@@ -193,9 +351,9 @@
 		}
 		*/
 		enableReminder(0);
-		var r = $("#mySettingsBillReminder input[name='rad0']:radio:checked").val();
+		var r = $('#mySettingsPersonalSettings #flipBillReminder').val();
 
-		if (r=='0'){
+		if (r=='off'){
 			cancelNotificationIOS(function(message){MsgBox('作業成功!');enableReminder(1);}, function(message){MsgBox('訊息刪除失敗：' + message);enableReminder(1);});	//清除所有通知
 			;	//清除所有通知
 		}else{
@@ -218,7 +376,7 @@
 		var curr_month = d.getMonth(); //目前月份，are zero based
 		var curr_year = d.getFullYear();	//目前西元年(四位數)
 		
-		var iDay = parseInt($("#mySettingsBillReminder input[name='rad0']:radio:checked").val());
+		var iDay = parseInt($('#mySettingsPersonalSettings #txtBillReminderDay').val());
 		
 		if (curr_date>=iDay){	//目前日期已超過或等於本月提醒日期，改由下月開始提醒
 			startDate = getNextMonth(new Date(curr_year, curr_month, iDay, startHour, endMinute,0));
@@ -302,17 +460,92 @@
 	
 	function enableReminder(i){	//enable 或 disable 繳費提醒的確認按鈕，0表示disable、1表示enable
 		if (i==0){
-			$('#mySettingsBillReminder #btnReminder').text('系統設定中，請稍候...');
-			$('#mySettingsBillReminder #btnReminder').button('disable');
+			$('#mySettingsPersonalSettings #flipBillReminder').slider( "disable" );
+			$('#mySettingsPersonalSettings #divBillReminderStatus').show();
+			$('#mySettingsPersonalSettings #divBillReminderDay').hide();
 		}else{
-			$('#mySettingsBillReminder #btnReminder').text('確認');
-			$('#mySettingsBillReminder #btnReminder').button('enable');
+			$('#mySettingsPersonalSettings #flipBillReminder').slider( "enable" );
+			$('#mySettingsPersonalSettings #divBillReminderStatus').hide();
+			$('#mySettingsPersonalSettings #divBillReminderDay').show();
 		}
-		$('#mySettingsBillReminder #btnReminder').button('refresh');
 	}	//function enableReminder(i){	//enable 或 disable 繳費提醒的確認按鈕
 	
 	function doShareMyVIBO(){	//分享MyVIBO
 		window.plugins.socialsharing.share('下載威寶MyVIBO App，馬上擁有行動客服小幫手!', null, null, 'https://vshop.vibo.com.tw/myviboinstall/index.html')
 		GATrackEvent('分享MyVIBO', '成功', '');
 	}
+
+	var msisdn = getLocalValue('loginmsisdn');
+	//變更密碼
+	function doChangePassword(){
+		var mymsisdn		= $('#mySettingsPassword #frmChangePassword #txtChangePasswordMSISDN').val();
+		var oldpassword		= $('#mySettingsPassword #frmChangePassword #txtChangePasswordOldPassword').val();
+		var newpassword1	= $('#mySettingsPassword #frmChangePassword #txtChangePasswordNewPassword1').val();
+		var newpassword2	= $('#mySettingsPassword #frmChangePassword #txtChangePasswordNewPassword2').val();
+		
+		if (beEmpty(mymsisdn) || beEmpty(oldpassword) || beEmpty(newpassword1) || beEmpty(newpassword2)){
+			MsgBox('請輸入所有欄位!');
+			return;
+		}
+
+		if (newpassword1!=newpassword2){
+			MsgBox('兩個新密碼的值不相同!');
+			return;
+		}
+
+		if (newpassword1.length<4 || newpassword1.length>6){
+			MsgBox('密碼長度需為4~6碼!');
+			return;
+		}
+
+		if (isNaN(newpassword1)){
+			MsgBox('新密碼需為數字!');
+			return;
+		}
+
+		var sData = "";
+		sData = "Function=DoPwdChange&Request=";
+		sData += "<MSISDN>" + mymsisdn + "</MSISDN>";
+		sData += "<OldPassword>" + oldpassword + "</OldPassword>";
+		sData += "<NewPassword>" + newpassword1 + "</NewPassword>";
+
+		$('<div>').simpledialog2({
+			mode: 'button',
+			headerText: '密碼變更確認',
+			headerClose: false,
+			themeDialog: 'f',
+			buttonPrompt: '請問您是否確定要變更' + mymsisdn + '的密碼',
+			buttons : {
+				'確定變更': {
+					click: function () { 
+						getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
+							var ResultCode = $(xml).find("ResultCode").text();
+							var ResultText = $(xml).find("ResultText").text();
+							if (ResultCode!='00000'){	//作業失敗
+								MsgBox('作業失敗：' + ResultText);
+								return;
+							}	//if (ResultCode=='00000'){	//作業成功
+							if ($(xml).find("Status").text()=='0'){
+								if (notEmpty(msisdn) && msisdn==mymsisdn) setLocalValue('loginpassword', newpassword1);	//目前登入的門號等於變更密碼的門號，將Password存起來
+								var localmsisdn = getLocalValue('msisdn');
+								var localpassword = getLocalValue('password');
+								if (notEmpty(localmsisdn) && notEmpty(localpassword) && localmsisdn==mymsisdn) setLocalValue('password', newpassword1);	//目前登入的門號等於變更密碼的門號，將Password存起來
+								GATrackEvent('變更密碼', '成功', mymsisdn);
+								MsgBox('﹝密碼﹞已變更完成，下次請使用新密碼登入。');
+							}else{
+								GATrackEvent('變更密碼', '失敗', mymsisdn);
+								MsgBox('作業失敗：' + $(xml).find("StatusMsg").text());
+							}
+						});
+					}
+				},
+				'再想一想': {
+					click: function () { 
+					},
+        			icon: "delete"
+				}
+			}
+		})
+	}	//function doChangePassword(){
+
 </script>

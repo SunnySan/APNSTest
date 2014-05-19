@@ -304,7 +304,12 @@
 				MsgBox('設定作業執行失敗：' + ResultText);
 				return;
 			}else{
-				MsgBox('設定作業執行成功：' + ResultText);
+				if (s=='R'){
+					setLocalValue('AutoPushNotification', 'Y');	//恢復發送
+				}else{
+					setLocalValue('AutoPushNotification', 'N');	//暫停發送
+				}
+				MsgBox('設定作業執行成功');
 			}	//if (ResultCode=='00000'){	//作業成功
 		});
 	}	//function setPushNotification(){	//設定是否要自動接收訊息通知

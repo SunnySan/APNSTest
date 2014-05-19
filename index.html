@@ -853,6 +853,7 @@
 			}	//if (ResultCode=='00000'){	//作業成功
 			setLocalValue('PushMessageRegister', 'Y');
 			setLocalValue('PushMessageDeviceId', result);
+			setLocalValue('AutoPushNotification', 'Y');	//自動發送及接收
 			window.plugins.toast.showShortCenter('訊息通知註冊成功');
 			showPage('#home');
 		});
@@ -910,11 +911,12 @@
 							MsgBox('訊息通知註冊失敗：' + ResultText, function(){showPage('#home');});
 							return;
 						}else{
+							setLocalValue('PushMessageRegister', 'Y');
+							setLocalValue('PushMessageDeviceId', e.regid);
+							setLocalValue('AutoPushNotification', 'Y');	//自動發送及接收
 							window.plugins.toast.showShortCenter('訊息通知註冊成功');
 							showPage('#home');
 						}	//if (ResultCode=='00000'){	//作業成功
-						setLocalValue('PushMessageRegister', 'Y');
-						setLocalValue('PushMessageDeviceId', e.regid);
 					});
 				}
 				unBlockUI();

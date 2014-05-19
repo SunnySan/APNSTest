@@ -854,8 +854,18 @@
 		var Alias = $('#myCustomerEmail #myName').val();	//姓名
 		var ContactEmail = $('#myCustomerEmail #Email').val();	//Email
 		var ContactMethod = $('#myCustomerEmail #ContactMethod').val();	//回覆方式 (Email, Morning, Afternoon, Evening)
-		var FaultCategoryRID = $('#myCustomerEmail #CallType1').val();	//CALL TYPE Lv1，第一層 call type
-		var CategoryChildName = $('#myCustomerEmail #CallType2').val();	//CALL TYPE Lv2，第二層 call type
+
+		var sCallType1 = $('#myCustomerEmail #CallType1').val();	//CALL TYPE Lv1，第一層 call type
+		var sCallType2 = "";
+		if (sCallType1=='SP01'){	//意見類別為網路收訊，傳給server的值是兩個次類別
+			sCallType1 = $('#myCustomerEmail #CallType2').val();	//CALL TYPE Lv2，第二層 call type
+			sCallType2 = $('#myCustomerEmail #CallType3').val();	//CALL TYPE Lv3，第三層 call type
+		}else{	//意見類別不是網路收訊，傳給server的值是意見類別及第一個次類別
+			sCallType2 = $('#myCustomerEmail #CallType2').val();	//CALL TYPE Lv2，第二層 call type
+		}
+		var FaultCategoryRID = sCallType1;
+		var CategoryChildName = sCallType2;
+
 		var OpinionText = $('#myCustomerEmail #OpinionText').val();	//意見內容
 		var FeedbackBefore = $('#myCustomerEmail input[name="FeedbackBefore"]:radio:checked').val();	//是否曾反應過同樣的意見 (01，02，03，空白)
 		var ISVIBOUser = $('#myCustomerEmail #isOnnetUser').val();	//是否為威寶用戶 (Y / N)

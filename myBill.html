@@ -775,7 +775,9 @@
 					return;
 				}else{
 					isMainMsisdn = true;
-					//updateProcessStatus(5);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+					updateProcessStatus(5);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+					updateProcessStatus(6);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
+					updateProcessStatus(7);	//查詢COD的申裝進度，CODType = 1:補寄帳單 2:補寄通話明細 3:申請每月通話明細 4:取消每月通話明細 5:修改帳單地址 6:修改電話 7:修改email
 				}
 			});	//getDataFromServer("ajaxBSCAPIBridge.jsp", sData, "xml", function(xml){
 		}	//if (notEmpty(msisdn) && notEmpty(contractid)){
@@ -928,6 +930,8 @@
 					tmp = getLocalValue('lastChangedAddress');
 					if (beEmpty(tmp) || tmp!=serNo){
 						setLocalValue('lastChangedAddress', serNo);
+						$("#myBillData input[name='chkmyBillAddressDiv']").checkboxradio('enable');
+						$("#myBillData input[name='chkmyBillAddressDiv']").checkboxradio("refresh");
 						msg = '您的帳單地址變更作業已經處理完成!';
 						MsgBox(msg);
 					}
@@ -937,6 +941,8 @@
 					tmp = getLocalValue('lastChangedPhone');
 					if (beEmpty(tmp) || tmp!=serNo){
 						setLocalValue('lastChangedPhone', serNo);
+						$("#myBillData input[name='chkmyBillPhoneDiv']").checkboxradio('enable');
+						$("#myBillData input[name='chkmyBillPhoneDiv']").checkboxradio("refresh");
 						msg = '您的電話變更作業已經處理完成!';
 						MsgBox(msg);
 					}
@@ -946,6 +952,8 @@
 					tmp = getLocalValue('lastChangedEmail');
 					if (beEmpty(tmp) || tmp!=serNo){
 						setLocalValue('lastChangedEmail', serNo);
+						$("#myBillData input[name='chkmyBillEmailDiv']").checkboxradio('enable');
+						$("#myBillData input[name='chkmyBillEmailDiv']").checkboxradio("refresh");
 						msg = '您的Email變更作業已經處理完成!';
 						MsgBox(msg);
 					}
@@ -955,8 +963,42 @@
 				$('#' + currPage + ' #' + currStatus).hide();
 				$('#' + currPage + ' #' + currData).show();
 			}else if (QueryStatus=='R' || QueryStatus=='F'){
-				msg = '您的' + currProcess + '變更作業執行失敗!';
-				MsgBox(msg);
+				//msg = '您的' + currProcess + '變更作業執行失敗!';
+				//MsgBox(msg);
+				var serNo = $(xml).find("SvChangeSerialNo").text();
+				if (CODType==5){
+					tmp = getLocalValue('lastChangedAddress');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedAddress', serNo);
+						$("#myBillData input[name='chkmyBillAddressDiv']").checkboxradio('enable');
+						$("#myBillData input[name='chkmyBillAddressDiv']").checkboxradio("refresh");
+						msg = '您的帳單地址變更作業執行失敗!';
+						MsgBox(msg);
+					}
+					sNewAddressSerNo = "";
+				}
+				if (CODType==6){
+					tmp = getLocalValue('lastChangedPhone');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedPhone', serNo);
+						$("#myBillData input[name='chkmyBillPhoneDiv']").checkboxradio('enable');
+						$("#myBillData input[name='chkmyBillPhoneDiv']").checkboxradio("refresh");
+						msg = '您的電話變更作業執行失敗!';
+						MsgBox(msg);
+					}
+					sNewPhoneSerNo = "";
+				}
+				if (CODType==7){
+					tmp = getLocalValue('lastChangedEmail');
+					if (beEmpty(tmp) || tmp!=serNo){
+						setLocalValue('lastChangedEmail', serNo);
+						$("#myBillData input[name='chkmyBillEmailDiv']").checkboxradio('enable');
+						$("#myBillData input[name='chkmyBillEmailDiv']").checkboxradio("refresh");
+						msg = '您的Email變更作業執行失敗!';
+						MsgBox(msg);
+					}
+					sNewEmailSerNo = "";
+				}
 				$('#' + currPage + ' #' + currStatus).html('');
 				$('#' + currPage + ' #' + currStatus).hide();
 				$('#' + currPage + ' #' + currData).show();

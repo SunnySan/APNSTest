@@ -493,6 +493,11 @@
 			return;
 		}
 
+		if (isNaN(mymsisdn)){
+			MsgBox('手機門號輸入錯誤!');
+			return;
+		}
+
 		if (newpassword1!=newpassword2){
 			MsgBox('兩個新密碼的值不相同!');
 			return;
@@ -530,6 +535,7 @@
 								MsgBox('作業失敗：' + ResultText);
 								return;
 							}	//if (ResultCode=='00000'){	//作業成功
+
 							if ($(xml).find("Status").text()=='0'){
 								if (notEmpty(msisdn) && msisdn==mymsisdn) setLocalValue('loginpassword', newpassword1);	//目前登入的門號等於變更密碼的門號，將Password存起來
 								var localmsisdn = getLocalValue('msisdn');

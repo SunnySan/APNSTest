@@ -221,9 +221,9 @@ function setLocalValue(key, value){
 /**********顯示類似alert的message box**********/
 function MsgBox(msg, callbackClose){
 	if (callbackClose==null){
-		$(document).simpledialog2({ blankContent : "<p class='msgbox-text'>" + msg + "</p>" + "<a rel='close' data-role='button' href='#' class='msgbox-button'>關閉</a>", headerText: '系統通知', mode: 'blank', showModal: true, headerClose: true, animate: false, themeDialog: 'f'});
+		$('<div>').simpledialog2({ blankContent : "<p class='msgbox-text'>" + msg + "</p>" + "<a rel='close' data-role='button' href='#' class='msgbox-button'>關閉</a>", headerText: '系統通知', mode: 'blank', showModal: true, headerClose: true, animate: false, themeDialog: 'f'});
 	}else{
-		$(document).simpledialog2({ blankContent : "<p class='msgbox-text'>" + msg + "</p>" + "<a rel='close' data-role='button' href='#' class='msgbox-button'>關閉</a>", headerText: '系統通知', mode: 'blank', showModal: true, headerClose: true, animate: false, themeDialog: 'f', callbackClose: callbackClose });
+		$('<div>').simpledialog2({ blankContent : "<p class='msgbox-text'>" + msg + "</p>" + "<a rel='close' data-role='button' href='#' class='msgbox-button'>關閉</a>", headerText: '系統通知', mode: 'blank', showModal: true, headerClose: true, animate: false, themeDialog: 'f', callbackClose: callbackClose });
 	}
 }
 

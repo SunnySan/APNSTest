@@ -395,7 +395,7 @@
 
 	function gridClick(i){
 		if (!isLogin() && i<5) return false;	//若未登入且點選需登入的項目，則不做事
-		$('#grid' + i).attr('src', 'images/grid-' + i + '-2.png');
+		//$('#grid' + i).attr('src', 'images/grid-' + i + '-2.png');	//更換icon圖檔，由於換完圖檔就要前往功能頁，此時瀏覽器可能來不及換圖檔，以致icon位置變成空白，所以先不換圖檔
 	}
 	
 	$('#userLogin').one('pageshow',function(event){

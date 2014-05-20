@@ -581,7 +581,6 @@
 	});	//$('#myPayCreditCard2').one('pageshow', function () {	//信用卡繳款，信用卡有效期限用的日期選擇器
 
 	$('#myPayCreditCard2').on('pageshow', function () {	//信用卡繳款，取得帳單資料
-		hightlightNavbarItem(0);	//將navbar中的信用卡設為高亮
 		userAuthentication();		//檢查登入資訊
 		getBillData("myPayCreditCard2");				//取得帳單資訊
 		setCardNo();	//若有儲存信用卡資料，則將儲存的資料讀出來顯示
@@ -592,7 +591,6 @@
 	});	//$('#myPayBankAccount2').one('pageshow', function () {	//銀行帳戶2，取得銀行清單
 
 	$('#myPayBankAccount2').on('pageshow', function () {	//銀行帳戶2，取得帳單資料
-		hightlightNavbarItem(1);	//將navbar中的銀行帳戶設為高亮
 		userAuthentication();		//檢查登入資訊
 		getBillData("myPayBankAccount2");				//取得帳單資訊
 	});	//$('#myPayBankAccount2').on('pageshow', function () {	//銀行帳戶2，取得帳單資料

@@ -297,22 +297,6 @@ function generateHeaderGoHomeButton(pageid){
 	}
 }
 
-/**********將頁面上方navbar中的某個項目設為已選取(active)**********/
-function hightlightNavbarItem(i, j){
-	var pageid = $.mobile.activePage.attr('id');
-	if (beEmpty(j)){	//只有一個 navbar
-		$("#" + pageid + " div[data-role='header'] div[data-role='navbar'] ul li a").eq(i).removeClass('ui-btn-active').addClass('ui-btn-active');
-	}else{	//有兩個navbar
-		var i = 0;
-		$("#" + pageid + " div[data-role='header'] div[data-role='navbar']").each(function(){
-			//alert($(this, 'li').find('a').eq(1).html());
-			if (i==0) $(this, 'li').find('a').eq(i).removeClass('ui-btn-active').addClass('ui-btn-active');
-			else $(this, 'li').find('a').eq(j).removeClass('ui-btn-active').addClass('ui-btn-active');
-			i++;
-		});
-	}
-}
-
 /**********從 Server 擷取資料**********/
 function getDataFromServer(sProgram, sData, sResponseType, SuccessCallback, bBlockUI){
 	/*****************************************************************

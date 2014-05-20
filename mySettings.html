@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="css/myvibo.min.css" /><!--將JQuery Mobile theme加上 swatch="F"-->
 	<link rel="stylesheet" href="css/jquery.mobile.simpledialog.min.css" /><!--類似alert的dialog，請參考 http://dev.jtsage.com/jQM-SimpleDialog/demos2/ -->
 	<link rel="stylesheet" href="css/style.css" />
+
+	<link rel="stylesheet" type="text/css" href="css/mobipick.css" /><!--選取信用卡有效期限用的日期選擇器，請參考 http://www.jqueryrain.com/?_F8wfBS3 -->
 	
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/initJQueryMobile.js"></script><!--初始化 JQuery Mobile -->
@@ -19,6 +21,10 @@
 	<script type="text/javascript" src="js/ga.js"></script><!--Browser用的Google Analytics 追蹤函數-->
 	<script type="text/javascript" src="js/jquery.cookie.js"></script><!--Browser用的Cookie函數，請參考 https://github.com/carhartl/jquery-cookie -->
 	<script type="text/javascript" src="js/jquery.blockUI.js"></script><!--JQuery BlockUI，請參考http://www.malsup.com/jquery/block/ -->
+
+	<script type="text/javascript" src="js/xdate.js"></script><!--選取信用卡有效期限用的日期選擇器，請參考 http://www.jqueryrain.com/?_F8wfBS3 -->
+	<script type="text/javascript" src="js/xdate.i18n.js"></script><!--選取信用卡有效期限用的日期選擇器，請參考 http://www.jqueryrain.com/?_F8wfBS3 -->
+	<script type="text/javascript" src="js/mobipick.js"></script><!--選取信用卡有效期限用的日期選擇器，請參考 http://www.jqueryrain.com/?_F8wfBS3 -->
 	
 	<script src="cordova.js"></script><!--給PhoneGap用的-->
 	<!--<script src="GAPlugin.js"></script>--><!--APP用的Google Analytics 追蹤函數，請參考 https://github.com/phonegap-build/GAPlugin -->
@@ -51,9 +57,9 @@
 		<ul data-role="listview" data-inset="false" data-theme="h" data-icon="false" class="MenuListview">
 			<li><a href="#mySettingsPersonalSettings"><img src="images/text_icon_01.png">個人設定</a></li>
 			<li data-role="list-divider"></li>
-			<li><a href="#myBillPrevious"><img src="images/text_icon_01.png">個人訊息</a></li>
+			<li><a href="#mySettingsPushMessage"><img src="images/text_icon_01.png">個人訊息</a></li>
 			<li data-role="list-divider"></li>
-			<li><a href="#myBillApplyEBill"><img src="images/text_icon_02.png">操作說明</a></li>
+			<li><a href="#"><img src="images/text_icon_02.png">操作說明</a></li>
 			<li data-role="list-divider"></li>
 			<li><a href="https://www.facebook.com/vibotelecom?fref=ts" class="external" target="_blank" onclick="GATrackEvent('加入威寶電信粉絲團', 'Click', '');"><img src="images/text_icon_03.png">FB台灣之星粉絲團</a></li>
 			<li data-role="list-divider"></li>
@@ -99,50 +105,20 @@
 					</tr>
 					<tr class="reminder">
 						<td colspan="2">
-							<!--<table style="width:50%;"><tr><td class="SmallInput">-->
 							<div id="divBillReminderStatus" name="divBillReminderStatus" style="float:right;display:none;">
 								系統設定中，請稍候...
 							</div>
 							<div id="divBillReminderDay" name="divBillReminderDay" class="SmallInput" style="float:right;">
 								每月<input type="tel" id="txtBillReminderDay" name="txtBillReminderDay" placeholder="1~28" size="5" maxlength="2" style="width:6em;text-align:right;" data-theme="d" onchange="CheckBillReminder();">日
 							</div>
-							<!--</td></tr></table>-->
-							<!--
-							<div data-role="fieldcontain">
-								<label for="txtBillReminderDay">每月</label>
-								<input type="tel" id="txtBillReminderDay" name="txtBillReminderDay" placeholder="1~28" size="5" maxlength="2">
-								<label for="txtBillReminderDay">日</label>
-							</div>
-							-->
 						</td>
 					</tr>
 				</table>
 			</li>
 			<li data-role="list-divider">個人資料</li>
-			<li><a href="#">信用卡資料</a></li>
+			<li><a href="#mySettingsCreditCard">信用卡資料</a></li>
 			<li><a href="#mySettingsPassword">修改密碼</a></li>
 		</ul>
-		<h3>電話帳單繳費提醒</h3>
-		<fieldset id="fsFeedbackBefore" data-role="controlgroup">
-			<label><input type="radio" name="rad0" id="rad0a" value="0" checked>取消提醒</label>
-			<label><input type="radio" name="rad0" id="rad0b" value="1">每月1日</label>
-			<label><input type="radio" name="rad0" id="rad0c" value="11">每月11日</label>
-			<label><input type="radio" name="rad0" id="rad0d" value="21">每月21日</label>
-		</fieldset>
-
-		<!--
-		<fieldset data-role="controlgroup">
-			<input type="checkbox" name="chk1" id="chk1">
-			<label for="chk1">每月1日</label>
-			<input type="checkbox" name="chk2" id="chk2">
-			<label for="chk2">每月11日</label>
-			<input type="checkbox" name="chk3" id="chk3">
-			<label for="chk3">每月21日</label>
-		</fieldset>
-		-->
-		<!--<button onclick="doBillReminder();">確認</button>-->
-		<!--<a href="#" data-role="button" id="btnReminder" onclick="doBillReminder();return false;">確認</a>-->
-		<button id="btnReminder" onclick="doBillReminder();">確認</button>
 	</div><!-- /content -->
 	
 	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
@@ -150,6 +126,53 @@
 		</div>
 	</div><!-- /footer -->
 </div><!-- 個人設定 -->
+
+<!-- ****************************** 信用卡資料 ***********************************-->
+<div data-role="page" id="mySettingsCreditCard">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">信用卡資料</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<table style="margin-top:5px;" data-role="table" id="table-custom-2" data-mode="columntoggle" border=0 class="ui-body-d ui-shadow table-stripe ui-responsive">
+			<thead>
+				<tr class="ui-bar-d">
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="4">卡號</td>
+				</tr>
+				<tr>
+					<td><input type="tel" id="CardNo1" data-mini="true" size="4" minlength="4" maxlength="4" value="" onkeyup="CardNoChange(1);"></td>
+					<td><input type="tel" id="CardNo2" data-mini="true" size="4" minlength="4" maxlength="4" value="" onkeyup="CardNoChange(2);"></td>
+					<td><input type="tel" id="CardNo3" data-mini="true" size="4" minlength="4" maxlength="4" value="" onkeyup="CardNoChange(3);"></td>
+					<td><input type="tel" id="CardNo4" data-mini="true" size="4" minlength="4" maxlength="4" value=""></td>
+				</tr>
+				<tr>
+					<td colspan="4">有效期限</td>
+				</tr>
+				<tr>
+					<td colspan="4"><input type="text" id="ExpiryDate" name="ExpiryDate" /></td>
+					<input type="hidden" id="ExpireMonth" value="">
+					<input type="hidden" id="ExpireYear" value="">
+				</tr>
+				<tr>
+					<td colspan="4">*信用卡卡號只會儲存您的手機端。</td>
+				</tr>
+			</tbody>
+		</table>
+		<button onclick="doSaveCreditCardInfo();">儲存資料</button>
+		<div id="divClearCreditCardInfo" name="divClearCreditCardInfo">
+			<button onclick="doClearCreditCardInfo();">清除資料</button>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 信用卡資料 -->
 
 <!-- ****************************** 變更密碼 ***********************************-->
 <div data-role="page" id="mySettingsPassword">
@@ -175,7 +198,27 @@
 		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
 		</div>
 	</div><!-- /footer -->
-</div><!-- Email -->
+</div><!-- 變更密碼 -->
+
+<!-- ****************************** 個人訊息 ***********************************-->
+<div data-role="page" id="mySettingsPushMessage">
+	<div data-role="header" data-position="fixed" class="vibo-header">
+		<div class="header-padding">個人訊息</div>
+	</div><!-- /header -->
+	
+	<div data-role="content">
+		<div id='itemList' style="margin-top:5px;"></div><!--各項目清單-->
+		<!--
+		<ul id="lvPushMessage" name="lvPushMessage" data-role="listview">
+		</ul>
+		-->
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="a" data-tap-toggle="false" data-position="fixed">
+		<div id="CarouselMenu" class="CarouselMenu"><!--滑動選單-->
+		</div>
+	</div><!-- /footer -->
+</div><!-- 個人訊息 -->
 
 </body>
 </html>
@@ -237,26 +280,21 @@
 
 	});	//$('#mySettingsPersonalSettings').one('pageshow', function () {	//若為不支援的設備，則隱藏繳費提醒
 
+	$('#mySettingsCreditCard').one('pageshow', function () {	//信用卡資料，信用卡有效期限用的日期選擇器
+		$('#mySettingsCreditCard #ExpiryDate').mobipick({
+    		accuracy: "month", //default is "day"，我們只要月及年
+    		locale: "tw", //default is "en", english
+    		dateFormatMonth: "MM-yyyy"
+		});
+	});	//$('#mySettingsCreditCard').one('pageshow', function () {	//信用卡資料，信用卡有效期限用的日期選擇器
 
-	$('#mySettingsBillReminder').on('pageshow', function () {	//設定帳單提醒項目
-		var r = getLocalValue('BillReminder');
-		if (notEmpty(r)){
-			if (r=='1') $("#mySettingsBillReminder input[name='rad0']")[1].checked = true;
-			if (r=='11') $("#mySettingsBillReminder input[name='rad0']")[2].checked = true;
-			if (r=='21') $("#mySettingsBillReminder input[name='rad0']")[3].checked = true;
-		}
-		$("#mySettingsBillReminder input[name='rad0']:radio").checkboxradio("refresh");
-		/*
-		var r1 = getLocalValue('BillReminder1');
-		var r2 = getLocalValue('BillReminder2');
-		var r3 = getLocalValue('BillReminder3');
+	$('#mySettingsCreditCard').on('pageshow', function () {	//信用卡資料
+		setCardNo();	//若有儲存信用卡資料，則將儲存的資料讀出來顯示
+	});	//$('#mySettingsCreditCard').on('pageshow', function () {	//信用卡資料
 
-		if (notEmpty(r1) && r1=='Y') $('#mySettingsBillReminder #chk1').attr('checked', 'checked');
-		if (notEmpty(r2) && r2=='Y') $('#mySettingsBillReminder #chk2').attr('checked', 'checked');
-		if (notEmpty(r3) && r3=='Y') $('#mySettingsBillReminder #chk3').attr('checked', 'checked');
-		$("#mySettingsBillReminder input[type='checkbox']").checkboxradio("refresh");	//要 refresh 才能生效
-		*/
-	});	//$('#mySettingsBillReminder').on('pageshow', function () {	//設定帳單提醒項目
+	$('#mySettingsPushMessage').on('pageshow', function () {	//個人訊息
+		getPushMessageList();	//取得個人訊息
+	});	//$('#mySettingsPushMessage').on('pageshow', function () {	//個人訊息
 
 	function SetAutoLogin(s){	//設定自動登入方式
 		if (beEmpty(s)){
@@ -335,26 +373,6 @@
 			$('#mySettingsPersonalSettings #txtBillReminderDay').val('');
 		}
 
-		/*
-		var r1old = (getLocalValue('BillReminder1')=='Y'?true:false);
-		var r2old = (getLocalValue('BillReminder2')=='Y'?true:false);
-		var r3old = (getLocalValue('BillReminder3')=='Y'?true:false);
-		var r1 = false;
-		var r2 = false;
-		var r3 = false;
-		if ($("#mySettingsBillReminder input[name='chk1']").is(":checked")) r1 = true;
-		if ($("#mySettingsBillReminder input[name='chk2']").is(":checked")) r2 = true;
-		if ($("#mySettingsBillReminder input[name='chk3']").is(":checked")) r3 = true;
-		if (r1!=r1old){
-			if (r1) addNotificationIOS(1); else cancelNotificationIOS(1);
-		}
-		if (r2!=r2old){
-			if (r2) addNotificationIOS(11); else cancelNotificationIOS(11);
-		}
-		if (r3!=r3old){
-			if (r3) addNotificationIOS(21); else cancelNotificationIOS(21);
-		}
-		*/
 		enableReminder(0);
 		var r = $('#mySettingsPersonalSettings #flipBillReminder').val();
 
@@ -429,11 +447,6 @@
 					});	//建立日曆提醒
 			}
 		}	//for (i=0;i<remindTimes;i++){	//跑迴圈，每月建立一個提醒
-		/*
-		if (i==1) setLocalValue('BillReminder1', 'Y');
-		if (i==11) setLocalValue('BillReminder2', 'Y');
-		if (i==21) setLocalValue('BillReminder3', 'Y');
-		*/
 	}
 	
 	function getNextMonth(d){	//找下個月的日期
@@ -456,11 +469,6 @@
 		var d = new Date();
 		//刪除從兩年前至兩年後，共四年的標題為【威寶帳單繳費通知】的日曆項目
 		window.plugins.calendar.deleteEvent("威寶帳單繳費通知", "", "", new Date(new Date(d).setMonth(d.getMonth()-24)), new Date(new Date(d).setMonth(d.getMonth()+24)),success,error);
-		/*
-		if (i==1) setLocalValue('BillReminder1', 'N');
-		if (i==11) setLocalValue('BillReminder2', 'N');
-		if (i==21) setLocalValue('BillReminder3', 'N');
-		*/
 	}
 	
 	function enableReminder(i){	//enable 或 disable 繳費提醒的確認按鈕，0表示disable、1表示enable
@@ -479,6 +487,82 @@
 		window.plugins.socialsharing.share('下載威寶MyVIBO App，馬上擁有行動客服小幫手!', null, null, 'https://vshop.vibo.com.tw/myviboinstall/index.html')
 		GATrackEvent('分享MyVIBO', '成功', '');
 	}
+
+	function setCardNo(){	//若有儲存信用卡資料，則將儲存的資料讀出來顯示
+		var CardNo1 = getLocalValue('CardNo1');
+		var CardNo2 = getLocalValue('CardNo2');
+		var CardNo3 = getLocalValue('CardNo3');
+		var CardNo4 = getLocalValue('CardNo4');
+		var ExpireMonth = getLocalValue('CardExpireMonth');
+		var ExpireYear = getLocalValue('CardExpireYear');
+		
+		if (notEmpty(CardNo1) && CardNo1.length==4 && notEmpty(CardNo2) && CardNo2.length==4 && notEmpty(CardNo3) && CardNo3.length==4 && notEmpty(CardNo4) && CardNo4.length==4){
+			$('#mySettingsCreditCard #CardNo1').val(CardNo1);
+			$('#mySettingsCreditCard #CardNo2').val(CardNo2);
+			$('#mySettingsCreditCard #CardNo3').val(CardNo3);
+			$('#mySettingsCreditCard #CardNo4').val(CardNo4);
+			$('#mySettingsCreditCard #btnClearCreditCardInfo').show();	//有資料，顯示清除資料按鈕
+		}else{
+			$('#mySettingsCreditCard #divClearCreditCardInfo').hide();	//沒資料，隱藏清除資料按鈕
+		}
+		if (notEmpty(ExpireMonth) && ExpireMonth.length==2 && notEmpty(ExpireYear) && ExpireYear.length==4){
+			$('#mySettingsCreditCard #ExpiryDate').val(ExpireMonth + '-' + ExpireYear);
+		}
+	}	//function setCardNo(){	//若有儲存信用卡資料，則將儲存的資料讀出來顯示
+
+	function CardNoChange(i){	//輸入信用卡號時，自動跳格
+		var s = $('#mySettingsCreditCard #CardNo' + i).val();
+		if (notEmpty(s) && s.length==4) $('#mySettingsCreditCard #CardNo' + (i+1)).focus();
+	}	//function CardNoChange(i){	//輸入信用卡號時，自動跳格
+
+	function doSaveCreditCardInfo(){	//儲存信用卡資料
+		if (notEmpty($('#mySettingsCreditCard #ExpiryDate').val()) && $('#mySettingsCreditCard #ExpiryDate').val().length==7){
+			$('#mySettingsCreditCard #ExpireMonth').val($('#mySettingsCreditCard #ExpiryDate').val().substring(0, 2));
+			$('#mySettingsCreditCard #ExpireYear').val($('#mySettingsCreditCard #ExpiryDate').val().substring(3, 7));
+		}
+
+		var CardNo1		= $('#mySettingsCreditCard #CardNo1').val();
+		var CardNo2		= $('#mySettingsCreditCard #CardNo2').val();
+		var CardNo3		= $('#mySettingsCreditCard #CardNo3').val();
+		var CardNo4		= $('#mySettingsCreditCard #CardNo4').val();
+		var ExpireMonth	= $('#mySettingsCreditCard #ExpireMonth').val();
+		var ExpireYear	= $('#mySettingsCreditCard #ExpireYear').val();
+
+		if (beEmpty(CardNo1) || isNaN(CardNo1) || CardNo1.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
+		if (beEmpty(CardNo2) || isNaN(CardNo2) || CardNo2.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
+		if (beEmpty(CardNo3) || isNaN(CardNo3) || CardNo3.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
+		if (beEmpty(CardNo4) || isNaN(CardNo4) || CardNo4.length!=4){MsgBox('請輸入正確的卡號共16碼數字'); return;}
+
+		if (beEmpty(ExpireMonth) || isNaN(ExpireMonth) || ExpireMonth.length!=2){MsgBox('請輸入有效期限月年共六碼'); return;}
+		if (beEmpty(ExpireYear) || isNaN(ExpireYear) || ExpireYear.length!=4){MsgBox('請輸入有效期限月年共六碼'); return;}
+
+		if (!(CardNo1.startsWith("3") || CardNo1.startsWith("4") || CardNo1.startsWith("5"))){MsgBox('請使用VISA、JCB或Master卡'); return;}
+
+		setLocalValue('CardNo1', CardNo1);
+		setLocalValue('CardNo2', CardNo2);
+		setLocalValue('CardNo3', CardNo3);
+		setLocalValue('CardNo4', CardNo4);
+		setLocalValue('CardExpireMonth', ExpireMonth);
+		setLocalValue('CardExpireYear', ExpireYear);
+		MsgBox("已儲存信用卡資料");
+	}	//function doSaveCreditCardInfo(){	//儲存信用卡資料
+
+	function doClearCreditCardInfo(){	//清除信用卡資料
+		setLocalValue('CardNo1', '');
+		setLocalValue('CardNo2', '');
+		setLocalValue('CardNo3', '');
+		setLocalValue('CardNo4', '');
+		setLocalValue('CardExpireMonth', '');
+		setLocalValue('CardExpireYear', '');
+		$('#mySettingsCreditCard #CardNo1').val('');
+		$('#mySettingsCreditCard #CardNo2').val('');
+		$('#mySettingsCreditCard #CardNo3').val('');
+		$('#mySettingsCreditCard #CardNo4').val('');
+		$('#mySettingsCreditCard #ExpiryDate').val('');
+		$('#mySettingsCreditCard #ExpireMonth').val('');
+		$('#mySettingsCreditCard #ExpireYear').val('');
+		MsgBox("信用卡資料已清除");
+	}	//function doClearCreditCardInfo(){	//清除信用卡資料
 
 	var msisdn = getLocalValue('loginmsisdn');
 	//變更密碼
@@ -559,4 +643,51 @@
 		})
 	}	//function doChangePassword(){
 
+	function getPushMessageList(){	//取得個人訊息
+		var msisdn = getLocalValue('loginmsisdn');
+		var contractid = getLocalValue('logincontractid');
+	
+		if (beEmpty(msisdn) || beEmpty(contractid)){
+			MsgBox("請先登入後再使用此功能");
+		}
+
+		var o = '';
+		if (getPlatformName()=='Android')	o = 'A';
+		if (getPlatformName()=='iOS')		o = 'I';
+		if (beEmpty(o)){
+			o = 'B';	//預設為Android+iOS
+		}
+
+		var sData = "";
+		sData = "ServiceId=myvibo";
+		sData += "&DeviceType=" + o;
+		sData += "&MSISDN=" + msisdn;
+		sData += "&ContractId=" + contractid;
+		sData += "&ResponseType=" + "xml";
+
+		getDataFromServer("ajaxPushMessageGetMessage.jsp", sData, "xml", function(xml){
+			var ResultCode = $(xml).find("ResultCode").text();
+			var ResultText = $(xml).find("ResultText").text();
+			if (ResultCode!='00000'){	//作業失敗
+				if (ResultCode=='00006'){	//無符合條件的資料
+					$('#mySettingsPushMessage #itemList').html("<h3>目前無訊息</h3>");
+				}else{
+					MsgBox('無法取得訊息清單：' + ResultText);
+				}
+				return;
+			}else{
+				var s = "";
+				s += "<ul data-role='listview' id='lvPushMessage' style='padding:15px;'>";
+				//$.each( xml.ResultData.items, function(i, item) {	//每個訊息項目
+				$(xml).find("item").each( function() {	//每個訊息項目
+					s += "<li><a href='#' onclick=\"MsgBox('" + $(this).children("MessageBody").text() + "');return false;\" class='wrapMe'><img src='images/icon-new.png' class='ui-li-icon ui-corner-none' />" +  $(this).children("MessageTitle").text() + "</a></li>";
+				//});	//$.each( data.ResultData.items, function(i, item) {	//每個訊息項目
+				});	//$(xml).find("items").each( function() {	//每個訊息項目
+				s += "</ul>";
+				$('#mySettingsPushMessage #itemList').html(s);
+				$("#mySettingsPushMessage #lvPushMessage").listview();
+
+			}	//if (ResultCode=='00000'){	//作業成功
+		});
+	}	//function getPushMessageList(){	//取得個人訊息
 </script>

@@ -409,6 +409,11 @@ a[data-rel='back'] .ui-icon {
 	white-space:normal;
 }
 
+/***********其他需要自動換行的項目***********/
+.wrapMe{
+	white-space:normal!important;
+}
+
 /***********撥打客服電話的撥號 icon***********/
 .ui-icon-phonecall {
 	max-height: 30px!important;
